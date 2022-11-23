@@ -1,8 +1,5 @@
 package sample.model;
 
-import sample.model.Automaten;
-import sample.model.Cell;
-
 public class KruemelmonsterAutomaten extends Automaten {
     public KruemelmonsterAutomaten() {
         this(8, 8, true);
