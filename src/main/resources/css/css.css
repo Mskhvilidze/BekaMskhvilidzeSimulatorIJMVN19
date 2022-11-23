@@ -1,0 +1,141 @@
+.pane{
+  -fx-background-color: #F0F8FF;
+  -fx-effect: dropshadow(three-pass-box, grey, 10, 0, 0, 15);
+ }
+
+ .paneForHbox{
+   -fx-background-color: #FFE4C4;
+   -fx-effect: dropshadow(three-pass-box, grey, 10, 0, 0, 15);
+ }
+
+.vBox1{
+  -fx-background-color: 	#FFE4C4;
+  -fx-effect: innershadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+}
+
+.menuBar{
+    -fx-background-color: 	#FFE4C4;
+    -fx-font-size: 14.0 pt;
+    -fx-font-family: "Bookman Old Style";
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.menu{
+    -fx-effect: innershadow(three-pass-box, derive(cadetblue, -20%), 10, 0, 4, 4);
+    -fx-background-color:
+        #3c7fb1,
+        linear-gradient(#fafdfe, #e8f5fc),
+        linear-gradient(#eaf6fd 0%, #d9f0fc 49%, #bee6fd 50%, #a7d9f5 100%);
+    -fx-background-insets: 0,1,2;
+    -fx-background-radius: 3,2,1;
+    -fx-padding: 3 30 3 30;
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+ }
+
+.menu:hover{
+    -fx-background-color: #0000CD;
+}
+
+.menu-item{
+    -fx-background-color: 	#FFE4C4;
+    -fx-padding: 0.0em 0.0em 0.0em 0.0em;
+    -fx-text-fill: black;
+    -fx-background: darkgray ;
+}
+
+.menu-item:hover{
+    -fx-background-color: 	black;
+}
+
+.buttonHeader{
+    -fx-background-color:
+        linear-gradient(#ffd65b, #e68400),
+        linear-gradient(#ffef84, #f2ba44),
+        linear-gradient(#ffea6a, #efaa22),
+        linear-gradient(#ffe657 0%, #f8c202 50%, #eea10b 100%),
+        linear-gradient(from 0% 0% to 15% 50%, rgba(255,255,255,0.9), rgba(255,255,255,0));
+    -fx-background-radius: 30;
+    -fx-background-insets: 0,1,2,3,0;
+    -fx-text-fill: #654b00;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 10 20 10 20;
+}
+
+.buttonHeader:hover {
+    -fx-background-color: #FFF8DC;
+}
+
+Slider{
+    -fx-background-color: linear-gradient(to left, cyan, magenta);
+    -fx-base:  #B22222;
+}
+
+.tooltip{
+    -fx-base: #AE3522;
+    -fx-text-fill: orange;
+}
+
+.radio-button .radio {
+    -fx-border-width: 1px;
+    -fx-border-color: #000;
+    -fx-background-color: white;
+    -fx-background-image: null;
+    -fx-border-radius: 15px;
+    -fx-padding: 2px;
+}
+.radio-button .radio:selected {
+    -fx-background-color: white;
+    -fx-background-image: null;
+}
+.radio-button -radio:armed {
+    -fx-background-color: white;
+    -fx-background-image: null;
+}
+.radio-button -radio:determinate {
+    -fx-background-color: white;
+    -fx-background-image: null;
+}
+.radio-button -radio:indeterminate {
+    -fx-background-color: white;
+    -fx-background-image: null;
+}
+.radio-button .dot {
+    -fx-background-radius: 15px;
+    -fx-padding: 7px;
+}
+
+.picker{
+    -fx-background-color:
+        #ecebe9,
+        rgba(0,0,0,0.05),
+        linear-gradient(#dcca8a, #c7a740),
+        linear-gradient(#f9f2d6 0%, #f4e5bc 20%, #e6c75d 80%, #e2c045 100%),
+        linear-gradient(#f6ebbe, #e6c34d);
+    -fx-background-insets: 0,9 9 8 9,9,10,11;
+    -fx-background-radius: 50;
+    -fx-padding: 5 15 5 15;
+    -fx-font-family: "Helvetica";
+    -fx-font-size: 10px;
+    -fx-text-fill: #311c09;
+    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.1) , 2, 0.0 , 0 , 1);
+}
+
+.picker:hover{
+    -fx-background-color: #FFF8DC;
+}
+
+.canvas{
+-fx-effect: dropshadow(three-pass-box, grey, 30, 0, 15, 40);
+}
+
+.dialog{
+-fx-effect: dropshadow(three-pass-box, grey, 30, 0, 15, 40);
+-fx-background-color: rgba(255, 255, 255, .7);
+}
+
+.dialogPane{
+-fx-background-color: rgba(	255, 	228, 	196, .7);
+}

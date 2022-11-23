@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eclipse-userlibraries>
+  <library name="Maven: org.openjfx:javafx-base:11">
+    <archive path="C:/Users/Beka/.m2/repository/org/openjfx/javafx-base/11/javafx-base-11.jar" />
+  </library>
+  <library name="Maven: org.openjfx:javafx-base:win:11">
+    <archive path="C:/Users/Beka/.m2/repository/org/openjfx/javafx-base/11/javafx-base-11-win.jar" />
+  </library>
+  <library name="Maven: org.openjfx:javafx-controls:11">
+    <archive path="C:/Users/Beka/.m2/repository/org/openjfx/javafx-controls/11/javafx-controls-11.jar" />
+  </library>
+  <library name="Maven: org.openjfx:javafx-controls:win:11">
+    <archive path="C:/Users/Beka/.m2/repository/org/openjfx/javafx-controls/11/javafx-controls-11-win.jar" />
+  </library>
+  <library name="Maven: org.openjfx:javafx-fxml:11">
+    <archive path="C:/Users/Beka/.m2/repository/org/openjfx/javafx-fxml/11/javafx-fxml-11.jar" />
+  </library>
+  <library name="Maven: org.openjfx:javafx-fxml:win:11">
+    <archive path="C:/Users/Beka/.m2/repository/org/openjfx/javafx-fxml/11/javafx-fxml-11-win.jar" />
+  </library>
+  <library name="Maven: org.openjfx:javafx-graphics:11">
+    <archive path="C:/Users/Beka/.m2/repository/org/openjfx/javafx-graphics/11/javafx-graphics-11.jar" />
+  </library>
+  <library name="Maven: org.openjfx:javafx-graphics:win:11">
+    <archive path="C:/Users/Beka/.m2/repository/org/openjfx/javafx-graphics/11/javafx-graphics-11-win.jar" />
+  </library>
+  <library name="msql.connector">
+    <archive path="C:/Beka/JavaFx/javafx-sdk-11.0.2/lib/javafx-swt.jar" />
+    <archive path="C:/Beka/JavaFx/javafx-sdk-11.0.2/lib/javafx.base.jar" />
+    <archive path="C:/Beka/JavaFx/javafx-sdk-11.0.2/lib/javafx.controls.jar" />
+    <archive path="C:/Beka/JavaFx/javafx-sdk-11.0.2/lib/javafx.fxml.jar" />
+    <archive path="C:/Beka/JavaFx/javafx-sdk-11.0.2/lib/javafx.graphics.jar" />
+    <archive path="C:/Beka/JavaFx/javafx-sdk-11.0.2/lib/javafx.media.jar" />
+    <archive path="C:/Beka/JavaFx/javafx-sdk-11.0.2/lib/javafx.swing.jar" />
+    <archive path="C:/Beka/JavaFx/javafx-sdk-11.0.2/lib/javafx.web.jar" />
+  </library>
+</eclipse-userlibraries>
+
