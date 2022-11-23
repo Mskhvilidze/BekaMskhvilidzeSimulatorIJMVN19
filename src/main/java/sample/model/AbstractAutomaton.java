@@ -2,14 +2,15 @@ package sample.model;
 
 import java.util.*;
 
-public abstract class Automaten {
+public abstract class AbstractAutomaton implements Automaton {
 
-    private int ROWS;
-    private int COLUMNS;
+    private int rows;
+    private int columns;
     private int numberOfStates;
     private boolean isMooreNeighborHood;
     private boolean isTorus;
     private Cell[][] cells;
+    private Random rand = new Random();
 
     /**
      * Konstruktor
@@ -27,9 +28,9 @@ public abstract class Automaten {
      * @param isTorus             true, falls die Zellen als
      *                            Torus betrachtet werden
      */
-    public Automaten(int rows, int columns, int numberOfStates, boolean isMooreNeighborHood, boolean isTorus) {
-        this.ROWS = rows;
-        this.COLUMNS = columns;
+     AbstractAutomaton(int rows, int columns, int numberOfStates, boolean isMooreNeighborHood, boolean isTorus) {
+        this.rows = rows;
+        this.columns = columns;
         this.numberOfStates = numberOfStates;
         this.isMooreNeighborHood = isMooreNeighborHood;
         this.isTorus = isTorus;
@@ -45,7 +46,7 @@ public abstract class Automaten {
         }
     }
 
-    public abstract Cell transform(Cell cell, Cell[] neighbors) throws Throwable;
+    public abstract Cell transform(Cell cell, Cell[] neighbors);
 
     /**
      * Liefert die Anzahl an Zuständen des Automaten; gültige Zustände sind
@@ -62,8 +63,8 @@ public abstract class Automaten {
      *
      * @return die Anzahl an Reihen
      */
-    public int getROWS() {
-        return this.ROWS;
+    public int getRows() {
+        return this.rows;
     }
 
     /**
@@ -71,8 +72,8 @@ public abstract class Automaten {
      *
      * @return die Anzahl an Spalten
      */
-    public int getCOLUMNS() {
-        return this.COLUMNS;
+    public int getColumns() {
+        return this.columns;
     }
 
     /**
@@ -87,7 +88,7 @@ public abstract class Automaten {
         Cell[][] temp = new Cell[rows][columns];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                if (i < this.ROWS && j < this.COLUMNS) {
+                if (i < this.rows && j < this.columns) {
                     temp[i][j] = this.cells[i][j];
                 } else {
                     temp[i][j] = new Cell(0);
@@ -95,8 +96,8 @@ public abstract class Automaten {
             }
         }
         this.cells = temp;
-        this.ROWS = rows;
-        this.COLUMNS = columns;
+        this.rows = rows;
+        this.columns = columns;
     }
 
     /**
@@ -135,8 +136,8 @@ public abstract class Automaten {
      * setzt alle Zellen in den Zustand 0
      */
     public void clearPopulation() {
-        for (int r = 0; r < this.ROWS; r++) {
-            for (int c = 0; c < this.COLUMNS; c++) {
+        for (int r = 0; r < this.rows; r++) {
+            for (int c = 0; c < this.columns; c++) {
                 this.cells[r][c].setState(0);
             }
         }
@@ -146,9 +147,8 @@ public abstract class Automaten {
      * setzt für jede Zelle einen zufällig erzeugten Zustand
      */
     public void randomPopulation() {
-        Random rand = new Random();
-        for (int r = 0; r < this.ROWS; r++) {
-            for (int c = 0; c < this.COLUMNS; c++) {
+        for (int r = 0; r < this.rows; r++) {
+            for (int c = 0; c < this.columns; c++) {
                 this.cells[r][c].setState(rand.nextInt(numberOfStates));
             }
         }
@@ -173,10 +173,8 @@ public abstract class Automaten {
      * @param state  neuer Zustand der Zelle
      */
     public void setState(int row, int column, int state) {
-        boolean swap = false;
         if (this.cells[row][column].getState() != state) {
             this.cells[row][column].setState(state);
-            swap = true;
         }
     }
 
@@ -190,12 +188,10 @@ public abstract class Automaten {
      * @param state      neuer Zustand der Zellen
      */
     public void setState(int fromRow, int fromColumn, int toRow, int toColumn, int state) {
-        boolean swap = false;
         for (int r = fromRow; r <= toRow; r++) {
             for (int c = fromColumn; c <= toColumn; c++) {
                 if (this.cells[r][c].getState() != state) {
                     this.cells[r][c].setState(state);
-                    swap = true;
                 }
             }
         }
@@ -207,58 +203,65 @@ public abstract class Automaten {
      * berücksichtigen sind die Nachbarschaftseigenschaft und die
      * Torus-Eigenschaft des Automaten
      *
-     * @throws Throwable Exceptions der transform-Methode werden
-     *                   weitergeleitet
      */
-    public void nextGeneration() throws Throwable {
+    public void nextGeneration()  {
         Cell[][] temp = new Cell[this.cells.length][this.cells[0].length];
-        if (this.isMooreNeighborHood) {
-            if (isTorus) {
-                for (int r = 0; r < this.cells.length; r++) {
-                    for (int c = 0; c < this.cells[r].length; c++) {
-                        temp[r][c] = new Cell(this.transform(getCell(r, c), this.getTorusMoorNeighbors(r, c)));
-                    }
-                }
-            } else {
-                for (int r = 0; r < this.cells.length; r++) {
-                    for (int c = 0; c < this.cells[r].length; c++) {
-                        temp[r][c] = new Cell(this.transform(getCell(r, c), this.getMoorNeighbors(r, c)));
-                    }
+        if (this.isMooreNeighborHood()) {
+            torusMoorNeighborsChecker(temp);
+        } else {
+            neumannNeighborsChecker(temp);
+        }
+    }
+
+    private void torusMoorNeighborsChecker(Cell[][] temp){
+        if (isTorus) {
+            for (int r = 0; r < this.cells.length; r++) {
+                for (int c = 0; c < this.cells[r].length; c++) {
+                    temp[r][c] = new Cell(this.transform(getCell(r, c), this.getTorusMoorNeighbors(r, c)));
                 }
             }
         } else {
+            System.out.println("CC");
             for (int r = 0; r < this.cells.length; r++) {
                 for (int c = 0; c < this.cells[r].length; c++) {
-                    temp[r][c] = new Cell(this.transform(getCell(r, c), this.getNeumannNeighbors(r, c)));
+                    temp[r][c] = new Cell(this.transform(getCell(r, c), this.getMoorNeighbors(r, c)));
                 }
             }
         }
         this.cells = temp;
     }
 
+    private void neumannNeighborsChecker(Cell[][] temp){
+        for (int r = 0; r < this.cells.length; r++) {
+            for (int c = 0; c < this.cells[r].length; c++) {
+                temp[r][c] = new Cell(this.transform(getCell(r, c), this.getNeumannNeighbors(r, c)));
+            }
+        }
+        this.cells = temp;
+    }
     private Cell[] getTorusMoorNeighbors(int row, int col) {
         List<Cell> list = new ArrayList<>();
-        int result_Of_tempRow_And_Rows =
-                (row + this.ROWS - 1) > this.ROWS ? (row + this.ROWS - 1) - this.ROWS : this.ROWS - (row + this.ROWS - 1);
-        int result_Of_tempCol_And_Columns =
-                (col + this.COLUMNS - 1) > this.COLUMNS ? (col + this.COLUMNS - 1) - this.COLUMNS : this.COLUMNS - (col + this.COLUMNS - 1);
-        int result_Of_tempRow_And_Rows1 = (row + 1) > this.ROWS ? (row + 1) - this.ROWS : this.ROWS - (row + 1);
-        int result_Of_tempCol_And_Columns1 = (col + 1) > this.COLUMNS ? (col + 1) - this.COLUMNS : this.COLUMNS - (col + 1);
+        int resultOfTempRowAndRows =
+                (row + this.rows - 1) > this.rows ? (row + this.rows - 1) - this.rows : this.rows - (row + this.rows - 1);
+        int resultOfTempColAndColumns =
+                (col + this.columns - 1) > this.columns ? (col + this.columns - 1) - this.columns : this.columns - (col + this.columns - 1);
+        int resultOfTempRowAndRows1 = (row + 1) > this.rows ? (row + 1) - this.rows : this.rows - (row + 1);
+        int resultOfTempColAndColumns1 = (col + 1) > this.columns ? (col + 1) - this.columns : this.columns - (col + 1);
 
-        list.add(this.cells[result_Of_tempRow_And_Rows1][result_Of_tempCol_And_Columns]);
-        list.add(this.cells[result_Of_tempRow_And_Rows1][col]);
-        list.add(this.cells[result_Of_tempRow_And_Rows1][result_Of_tempCol_And_Columns1]);
-        list.add(this.cells[result_Of_tempRow_And_Rows][result_Of_tempCol_And_Columns]);
-        list.add(this.cells[result_Of_tempRow_And_Rows][col]);
-        list.add(this.cells[result_Of_tempRow_And_Rows][result_Of_tempCol_And_Columns1]);
-        list.add(this.cells[row][result_Of_tempCol_And_Columns]);
-        list.add(this.cells[row][result_Of_tempCol_And_Columns1]);
+        list.add(this.cells[resultOfTempRowAndRows1][resultOfTempColAndColumns]);
+        list.add(this.cells[resultOfTempRowAndRows1][col]);
+        list.add(this.cells[resultOfTempRowAndRows1][resultOfTempColAndColumns1]);
+        list.add(this.cells[resultOfTempRowAndRows][resultOfTempColAndColumns]);
+        list.add(this.cells[resultOfTempRowAndRows][col]);
+        list.add(this.cells[resultOfTempRowAndRows][resultOfTempColAndColumns1]);
+        list.add(this.cells[row][resultOfTempColAndColumns]);
+        list.add(this.cells[row][resultOfTempColAndColumns1]);
         return list.toArray(new Cell[8]);
     }
 
     private boolean aLive(int i, int j) {
         boolean valid = false;
-        if (i < ROWS && j < COLUMNS && i >= 0 && j >= 0 && this.cells[i][j].getState() == 1) {
+        if (i < rows && j < columns && i >= 0 && j >= 0 && this.cells[i][j].getState() == 1) {
             valid = true;
         }
         return valid;
@@ -304,8 +307,8 @@ public abstract class Automaten {
 
         list.add(row > 0 ? this.cells[row - 1][col] : null);
         list.add(col > 0 ? this.cells[row][col - 1] : null);
-        list.add(row < this.ROWS - 1 ? this.cells[row + 1][col] : null);
-        list.add(col < this.COLUMNS - 1 ? this.cells[row][col + 1] : null);
+        list.add(row < this.rows - 1 ? this.cells[row + 1][col] : null);
+        list.add(col < this.columns - 1 ? this.cells[row][col + 1] : null);
 
         return list.stream().filter(Objects::nonNull).toArray(Cell[]::new);
     }

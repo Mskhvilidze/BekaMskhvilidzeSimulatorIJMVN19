@@ -10,7 +10,8 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import sample.model.Automaten;
+import sample.model.AbstractAutomaton;
+import sample.model.GameOfLifeAutomaton;
 import sample.model.KruemelmonsterAutomaten;
 
 import java.net.URL;
@@ -68,7 +69,7 @@ public class Controller implements Initializable {
     @FXML
     private Button generate;
     private PopulationPanel populationPanel;
-    private Automaten automaten;
+    private AbstractAutomaton automaton;
     private StatesColorMapping mapping;
     private EventBus bus;
     Random random = new Random();
@@ -79,18 +80,18 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        automaten = new KruemelmonsterAutomaten(45, 45, true);
-        this.ROW_SIZE.setText(String.valueOf(automaten.getROWS()));
-        this.COL_SIZE.setText(String.valueOf(automaten.getCOLUMNS()));
+        automaton = new KruemelmonsterAutomaten(45, 45, true);
+        this.ROW_SIZE.setText(String.valueOf(automaton.getRows()));
+        this.COL_SIZE.setText(String.valueOf(automaton.getColumns()));
         this.scrollPane.viewportBoundsProperty().addListener((observable, oldValue, newValue) -> {
             this.populationPanel.center(newValue);
         });
         Platform.runLater(() -> {
-            initPopulationPanel(automaten);
+            initPopulationPanel(automaton);
             setTooltip();
             set_H_grow_And_V_grow();
         });
-        automaten.randomPopulation();
+        automaton.randomPopulation();
     }
 
     private void setTooltip() {
@@ -119,7 +120,7 @@ public class Controller implements Initializable {
         HBox.setHgrow(this.scrollPane, Priority.ALWAYS);
     }
 
-    private void initPopulationPanel(Automaten automaten) {
+    private void initPopulationPanel(AbstractAutomaton automaten) {
         mapping = new StatesColorMapping(automaten.getNumberOfStates());
         populationPanel = new PopulationPanel(automaten, canvas, mapping);
     }
@@ -204,8 +205,8 @@ public class Controller implements Initializable {
             @Override
             public void run() {
                 Platform.runLater(() -> {
-                    automaten.randomPopulation();
-                    initPopulationPanel(automaten);
+                    automaton.randomPopulation();
+                    initPopulationPanel(automaton);
                 });
             }
         }, 1000);
@@ -216,8 +217,8 @@ public class Controller implements Initializable {
     private void onResetPopulation() throws ExecutionException {
         AudioCache.getAudio("clear.mp3").play();
         Platform.runLater(() -> {
-            this.automaten.clearPopulation();
-            initPopulationPanel(automaten);
+            this.automaton.clearPopulation();
+            initPopulationPanel(automaton);
         });
     }
 
@@ -236,8 +237,8 @@ public class Controller implements Initializable {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Minimale Größe ist 15");
                 alert.showAndWait();
             } else {
-                automaten.changeSize(Integer.parseInt(ROW_SIZE.getText()), Integer.parseInt(COL_SIZE.getText()));
-                initPopulationPanel(automaten);
+                automaton.changeSize(Integer.parseInt(ROW_SIZE.getText()), Integer.parseInt(COL_SIZE.getText()));
+                initPopulationPanel(automaton);
             }
         });
         this.togglePaneVisible(dialogWindow, false);
@@ -250,14 +251,14 @@ public class Controller implements Initializable {
 
     @FXML
     private void onSetTorus() {
-        automaten.setTorus(isToggleTorus(automaten.isTorus()));
+        automaton.setTorus(isToggleTorus(automaton.isTorus()));
     }
 
     @FXML
     private void onStart() {
         try {
-            automaten.nextGeneration();
-            initPopulationPanel(automaten);
+            automaton.nextGeneration();
+            initPopulationPanel(automaton);
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
@@ -267,8 +268,8 @@ public class Controller implements Initializable {
         Platform.runLater(() -> {
             RadioButton radioButton = (RadioButton) event.getSource();
             activeCell = Integer.parseInt(radioButton.getText());
-            automaten.setNumberOfStates(Integer.parseInt(radioButton.getText()) + 1);
-            initPopulationPanel(automaten);
+            automaton.setNumberOfStates(Integer.parseInt(radioButton.getText()) + 1);
+            initPopulationPanel(automaton);
         });
     }
 
@@ -277,14 +278,14 @@ public class Controller implements Initializable {
         int y = (int) ((mouseEvent.getY() - 15) / 15);
         a = x;
         b = y;
-        automaten.setState(y, x, activeCell);
-        initPopulationPanel(automaten);
+        automaton.setState(y, x, activeCell);
+        initPopulationPanel(automaton);
     }
 
     public void onTest(MouseEvent mouseEvent) {
         int x = (int) ((mouseEvent.getX() - 15) / 15);
         int y = (int) ((mouseEvent.getY() - 15) / 15);
-        automaten.setState(b, a, y, x,activeCell);
-        initPopulationPanel(automaten);
+        automaton.setState(b, a, y, x,activeCell);
+        initPopulationPanel(automaton);
     }
 }

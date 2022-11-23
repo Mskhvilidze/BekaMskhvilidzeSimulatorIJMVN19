@@ -5,7 +5,7 @@ import javafx.geometry.Bounds;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import sample.model.Automaten;
+import sample.model.AbstractAutomaton;
 
 public class PopulationPanel {
     private static final int CANVAS_WIDTH_AND_HEIGHT = 16;
@@ -14,7 +14,7 @@ public class PopulationPanel {
     private static final double GAME_HEIGHT = 15;
     private static final double MAX_SIZE = 2.0;
     private static final double MIN_SIZE = 0.4;
-    private final Automaten automaten;
+    private final AbstractAutomaton automaten;
     private Canvas canvas;
     private final int rows;
     private final int cols;
@@ -23,10 +23,10 @@ public class PopulationPanel {
     private boolean disableZoomIn;
     private boolean disableZoomOut;
 
-    public PopulationPanel(Automaten automaten, Canvas canvas, StatesColorMapping mapping) {
+    public PopulationPanel(AbstractAutomaton automaten, Canvas canvas, StatesColorMapping mapping) {
         this.automaten = automaten;
-        rows = this.automaten.getROWS();
-        cols = this.automaten.getCOLUMNS();
+        rows = this.automaten.getRows();
+        cols = this.automaten.getColumns();
         canvas.setHeight(getMinCanvasHeight());
         canvas.setWidth(getMinCanvasWidth());
         this.canvas = canvas;
