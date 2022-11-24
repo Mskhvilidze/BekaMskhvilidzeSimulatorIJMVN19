@@ -1,4 +1,4 @@
-package sample;
+package sample.view;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
@@ -8,6 +8,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import sample.Controller;
+import sample.RequestExitStage;
+import sample.RequestNewStage;
+
 import java.io.IOException;
 
 @SuppressWarnings("UnstableApiUsage")
@@ -23,9 +27,6 @@ public class View {
         initView();
     }
 
-    public View() {
-
-    }
 
     private void initView() throws IOException {
         showScene();
@@ -38,7 +39,7 @@ public class View {
         Parent rootParent = loader.load();
         Controller controller = loader.getController();
         controller.setEventBus(this.bus);
-        setMin_And_Max_Size_Of_Stage();
+        setMinAndMaxSizeOfStage();
         Platform.runLater(() -> {
             primaryStage.initStyle(StageStyle.UTILITY);
             primaryStage.setTitle("Simulator");
@@ -57,7 +58,7 @@ public class View {
         Parent rootParent = loader.load();
         Controller controller = loader.getController();
         controller.setEventBus(this.bus);
-        setMin_And_Max_Size_Of_Stage();
+        setMinAndMaxSizeOfStage();
         Platform.runLater(() -> {
             stage.setTitle("Simulator");
             scene = new Scene(rootParent, 815, 815);
@@ -68,12 +69,12 @@ public class View {
     }
 
     @Subscribe
-    private void ExitStage(RequestExitStage exitStage) {
+    private void closeStage(RequestExitStage exitStage) {
        Stage stage = (Stage) exitStage.getStage().getScene().getWindow();
        stage.close();
     }
 
-    private void setMin_And_Max_Size_Of_Stage() {
+    private void setMinAndMaxSizeOfStage() {
         this.primaryStage.setMinHeight(470);
         this.primaryStage.setMinWidth(250);
         this.primaryStage.setMaxWidth(950);

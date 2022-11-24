@@ -317,15 +317,6 @@ public abstract class AbstractAutomaton implements Automaton {
         this.numberOfStates = numberOfStates;
     }
 
-    public void print() {
-        for (Cell[] cell : this.cells) {
-            for (Cell value : cell) {
-                System.out.print(value.getState() + "  ");
-            }
-            System.out.println(" ");
-        }
-    }
-
     public static class Cell {
         private int state;
 

@@ -11,8 +11,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import sample.model.AbstractAutomaton;
-import sample.model.GameOfLifeAutomaton;
 import sample.model.KruemelmonsterAutomaten;
+import sample.view.PopulationPanelImpl;
 
 import java.net.URL;
 import java.util.*;
@@ -68,7 +68,7 @@ public class Controller implements Initializable {
     private Button laden;
     @FXML
     private Button generate;
-    private PopulationPanel populationPanel;
+    private PopulationPanelImpl populationPanel;
     private AbstractAutomaton automaton;
     private StatesColorMapping mapping;
     private EventBus bus;
@@ -122,7 +122,7 @@ public class Controller implements Initializable {
 
     private void initPopulationPanel(AbstractAutomaton automaten) {
         mapping = new StatesColorMapping(automaten.getNumberOfStates());
-        populationPanel = new PopulationPanel(automaten, canvas, mapping);
+        populationPanel = new PopulationPanelImpl(automaten, canvas, mapping);
     }
 
     /**

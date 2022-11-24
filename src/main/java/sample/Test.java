@@ -6,7 +6,13 @@ import java.util.concurrent.TimeUnit;
 
 public class Test {
 
-    private LoadingCache<String, String> cache;
+    public static void main(String[] args) {
+
+    }
+
+
+}
+   /* private LoadingCache<String, String> cache;
     private static Test gt = new Test();
     private Test() {
         cache = CacheBuilder.newBuilder().refreshAfterWrite(2, TimeUnit.SECONDS).build(new CacheLoader<String, String>() {
@@ -49,7 +55,7 @@ public class Test {
         Thread.sleep(2100);
         System.out.println(gt.getCache().asMap().values());*/
 
-        CacheLoader<String, String> loader;
+      /*  CacheLoader<String, String> loader;
         loader = new CacheLoader<String, String>() {
             @Override
             public String load(final String key) {
@@ -86,6 +92,4 @@ public class Test {
 
         System.out.println("Size: " + cache.size());
         System.out.println();
-        System.out.println(cache.asMap().keySet());
-    }
-}
+        System.out.println(cache.asMap().keySet());*/

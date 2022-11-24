@@ -11,13 +11,14 @@ import java.util.concurrent.TimeUnit;
 /**
  * AudioCache
  */
+@SuppressWarnings("NullableProblems")
 public final class AudioCache {
     private static final LoadingCache<String, AudioClip> SOUNDS = CacheBuilder.newBuilder()
             .expireAfterAccess(10, TimeUnit.MINUTES)
             .maximumSize(100)
             .build(new CacheLoader<String, AudioClip>() {
                 @Override
-                public AudioClip load(String key) throws Exception {
+                public AudioClip load(String key){
                     return new AudioClip(key);
                 }
             });

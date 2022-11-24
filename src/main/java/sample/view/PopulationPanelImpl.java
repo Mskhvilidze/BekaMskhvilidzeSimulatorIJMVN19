@@ -1,32 +1,33 @@
-package sample;
+package sample.view;
 
 import javafx.application.Platform;
 import javafx.geometry.Bounds;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import sample.StatesColorMapping;
 import sample.model.AbstractAutomaton;
 
-public class PopulationPanel {
+public class PopulationPanelImpl implements PopulationPanel {
     private static final int CANVAS_WIDTH_AND_HEIGHT = 16;
     public static final int BORDER_SIZE = 10;
     private static final double GAME_WIDTH = 15;
     private static final double GAME_HEIGHT = 15;
     private static final double MAX_SIZE = 2.0;
     private static final double MIN_SIZE = 0.4;
-    private final AbstractAutomaton automaten;
+    private final AbstractAutomaton automaton;
     private Canvas canvas;
     private final int rows;
     private final int cols;
     private StatesColorMapping mapping;
-    private static double sizeCell = 1.0;
+    private double sizeCell = 1.0;
     private boolean disableZoomIn;
     private boolean disableZoomOut;
 
-    public PopulationPanel(AbstractAutomaton automaten, Canvas canvas, StatesColorMapping mapping) {
-        this.automaten = automaten;
-        rows = this.automaten.getRows();
-        cols = this.automaten.getColumns();
+    public PopulationPanelImpl(AbstractAutomaton automaten, Canvas canvas, StatesColorMapping mapping) {
+        this.automaton = automaten;
+        rows = this.automaton.getRows();
+        cols = this.automaton.getColumns();
         canvas.setHeight(getMinCanvasHeight());
         canvas.setWidth(getMinCanvasWidth());
         this.canvas = canvas;
@@ -34,7 +35,7 @@ public class PopulationPanel {
         paintPopulation();
     }
 
-    private void paintPopulation() {
+    public void paintPopulation() {
         GraphicsContext g = this.canvas.getGraphicsContext2D();
         g.clearRect(0, 0, this.canvas.getWidth(), this.canvas.getHeight());
 
@@ -44,18 +45,18 @@ public class PopulationPanel {
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
 
-                g.setFill(mapping.setColor(automaten.getCell(r, c).getState()));
+                g.setFill(mapping.setColor(automaton.getCell(r, c).getState()));
                 g.fillRect(BORDER_SIZE + c * GAME_WIDTH, BORDER_SIZE + r * GAME_HEIGHT, GAME_WIDTH, GAME_HEIGHT);
                 g.strokeRect(BORDER_SIZE + c * GAME_WIDTH, BORDER_SIZE + r * GAME_HEIGHT, GAME_WIDTH, GAME_HEIGHT);
             }
         }
     }
 
-    private int getMinCanvasWidth() {
+    public int getMinCanvasWidth() {
         return Math.min(cols * CANVAS_WIDTH_AND_HEIGHT, 1360);
     }
 
-    private int getMinCanvasHeight() {
+    public int getMinCanvasHeight() {
         return Math.min(rows * CANVAS_WIDTH_AND_HEIGHT, 1360);
     }
 

@@ -2,16 +2,20 @@ package sample;
 
 import com.google.common.eventbus.EventBus;
 import javafx.stage.Stage;
+import sample.view.View;
+import sample.view.ViewManagerFactory;
+
 @SuppressWarnings("UnstableApiUsage")
 public class App extends javafx.application.Application {
-    private EventBus eventBus;
+
     @Override
-    public void start(Stage primaryStage) throws Exception{
-        this.eventBus = new EventBus();
-        this.eventBus.register(this);
-        new View(primaryStage, this.eventBus);
+    public void start(Stage primaryStage) throws Exception {
+        ViewManagerFactory manager = View::new;
+        EventBus eventBus = new EventBus();
+        eventBus.register(this);
+        manager.create(primaryStage, eventBus);
     }
-    
+
     public static void main(String[] args) {
         launch(args);
     }
