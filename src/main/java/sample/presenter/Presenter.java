@@ -1,6 +1,5 @@
-package sample;
+package sample.presenter;
 
-import com.google.common.eventbus.EventBus;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,6 +9,8 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import sample.AudioCache;
+import sample.StatesColorMapping;
 import sample.model.AbstractAutomaton;
 import sample.model.KruemelmonsterAutomaten;
 import sample.view.PopulationPanelImpl;
@@ -18,16 +19,16 @@ import java.net.URL;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 
-@SuppressWarnings("UnstableApiUsage")
-public class Controller implements Initializable {
+
+public class Presenter extends AbstractPresenter implements Initializable {
     public static final String FXML = "/fxml/view.fxml";
-    public static final String SOUND_PATH = "C:\\Beka\\OMP\\IDEA\\Übungen\\BekaMskhvilidzeSimulatorIJMVN19\\src\\main\\resources\\sound\\";
+    public static final String SOUND_PATH = "src/main/resources/sound/";
     @FXML
     private DialogPane dialogWindow;
     @FXML
-    private TextField ROW_SIZE;
+    private TextField rowSize;
     @FXML
-    private TextField COL_SIZE;
+    private TextField colSize;
     @FXML
     private MenuItem beenden;
     @FXML
@@ -70,28 +71,28 @@ public class Controller implements Initializable {
     private Button generate;
     private PopulationPanelImpl populationPanel;
     private AbstractAutomaton automaton;
-    private StatesColorMapping mapping;
-    private EventBus bus;
-    Random random = new Random();
-    private Map<String, Stage> map = new HashMap<>();
-    private int activeCell = 0;
-    int a = 0;
-    int b = 0;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         automaton = new KruemelmonsterAutomaten(45, 45, true);
-        this.ROW_SIZE.setText(String.valueOf(automaton.getRows()));
-        this.COL_SIZE.setText(String.valueOf(automaton.getColumns()));
-        this.scrollPane.viewportBoundsProperty().addListener((observable, oldValue, newValue) -> {
-            this.populationPanel.center(newValue);
-        });
+        this.rowSize.setText(String.valueOf(automaton.getRows()));
+        this.colSize.setText(String.valueOf(automaton.getColumns()));
+        this.scrollPane.viewportBoundsProperty().addListener((observable, oldValue, newValue) -> this.populationPanel.center(newValue));
         Platform.runLater(() -> {
             initPopulationPanel(automaton);
             setTooltip();
-            set_H_grow_And_V_grow();
+            setHgrowAndVgrow();
         });
         automaton.randomPopulation();
+    }
+
+    public void simulatorPresenter(Service service) {
+        setService(service);
+    }
+
+    public void setStage(Stage stage) {
+        this.beenden.setId("" + random.nextInt());
+        map.put(this.beenden.getId(), stage);
     }
 
     private void setTooltip() {
@@ -109,7 +110,7 @@ public class Controller implements Initializable {
         this.stopSimulation.setTooltip(new Tooltip("Simulation anhalten"));
     }
 
-    private void set_H_grow_And_V_grow() {
+    private void setHgrowAndVgrow() {
         HBox.setHgrow(this.hBoxForSimul, Priority.ALWAYS);
         VBox.setVgrow(this.hBoxForSimul, Priority.ALWAYS);
         HBox.setHgrow(this.pane, Priority.ALWAYS);
@@ -120,57 +121,20 @@ public class Controller implements Initializable {
         HBox.setHgrow(this.scrollPane, Priority.ALWAYS);
     }
 
-    private void initPopulationPanel(AbstractAutomaton automaten) {
-        mapping = new StatesColorMapping(automaten.getNumberOfStates());
-        populationPanel = new PopulationPanelImpl(automaten, canvas, mapping);
-    }
-
-    /**
-     * ZoomButtons deaktivieren und aktivieren
-     *
-     * @param button   button
-     * @param disabled button disabled
-     */
-    private void toggleButtonDisable(Button button, boolean disabled) {
-        if (button.getId().equals(this.zoomIn.getId()) && !disabled) {
-            this.zoomOut.disableProperty().set(false);
-        }
-
-        if (button.getId().equals(this.zoomOut.getId()) && !disabled) {
-            this.zoomIn.disableProperty().set(false);
-        }
-        button.disableProperty().set(disabled);
-    }
-
-    private void togglePaneVisible(Pane pane, boolean visible) {
-        pane.setVisible(visible);
-    }
-
-    private boolean isToggleTorus(boolean isTorus) {
-        return !isTorus;
-    }
-
-    //Public
-    public void setEventBus(EventBus eventBus) {
-        this.bus = eventBus;
-        eventBus.register(this);
-    }
-
-    public void setStage(Stage stage) {
-        this.beenden.setId("" + random.nextInt());
-        map.put(this.beenden.getId(), stage);
+    private void initPopulationPanel(AbstractAutomaton automaton) {
+        StatesColorMapping mapping = new StatesColorMapping(automaton.getNumberOfStates());
+        populationPanel = new PopulationPanelImpl(automaton, canvas, mapping);
     }
 
     //Menu
     @FXML
     private void onNewGameWindow() {
-        RequestNewStage newStage = new RequestNewStage();
-        this.bus.post(newStage);
+        service.onNewGameWindow();
     }
 
     @FXML
     private void onPlatformExit() {
-        this.bus.post(new RequestExitStage(map.get(this.beenden.getId())));
+        this.service.onPlatformExit(map.get(this.beenden.getId()));
     }
 
     //Button
@@ -181,7 +145,7 @@ public class Controller implements Initializable {
             this.stackPane.setPrefWidth(this.populationPanel.getMinStackPaneWidth());
             this.stackPane.setPrefHeight(this.populationPanel.getMinStackPaneHeight());
         });
-        toggleButtonDisable(zoomIn, this.populationPanel.isDisableZoomIn());
+        this.service.toggleButtonDisable(zoomIn, this.zoomIn, this.zoomOut, this.populationPanel.isDisableZoomIn());
     }
 
     @FXML
@@ -195,7 +159,7 @@ public class Controller implements Initializable {
                 this.stackPane.setPrefSize(-1, -1);
             }
         });
-        toggleButtonDisable(zoomOut, this.populationPanel.isDisableZoomOut());
+        this.service.toggleButtonDisable(zoomIn, this.zoomIn, this.zoomOut, this.populationPanel.isDisableZoomIn());
     }
 
     @FXML
@@ -223,48 +187,45 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    private void onDialog_Window_Open() {
-        this.togglePaneVisible(dialogWindow, true);
+    private void onDialogWindowOpen() {
+        this.service.togglePaneVisible(dialogWindow, true);
     }
 
     @FXML
     private void onChangeSize() {
         Platform.runLater(() -> {
-            if (Integer.parseInt(ROW_SIZE.getText()) > 50 || Integer.parseInt(COL_SIZE.getText()) > 50) {
+            if (Integer.parseInt(rowSize.getText()) > 50 || Integer.parseInt(colSize.getText()) > 50) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Maximale Größe ist 50");
                 alert.showAndWait();
-            } else if (Integer.parseInt(ROW_SIZE.getText()) < 15 || Integer.parseInt(COL_SIZE.getText()) < 15) {
+            } else if (Integer.parseInt(rowSize.getText()) < 15 || Integer.parseInt(colSize.getText()) < 15) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Minimale Größe ist 15");
                 alert.showAndWait();
             } else {
-                automaton.changeSize(Integer.parseInt(ROW_SIZE.getText()), Integer.parseInt(COL_SIZE.getText()));
+                automaton.changeSize(Integer.parseInt(rowSize.getText()), Integer.parseInt(colSize.getText()));
                 initPopulationPanel(automaton);
             }
         });
-        this.togglePaneVisible(dialogWindow, false);
+        this.service.togglePaneVisible(dialogWindow, false);
     }
 
     @FXML
-    private void onDialog_Window_Close() {
-        this.togglePaneVisible(dialogWindow, false);
+    private void onDialogWindowClose() {
+        this.service.togglePaneVisible(dialogWindow, false);
     }
 
     @FXML
     private void onSetTorus() {
-        automaton.setTorus(isToggleTorus(automaton.isTorus()));
+        automaton.setTorus(this.service.isToggleTorus(automaton.isTorus()));
     }
 
     @FXML
     private void onStart() {
-        try {
-            automaton.nextGeneration();
-            initPopulationPanel(automaton);
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
-        }
+        automaton.nextGeneration();
+        initPopulationPanel(automaton);
     }
 
-    public void onStateGenerate(ActionEvent event) {
+    @FXML
+    private void onStateGenerate(ActionEvent event) {
         Platform.runLater(() -> {
             RadioButton radioButton = (RadioButton) event.getSource();
             activeCell = Integer.parseInt(radioButton.getText());
@@ -273,7 +234,8 @@ public class Controller implements Initializable {
         });
     }
 
-    public void onMousePressed(MouseEvent mouseEvent) {
+    @FXML
+    private void onMousePressed(MouseEvent mouseEvent) {
         int x = (int) ((mouseEvent.getX() - 15) / 15);
         int y = (int) ((mouseEvent.getY() - 15) / 15);
         a = x;
@@ -282,10 +244,11 @@ public class Controller implements Initializable {
         initPopulationPanel(automaton);
     }
 
-    public void onTest(MouseEvent mouseEvent) {
+    @FXML
+    private void onTest(MouseEvent mouseEvent) {
         int x = (int) ((mouseEvent.getX() - 15) / 15);
         int y = (int) ((mouseEvent.getY() - 15) / 15);
-        automaton.setState(b, a, y, x,activeCell);
+        automaton.setState(b, a, y, x, activeCell);
         initPopulationPanel(automaton);
     }
 }

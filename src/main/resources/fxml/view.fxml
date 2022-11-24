@@ -9,7 +9,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<VBox fx:id="vBox" prefHeight="799.0" prefWidth="800.0" stylesheets="/css/css.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<VBox fx:id="vBox" prefHeight="799.0" prefWidth="800.0" stylesheets="/css/css.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.presenter.Presenter">
     <VBox maxHeight="799.0" style="-fx-border-insets: 5;" styleClass="vBox1">
         <MenuBar styleClass="menuBar">
             <Menu fx:id="te" mnemonicParsing="true" styleClass="menu" text="_Automat">
@@ -47,7 +47,7 @@
                 </MenuItem>
             </Menu>
             <Menu mnemonicParsing="true" styleClass="menu" text="_Population">
-                <MenuItem fx:id="change" mnemonicParsing="true" onAction="#onDialog_Window_Open" text="_Größe ändern...">
+                <MenuItem fx:id="change" mnemonicParsing="true" onAction="#onDialogWindowOpen" text="_Größe ändern...">
                     <accelerator>
                         <KeyCodeCombination alt="UP" code="G" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
                     </accelerator>
@@ -156,7 +156,7 @@
                     </graphic>
                 </Button>
 
-                <Button fx:id="sizeChange" layoutX="94.0" layoutY="3.0" maxHeight="40.0" maxWidth="30.0" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" onAction="#onDialog_Window_Open" prefHeight="33.0" prefWidth="30.0" styleClass="buttonHeader" translateY="2.0">
+                <Button fx:id="sizeChange" layoutX="94.0" layoutY="3.0" maxHeight="40.0" maxWidth="30.0" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" onAction="#onDialogWindowOpen" prefHeight="33.0" prefWidth="30.0" styleClass="buttonHeader" translateY="2.0">
                     <graphic>
                         <ImageView fitHeight="28.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                             <Image url="@../icons/Size24.gif" />
@@ -407,15 +407,15 @@
                                         <Font name="System Bold" size="12.0" />
                                     </font>
                                 </Label>
-                                <TextField fx:id="ROW_SIZE" prefHeight="25.0" prefWidth="118.0" translateX="5.0" translateY="50.0" />
-                                <TextField fx:id="COL_SIZE" prefHeight="25.0" prefWidth="118.0" translateX="5.0" translateY="5.0" />
+                                <TextField fx:id="rowSize" prefHeight="25.0" prefWidth="118.0" translateX="5.0" translateY="50.0" />
+                                <TextField fx:id="colSize" prefHeight="25.0" prefWidth="118.0" translateX="5.0" translateY="5.0" />
                                 <Label layoutX="150.0" layoutY="34.0" text="COL" translateY="20.0">
                                     <font>
                                         <Font name="System Bold" size="12.0" />
                                     </font>
                                 </Label>
                                 <Button fx:id="YES" layoutX="14.0" onAction="#onChangeSize" prefHeight="25.0" prefWidth="75.0" text="YES" translateY="100.0" />
-                                <Button fx:id="CANCEL" layoutX="98.0" layoutY="100.0" onAction="#onDialog_Window_Close" prefHeight="25.0" prefWidth="75.0" text="CANCEL" />
+                                <Button fx:id="CANCEL" layoutX="98.0" layoutY="100.0" onAction="#onDialogWindowClose" prefHeight="25.0" prefWidth="75.0" text="CANCEL" />
                             </Pane>
                         </graphic>
                     </DialogPane>

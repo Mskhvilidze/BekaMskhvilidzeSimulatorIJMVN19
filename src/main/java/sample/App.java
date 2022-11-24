@@ -13,7 +13,8 @@ public class App extends javafx.application.Application {
         ViewManagerFactory manager = View::new;
         EventBus eventBus = new EventBus();
         eventBus.register(this);
-        manager.create(primaryStage, eventBus);
+        View view = manager.create(primaryStage, eventBus);
+        view.show();
     }
 
     public static void main(String[] args) {

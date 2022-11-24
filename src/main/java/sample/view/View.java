@@ -8,9 +8,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import sample.Controller;
 import sample.RequestExitStage;
 import sample.RequestNewStage;
+import sample.presenter.Presenter;
+import sample.presenter.Service;
 
 import java.io.IOException;
 
@@ -18,28 +19,32 @@ import java.io.IOException;
 public class View {
     private Stage primaryStage;
     private Scene scene;
-    private EventBus bus;
+    private Service service;
+    private EventBus eventBus;
 
-    public View(Stage stage, EventBus eventBus) throws IOException {
-        this.bus = eventBus;
-        eventBus.register(this);
+    public View(Stage stage, EventBus eventBus)  {
+        this.eventBus = eventBus;
         this.primaryStage = stage;
-        initView();
+
     }
 
+    public void show() throws IOException {
+        eventBus.register(this);
+        this.service = new Service(eventBus);
+        initView();
+        setMinAndMaxSizeOfStage();
+    }
 
     private void initView() throws IOException {
         showScene();
     }
 
-
     private void showScene() throws IOException {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource(Controller.FXML));
+        loader.setLocation(getClass().getResource(Presenter.FXML));
         Parent rootParent = loader.load();
-        Controller controller = loader.getController();
-        controller.setEventBus(this.bus);
-        setMinAndMaxSizeOfStage();
+        Presenter presenter = loader.getController();
+        presenter.simulatorPresenter(this.service);
         Platform.runLater(() -> {
             primaryStage.initStyle(StageStyle.UTILITY);
             primaryStage.setTitle("Simulator");
@@ -47,25 +52,24 @@ public class View {
             primaryStage.setScene(scene);
             primaryStage.show();
         });
-        controller.setStage(primaryStage);
+        presenter.setStage(primaryStage);
     }
 
     @Subscribe
     private void newShowScene(RequestNewStage newStage) throws IOException {
         Stage stage = newStage.getStage();
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource(Controller.FXML));
+        loader.setLocation(getClass().getResource(Presenter.FXML));
         Parent rootParent = loader.load();
-        Controller controller = loader.getController();
-        controller.setEventBus(this.bus);
-        setMinAndMaxSizeOfStage();
+        Presenter presenter = loader.getController();
+        presenter.simulatorPresenter(this.service);
         Platform.runLater(() -> {
             stage.setTitle("Simulator");
             scene = new Scene(rootParent, 815, 815);
             stage.setScene(scene);
             stage.show();
         });
-        controller.setStage(stage);
+        presenter.setStage(stage);
     }
 
     @Subscribe
