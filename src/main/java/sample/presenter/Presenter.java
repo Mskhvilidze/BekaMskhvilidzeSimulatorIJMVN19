@@ -1,5 +1,4 @@
 package sample.presenter;
-
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,16 +8,15 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import sample.AudioCache;
+import sample.util.AudioCache;
 import sample.StatesColorMapping;
 import sample.model.AbstractAutomaton;
 import sample.model.KruemelmonsterAutomaten;
+import sample.view.PopulationPanel;
 import sample.view.PopulationPanelImpl;
-
 import java.net.URL;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
-
 
 public class Presenter extends AbstractPresenter implements Initializable {
     public static final String FXML = "/fxml/view.fxml";
@@ -69,16 +67,16 @@ public class Presenter extends AbstractPresenter implements Initializable {
     private Button laden;
     @FXML
     private Button generate;
-    private PopulationPanelImpl populationPanel;
+    private PopulationPanel populationPanel;
     private AbstractAutomaton automaton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         automaton = new KruemelmonsterAutomaten(45, 45, true);
-        this.rowSize.setText(String.valueOf(automaton.getRows()));
-        this.colSize.setText(String.valueOf(automaton.getColumns()));
-        this.scrollPane.viewportBoundsProperty().addListener((observable, oldValue, newValue) -> this.populationPanel.center(newValue));
         Platform.runLater(() -> {
+            this.rowSize.setText(String.valueOf(automaton.getRows()));
+            this.colSize.setText(String.valueOf(automaton.getColumns()));
+            this.scrollPane.viewportBoundsProperty().addListener((observable, oldValue, newValue) -> this.populationPanel.center(newValue));
             initPopulationPanel(automaton);
             setTooltip();
             setHgrowAndVgrow();
