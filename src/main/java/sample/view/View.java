@@ -8,8 +8,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import sample.RequestExitStage;
-import sample.RequestNewStage;
+import sample.message.request.RequestExitStage;
+import sample.message.request.RequestNewStage;
 import sample.presenter.Presenter;
 import sample.presenter.Service;
 

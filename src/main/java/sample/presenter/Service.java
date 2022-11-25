@@ -4,8 +4,8 @@ import com.google.common.eventbus.EventBus;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import sample.RequestExitStage;
-import sample.RequestNewStage;
+import sample.message.request.RequestExitStage;
+import sample.message.request.RequestNewStage;
 
 @SuppressWarnings("UnstableApiUsage")
 public class Service {

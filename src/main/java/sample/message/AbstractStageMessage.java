@@ -1,14 +1,14 @@
-package sample;
+package sample.message;
 
 import javafx.stage.Stage;
 
 import java.util.Objects;
 
-public class RequestNewStage {
-    private Stage stage;
+public abstract class AbstractStageMessage implements Message{
+    private final Stage stage;
 
-    public RequestNewStage() {
-        this.stage = new Stage();
+    protected AbstractStageMessage(Stage stage) {
+        this.stage = stage;
     }
 
     public Stage getStage() {
@@ -23,8 +23,8 @@ public class RequestNewStage {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        RequestNewStage newStage = (RequestNewStage) o;
-        return Objects.equals(stage, newStage.stage);
+        AbstractStageMessage that = (AbstractStageMessage) o;
+        return Objects.equals(stage, that.stage);
     }
 
     @Override

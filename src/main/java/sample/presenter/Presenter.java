@@ -18,6 +18,8 @@ import java.util.concurrent.ExecutionException;
 public class Presenter extends AbstractPresenter implements Initializable {
     public static final String FXML = "/fxml/view.fxml";
     @FXML
+    private ToggleGroup toggleGroup;
+    @FXML
     private DialogPane dialogWindow;
     @FXML
     private TextField rowSize;
@@ -79,6 +81,7 @@ public class Presenter extends AbstractPresenter implements Initializable {
             setHgrowAndVgrow();
         });
         automaton.randomPopulation();
+        System.out.println(this.toggleGroup.getUserData());
     }
 
     public void simulatorPresenter(Service service) {

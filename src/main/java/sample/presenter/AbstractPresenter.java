@@ -2,7 +2,7 @@ package sample.presenter;
 
 import javafx.scene.canvas.Canvas;
 import javafx.stage.Stage;
-import sample.StatesColorMapping;
+import sample.util.StatesColorMapping;
 import sample.model.AbstractAutomaton;
 import sample.util.Pair;
 import sample.view.PopulationPanel;

@@ -5,7 +5,7 @@ import javafx.geometry.Bounds;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import sample.StatesColorMapping;
+import sample.util.StatesColorMapping;
 import sample.model.AbstractAutomaton;
 import sample.util.Pair;
 
