@@ -1,4 +1,5 @@
 package sample.presenter;
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,18 +10,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import sample.util.AudioCache;
-import sample.StatesColorMapping;
-import sample.model.AbstractAutomaton;
 import sample.model.KruemelmonsterAutomaten;
-import sample.view.PopulationPanel;
-import sample.view.PopulationPanelImpl;
 import java.net.URL;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 public class Presenter extends AbstractPresenter implements Initializable {
     public static final String FXML = "/fxml/view.fxml";
-    public static final String SOUND_PATH = "src/main/resources/sound/";
     @FXML
     private DialogPane dialogWindow;
     @FXML
@@ -67,17 +63,18 @@ public class Presenter extends AbstractPresenter implements Initializable {
     private Button laden;
     @FXML
     private Button generate;
-    private PopulationPanel populationPanel;
-    private AbstractAutomaton automaton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        setAutomaton(automaton);
+        setPopulationPanel(populationPanel);
+        setCanvas(canvas);
         automaton = new KruemelmonsterAutomaten(45, 45, true);
         Platform.runLater(() -> {
             this.rowSize.setText(String.valueOf(automaton.getRows()));
             this.colSize.setText(String.valueOf(automaton.getColumns()));
             this.scrollPane.viewportBoundsProperty().addListener((observable, oldValue, newValue) -> this.populationPanel.center(newValue));
-            initPopulationPanel(automaton);
+            initPopulationView(automaton);
             setTooltip();
             setHgrowAndVgrow();
         });
@@ -119,11 +116,6 @@ public class Presenter extends AbstractPresenter implements Initializable {
         HBox.setHgrow(this.scrollPane, Priority.ALWAYS);
     }
 
-    private void initPopulationPanel(AbstractAutomaton automaton) {
-        StatesColorMapping mapping = new StatesColorMapping(automaton.getNumberOfStates());
-        populationPanel = new PopulationPanelImpl(automaton, canvas, mapping);
-    }
-
     //Menu
     @FXML
     private void onNewGameWindow() {
@@ -157,7 +149,7 @@ public class Presenter extends AbstractPresenter implements Initializable {
                 this.stackPane.setPrefSize(-1, -1);
             }
         });
-        this.service.toggleButtonDisable(zoomIn, this.zoomIn, this.zoomOut, this.populationPanel.isDisableZoomIn());
+        this.service.toggleButtonDisable(zoomOut, this.zoomOut, this.zoomIn, this.populationPanel.isDisableZoomOut());
     }
 
     @FXML
@@ -168,7 +160,7 @@ public class Presenter extends AbstractPresenter implements Initializable {
             public void run() {
                 Platform.runLater(() -> {
                     automaton.randomPopulation();
-                    initPopulationPanel(automaton);
+                    initPopulationView(automaton);
                 });
             }
         }, 1000);
@@ -180,7 +172,7 @@ public class Presenter extends AbstractPresenter implements Initializable {
         AudioCache.getAudio("clear.mp3").play();
         Platform.runLater(() -> {
             this.automaton.clearPopulation();
-            initPopulationPanel(automaton);
+            initPopulationView(automaton);
         });
     }
 
@@ -200,7 +192,7 @@ public class Presenter extends AbstractPresenter implements Initializable {
                 alert.showAndWait();
             } else {
                 automaton.changeSize(Integer.parseInt(rowSize.getText()), Integer.parseInt(colSize.getText()));
-                initPopulationPanel(automaton);
+                initPopulationView(automaton);
             }
         });
         this.service.togglePaneVisible(dialogWindow, false);
@@ -219,7 +211,7 @@ public class Presenter extends AbstractPresenter implements Initializable {
     @FXML
     private void onStart() {
         automaton.nextGeneration();
-        initPopulationPanel(automaton);
+        initPopulationView(automaton);
     }
 
     @FXML
@@ -228,25 +220,22 @@ public class Presenter extends AbstractPresenter implements Initializable {
             RadioButton radioButton = (RadioButton) event.getSource();
             activeCell = Integer.parseInt(radioButton.getText());
             automaton.setNumberOfStates(Integer.parseInt(radioButton.getText()) + 1);
-            initPopulationPanel(automaton);
+            initPopulationView(automaton);
         });
     }
 
     @FXML
     private void onMousePressed(MouseEvent mouseEvent) {
-        int x = (int) ((mouseEvent.getX() - 15) / 15);
-        int y = (int) ((mouseEvent.getY() - 15) / 15);
-        a = x;
-        b = y;
-        automaton.setState(y, x, activeCell);
-        initPopulationPanel(automaton);
+        if (isPairNotNull(this.populationPanel.getCell(mouseEvent.getX(), mouseEvent.getY()))) {
+            automaton.setState(pair.getValue2(), pair.getValue1(), activeCell);
+            Platform.runLater(() -> initPopulationView(automaton));
+        }
     }
 
     @FXML
     private void onTest(MouseEvent mouseEvent) {
-        int x = (int) ((mouseEvent.getX() - 15) / 15);
-        int y = (int) ((mouseEvent.getY() - 15) / 15);
-        automaton.setState(b, a, y, x, activeCell);
-        initPopulationPanel(automaton);
+        pair = this.populationPanel.getCell(mouseEvent.getX(), mouseEvent.getY());
+        automaton.setState(oy, ox, pair.getValue2(), pair.getValue1(), activeCell);
+        Platform.runLater(() -> initPopulationView(automaton));
     }
 }

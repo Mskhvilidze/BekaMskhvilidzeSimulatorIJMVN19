@@ -1,6 +1,7 @@
 package sample.view;
 
 import javafx.geometry.Bounds;
+import sample.util.Pair;
 
 public interface PopulationPanel {
     void paintPopulation();
@@ -22,4 +23,5 @@ public interface PopulationPanel {
     boolean isDisableZoomIn();
 
     boolean isDisableZoomOut();
+    Pair<Integer> getCell(double x, double y);
 }

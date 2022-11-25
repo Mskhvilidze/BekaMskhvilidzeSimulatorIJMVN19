@@ -4,8 +4,7 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import javafx.scene.media.AudioClip;
-import sample.presenter.Presenter;
-
+import sample.presenter.AbstractPresenter;
 import java.io.File;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -37,7 +36,7 @@ public final class AudioCache {
      * @return an AudioClip
      */
     public static AudioClip getAudio(String key) throws ExecutionException {
-        String audioPath = Presenter.SOUND_PATH + key;
+        String audioPath = AbstractPresenter.SOUND_PATH + key;
         return AudioCache.SOUNDS.get(new File(audioPath).toURI().toString());
     }
 

@@ -7,6 +7,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import sample.StatesColorMapping;
 import sample.model.AbstractAutomaton;
+import sample.util.Pair;
 
 public class PopulationPanelImpl implements PopulationPanel {
     private static final int CANVAS_WIDTH_AND_HEIGHT = 16;
@@ -112,6 +113,15 @@ public class PopulationPanelImpl implements PopulationPanel {
             this.canvas.setTranslateY(0);
         }
 
+    }
+
+    public Pair<Integer> getCell(double x, double y) {
+        if (x < 15 || y < 15 || x >= 15 + this.automaton.getColumns() * 15 || y >= 15 + this.automaton.getRows() * 15) {
+            return null;
+        }
+        int row = (int) ((x - 15) / 15);
+        int col = (int) ((y - 15) / 15);
+        return new Pair<>(row, col);
     }
 
     public boolean isDisableZoomIn() {
