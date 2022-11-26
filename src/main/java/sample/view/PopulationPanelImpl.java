@@ -10,10 +10,8 @@ import sample.model.AbstractAutomaton;
 import sample.util.Pair;
 
 public class PopulationPanelImpl implements PopulationPanel {
-    private static final int CANVAS_WIDTH_AND_HEIGHT = 16;
-    public static final int BORDER_SIZE = 10;
-    private static final double GAME_WIDTH = 15;
-    private static final double GAME_HEIGHT = 15;
+    public static final double BORDER_SIZE = 10;
+    private int size = 10;
     private static final double MAX_SIZE = 2.0;
     private static final double MIN_SIZE = 0.4;
     private final AbstractAutomaton automaton;
@@ -24,14 +22,16 @@ public class PopulationPanelImpl implements PopulationPanel {
     private double sizeCell = 1.0;
     private boolean disableZoomIn;
     private boolean disableZoomOut;
+    int cellSize;
 
-    public PopulationPanelImpl(AbstractAutomaton automaten, Canvas canvas, StatesColorMapping mapping) {
-        this.automaton = automaten;
+    public PopulationPanelImpl(AbstractAutomaton automaton, Canvas canvas, StatesColorMapping mapping) {
+        this.automaton = automaton;
         rows = this.automaton.getRows();
         cols = this.automaton.getColumns();
-        canvas.setHeight(getMinCanvasHeight());
-        canvas.setWidth(getMinCanvasWidth());
+        this.cellSize = size * 2;
         this.canvas = canvas;
+        this.canvas.setHeight(getMinStackPaneHeight());
+        this.canvas.setWidth(getMinStackPaneWidth());
         this.mapping = mapping;
         paintPopulation();
     }
@@ -45,38 +45,32 @@ public class PopulationPanelImpl implements PopulationPanel {
         g.setFill(Color.WHITE);
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
-
                 g.setFill(mapping.setColor(automaton.getCell(r, c).getState()));
-                g.fillRect(BORDER_SIZE + c * GAME_WIDTH, BORDER_SIZE + r * GAME_HEIGHT, GAME_WIDTH, GAME_HEIGHT);
-                g.strokeRect(BORDER_SIZE + c * GAME_WIDTH, BORDER_SIZE + r * GAME_HEIGHT, GAME_WIDTH, GAME_HEIGHT);
+                g.fillRect(BORDER_SIZE + c * size, BORDER_SIZE + r * size, size, size);
+                g.strokeRect(BORDER_SIZE + c * size, BORDER_SIZE + r * size, size, size);
             }
         }
     }
 
-    public int getMinCanvasWidth() {
-        return Math.min(cols * CANVAS_WIDTH_AND_HEIGHT, 1360);
-    }
-
-    public int getMinCanvasHeight() {
-        return Math.min(rows * CANVAS_WIDTH_AND_HEIGHT, 1360);
-    }
 
     public double getMinStackPaneWidth() {
-        return Math.min(cols * CANVAS_WIDTH_AND_HEIGHT, 1360) + sizeCell * 10 * 1.5;
+        return Math.min(2 * BORDER_SIZE + automaton.getColumns() * cellSize, 3000);
     }
 
     public double getMinStackPaneHeight() {
-        return Math.min(rows * CANVAS_WIDTH_AND_HEIGHT, 1360) + sizeCell * 10 * 1.5;
+        return Math.min(2 * BORDER_SIZE + automaton.getRows() * cellSize, 3000);
     }
 
     public void incZoom() {
-        if (sizeCell < MAX_SIZE && getMinStackPaneWidth() <= 735.0) {
+        if (sizeCell < MAX_SIZE) {
+            size++;
+            incCellSize();
             sizeCell = sizeCell + 0.1;
             this.disableZoomIn = false;
             this.disableZoomOut = false;
             Platform.runLater(() -> {
-                this.canvas.setScaleX(sizeCell);
-                this.canvas.setScaleY(sizeCell);
+                this.canvas.setHeight(getMinStackPaneHeight());
+                this.canvas.setWidth(getMinStackPaneWidth());
             });
             paintPopulation();
         } else {
@@ -84,14 +78,17 @@ public class PopulationPanelImpl implements PopulationPanel {
         }
     }
 
+
     public void decZoom() {
         if (sizeCell > MIN_SIZE) {
+            size--;
+            incCellSize();
             this.disableZoomOut = false;
             this.disableZoomIn = false;
             sizeCell = sizeCell - 0.1;
             Platform.runLater(() -> {
-                this.canvas.setScaleX(sizeCell);
-                this.canvas.setScaleY(sizeCell);
+                this.canvas.setHeight(getMinStackPaneHeight());
+                this.canvas.setWidth(getMinStackPaneWidth());
             });
             paintPopulation();
         } else {
@@ -102,13 +99,13 @@ public class PopulationPanelImpl implements PopulationPanel {
     public void center(Bounds viewPortBounds) {
         double width = viewPortBounds.getWidth();
         double height = viewPortBounds.getHeight();
-        if (width > this.getMinCanvasWidth()) {
-            this.canvas.setTranslateX((width - this.getMinCanvasWidth()) / 2);
+        if (width > this.getMinStackPaneWidth()) {
+            this.canvas.setTranslateX((width - this.getMinStackPaneWidth()) / 2);
         } else {
             this.canvas.setTranslateX(0);
         }
-        if (height > this.getMinCanvasHeight()) {
-            this.canvas.setTranslateY((height - this.getMinCanvasHeight()) / 2);
+        if (height > this.getMinStackPaneHeight()) {
+            this.canvas.setTranslateY((height - this.getMinStackPaneHeight()) / 2);
         } else {
             this.canvas.setTranslateY(0);
         }
@@ -116,11 +113,11 @@ public class PopulationPanelImpl implements PopulationPanel {
     }
 
     public Pair<Integer> getCell(double x, double y) {
-        if (x < 15 || y < 15 || x >= 15 + this.automaton.getColumns() * 15 || y >= 15 + this.automaton.getRows() * 15) {
+        if (x < size || y < size || x >= size + this.automaton.getColumns() * size || y >= size + this.automaton.getRows() * size) {
             return null;
         }
-        int row = (int) ((x - 15) / 15);
-        int col = (int) ((y - 15) / 15);
+        int row = (int) ((x - size) / size);
+        int col = (int) ((y - size) / size);
         return new Pair<>(row, col);
     }
 
@@ -130,5 +127,9 @@ public class PopulationPanelImpl implements PopulationPanel {
 
     public boolean isDisableZoomOut() {
         return disableZoomOut;
+    }
+
+    private void incCellSize() {
+        cellSize = size * 2;
     }
 }

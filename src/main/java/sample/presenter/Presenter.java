@@ -11,6 +11,7 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import sample.util.AudioCache;
 import sample.model.KruemelmonsterAutomaten;
+
 import java.net.URL;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
@@ -134,24 +135,15 @@ public class Presenter extends AbstractPresenter implements Initializable {
     @FXML
     private void onZoomIn() {
         this.populationPanel.incZoom();
-        Platform.runLater(() -> {
-            this.stackPane.setPrefWidth(this.populationPanel.getMinStackPaneWidth());
-            this.stackPane.setPrefHeight(this.populationPanel.getMinStackPaneHeight());
-        });
+        System.out.println(canvas.getHeight() + " : " + canvas.getWidth());
+        Platform.runLater(() -> stackPane.setPrefSize(populationPanel.getMinStackPaneWidth(), populationPanel.getMinStackPaneHeight()));
         this.service.toggleButtonDisable(zoomIn, this.zoomIn, this.zoomOut, this.populationPanel.isDisableZoomIn());
     }
 
     @FXML
     private void onZoomOut() {
         this.populationPanel.decZoom();
-        Platform.runLater(() -> {
-            this.stackPane.setPrefWidth(this.populationPanel.getMinStackPaneWidth());
-            this.stackPane.setPrefHeight(this.populationPanel.getMinStackPaneHeight());
-
-            if (this.stackPane.getPrefHeight() <= 746.0) {
-                this.stackPane.setPrefSize(-1, -1);
-            }
-        });
+        Platform.runLater(() -> stackPane.setPrefSize(populationPanel.getMinStackPaneWidth(), populationPanel.getMinStackPaneHeight()));
         this.service.toggleButtonDisable(zoomOut, this.zoomOut, this.zoomIn, this.populationPanel.isDisableZoomOut());
     }
 
@@ -187,7 +179,7 @@ public class Presenter extends AbstractPresenter implements Initializable {
     @FXML
     private void onChangeSize() {
         Platform.runLater(() -> {
-            if (Integer.parseInt(rowSize.getText()) > 50 || Integer.parseInt(colSize.getText()) > 50) {
+            if (Integer.parseInt(rowSize.getText()) > 100 || Integer.parseInt(colSize.getText()) > 100) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Maximale Größe ist 50");
                 alert.showAndWait();
             } else if (Integer.parseInt(rowSize.getText()) < 15 || Integer.parseInt(colSize.getText()) < 15) {

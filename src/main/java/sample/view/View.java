@@ -48,7 +48,7 @@ public class View {
         Platform.runLater(() -> {
             primaryStage.initStyle(StageStyle.UTILITY);
             primaryStage.setTitle("Simulator");
-            scene = new Scene(rootParent, 815, 815);
+            scene = new Scene(rootParent, 815, 850);
             primaryStage.setScene(scene);
             primaryStage.show();
         });
@@ -65,7 +65,7 @@ public class View {
         presenter.simulatorPresenter(this.service);
         Platform.runLater(() -> {
             stage.setTitle("Simulator");
-            scene = new Scene(rootParent, 815, 815);
+            scene = new Scene(rootParent, 815, 850);
             stage.setScene(scene);
             stage.show();
         });

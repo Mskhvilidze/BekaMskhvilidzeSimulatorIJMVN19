@@ -6,10 +6,6 @@ import sample.util.Pair;
 public interface PopulationPanel {
     void paintPopulation();
 
-    int getMinCanvasWidth();
-
-    int getMinCanvasHeight();
-
     double getMinStackPaneWidth();
 
     double getMinStackPaneHeight();
