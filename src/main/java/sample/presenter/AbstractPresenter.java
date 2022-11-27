@@ -2,6 +2,7 @@ package sample.presenter;
 
 import javafx.scene.canvas.Canvas;
 import javafx.stage.Stage;
+import sample.model.KruemelmonsterAutomaten;
 import sample.util.StatesColorMapping;
 import sample.model.AbstractAutomaton;
 import sample.util.Pair;
@@ -26,15 +27,12 @@ public class AbstractPresenter {
     protected PopulationPanel populationPanel;
     private Canvas canvas;
 
-    public void setService(Service service) {
-        this.service = service;
+    public AbstractPresenter(){
+        automaton = new KruemelmonsterAutomaten(45, 45, true);
     }
 
-    public void setAutomaton(AbstractAutomaton automaton){
-        this.automaton = automaton;
-    }
-    public void setPopulationPanel(PopulationPanel populationPanel){
-        this.populationPanel = populationPanel;
+    public void setService(Service service) {
+        this.service = service;
     }
     public void setCanvas(Canvas canvas){
         this.canvas = canvas;

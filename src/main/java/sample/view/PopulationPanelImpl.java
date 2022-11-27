@@ -10,8 +10,8 @@ import sample.model.AbstractAutomaton;
 import sample.util.Pair;
 
 public class PopulationPanelImpl implements PopulationPanel {
-    public static final double BORDER_SIZE = 10;
-    private int size = 10;
+    private static final double BORDER_SIZE = 10;
+    private static int size = 10;
     private static final double MAX_SIZE = 2.0;
     private static final double MIN_SIZE = 0.4;
     private final AbstractAutomaton automaton;
@@ -28,7 +28,7 @@ public class PopulationPanelImpl implements PopulationPanel {
         this.automaton = automaton;
         rows = this.automaton.getRows();
         cols = this.automaton.getColumns();
-        this.cellSize = size * 2;
+        multiplyCellSize();
         this.canvas = canvas;
         this.canvas.setHeight(getMinStackPaneHeight());
         this.canvas.setWidth(getMinStackPaneWidth());
@@ -39,7 +39,6 @@ public class PopulationPanelImpl implements PopulationPanel {
     public void paintPopulation() {
         GraphicsContext g = this.canvas.getGraphicsContext2D();
         g.clearRect(0, 0, this.canvas.getWidth(), this.canvas.getHeight());
-
         g.setStroke(Color.BLACK);
         g.setLineWidth(1);
         g.setFill(Color.WHITE);
@@ -63,8 +62,8 @@ public class PopulationPanelImpl implements PopulationPanel {
 
     public void incZoom() {
         if (sizeCell < MAX_SIZE) {
-            size++;
-            incCellSize();
+            incSize();
+            multiplyCellSize();
             sizeCell = sizeCell + 0.1;
             this.disableZoomIn = false;
             this.disableZoomOut = false;
@@ -81,8 +80,8 @@ public class PopulationPanelImpl implements PopulationPanel {
 
     public void decZoom() {
         if (sizeCell > MIN_SIZE) {
-            size--;
-            incCellSize();
+            decSize();
+            multiplyCellSize();
             this.disableZoomOut = false;
             this.disableZoomIn = false;
             sizeCell = sizeCell - 0.1;
@@ -109,7 +108,6 @@ public class PopulationPanelImpl implements PopulationPanel {
         } else {
             this.canvas.setTranslateY(0);
         }
-
     }
 
     public Pair<Integer> getCell(double x, double y) {
@@ -129,7 +127,15 @@ public class PopulationPanelImpl implements PopulationPanel {
         return disableZoomOut;
     }
 
-    private void incCellSize() {
+    private void multiplyCellSize() {
         cellSize = size * 2;
+    }
+
+    private static void incSize() {
+        size++;
+    }
+
+    private static void decSize() {
+        size--;
     }
 }

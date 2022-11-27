@@ -10,7 +10,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import sample.util.AudioCache;
-import sample.model.KruemelmonsterAutomaten;
 
 import java.net.URL;
 import java.util.*;
@@ -18,6 +17,8 @@ import java.util.concurrent.ExecutionException;
 
 public class Presenter extends AbstractPresenter implements Initializable {
     public static final String FXML = "/fxml/view.fxml";
+    @FXML
+    private Button ok;
     @FXML
     private ToggleGroup toggleGroup;
     @FXML
@@ -67,12 +68,13 @@ public class Presenter extends AbstractPresenter implements Initializable {
     @FXML
     private Button generate;
 
+    public Presenter() {
+        super();
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        setAutomaton(automaton);
-        setPopulationPanel(populationPanel);
         setCanvas(canvas);
-        automaton = new KruemelmonsterAutomaten(45, 45, true);
         Platform.runLater(() -> {
             this.rowSize.setText(String.valueOf(automaton.getRows()));
             this.colSize.setText(String.valueOf(automaton.getColumns()));
@@ -135,7 +137,6 @@ public class Presenter extends AbstractPresenter implements Initializable {
     @FXML
     private void onZoomIn() {
         this.populationPanel.incZoom();
-        System.out.println(canvas.getHeight() + " : " + canvas.getWidth());
         Platform.runLater(() -> stackPane.setPrefSize(populationPanel.getMinStackPaneWidth(), populationPanel.getMinStackPaneHeight()));
         this.service.toggleButtonDisable(zoomIn, this.zoomIn, this.zoomOut, this.populationPanel.isDisableZoomIn());
     }
@@ -173,6 +174,8 @@ public class Presenter extends AbstractPresenter implements Initializable {
 
     @FXML
     private void onDialogWindowOpen() {
+        this.ok.disableProperty().bind(rowSize.textProperty().greaterThan("\\d+$").or(rowSize.textProperty().isEmpty())
+                .or(colSize.textProperty().greaterThan("\\d+$")).or(colSize.textProperty().isEmpty()));
         this.service.togglePaneVisible(dialogWindow, true);
     }
 
@@ -180,10 +183,10 @@ public class Presenter extends AbstractPresenter implements Initializable {
     private void onChangeSize() {
         Platform.runLater(() -> {
             if (Integer.parseInt(rowSize.getText()) > 100 || Integer.parseInt(colSize.getText()) > 100) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Maximale Größe ist 50");
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Maximale Größe ist 100");
                 alert.showAndWait();
-            } else if (Integer.parseInt(rowSize.getText()) < 15 || Integer.parseInt(colSize.getText()) < 15) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Minimale Größe ist 15");
+            } else if (Integer.parseInt(rowSize.getText()) < 5 || Integer.parseInt(colSize.getText()) < 5) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Minimale Größe ist 5");
                 alert.showAndWait();
             } else {
                 automaton.changeSize(Integer.parseInt(rowSize.getText()), Integer.parseInt(colSize.getText()));
@@ -230,7 +233,9 @@ public class Presenter extends AbstractPresenter implements Initializable {
     @FXML
     private void onTest(MouseEvent mouseEvent) {
         pair = this.populationPanel.getCell(mouseEvent.getX(), mouseEvent.getY());
-        automaton.setState(oy, ox, pair.getValue2(), pair.getValue1(), activeCell);
-        Platform.runLater(() -> initPopulationView(automaton));
+        if (pair != null) {
+            automaton.setState(oy, ox, pair.getValue2(), pair.getValue1(), activeCell);
+            Platform.runLater(() -> initPopulationView(automaton));
+        }
     }
 }
