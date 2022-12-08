@@ -10,6 +10,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import sample.util.AudioCache;
+import sample.util.Simulation;
 
 import java.net.URL;
 import java.util.*;
@@ -17,6 +18,8 @@ import java.util.concurrent.ExecutionException;
 
 public class Presenter extends AbstractPresenter implements Initializable {
     public static final String FXML = "/fxml/view.fxml";
+    @FXML
+    private Slider slider;
     @FXML
     private Button ok;
     @FXML
@@ -84,6 +87,7 @@ public class Presenter extends AbstractPresenter implements Initializable {
             setHgrowAndVgrow();
         });
         automaton.randomPopulation();
+        this.slider.valueProperty().addListener((a, b, c) -> this.simulation.setSpeed(c.intValue()));
         System.out.println(this.toggleGroup.getUserData());
     }
 
@@ -138,14 +142,14 @@ public class Presenter extends AbstractPresenter implements Initializable {
     private void onZoomIn() {
         this.populationPanel.incZoom();
         Platform.runLater(() -> stackPane.setPrefSize(populationPanel.getMinStackPaneWidth(), populationPanel.getMinStackPaneHeight()));
-        this.service.toggleButtonDisable(zoomIn, this.zoomIn, this.zoomOut, this.populationPanel.isDisableZoomIn());
+        this.service.toggleZoomButtonDisable(zoomIn, this.zoomIn, this.zoomOut, this.populationPanel.isDisableZoomIn());
     }
 
     @FXML
     private void onZoomOut() {
         this.populationPanel.decZoom();
         Platform.runLater(() -> stackPane.setPrefSize(populationPanel.getMinStackPaneWidth(), populationPanel.getMinStackPaneHeight()));
-        this.service.toggleButtonDisable(zoomOut, this.zoomOut, this.zoomIn, this.populationPanel.isDisableZoomOut());
+        this.service.toggleZoomButtonDisable(zoomOut, this.zoomOut, this.zoomIn, this.populationPanel.isDisableZoomOut());
     }
 
     @FXML
@@ -208,8 +212,17 @@ public class Presenter extends AbstractPresenter implements Initializable {
 
     @FXML
     private void onStart() {
-        automaton.nextGeneration();
-        initPopulationView(automaton);
+        simulation = new Simulation(automaton, populationPanel);
+        simulation.start();
+        service.toggleButtonDisable(this.startSimulation, true);
+        service.toggleButtonDisable(this.stepSimulation, true);
+    }
+
+    @FXML
+    private void onStop() {
+        this.simulation.stop();
+        service.toggleButtonDisable(this.startSimulation, false);
+        service.toggleButtonDisable(this.stepSimulation, false);
     }
 
     @FXML

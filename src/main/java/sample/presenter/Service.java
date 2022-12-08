@@ -22,7 +22,7 @@ public class Service {
         this.eventBus.post(newStage);
     }
 
-    public void onPlatformExit(Stage stageID){
+    public void onPlatformExit(Stage stageID) {
         this.eventBus.post(new RequestExitStage(stageID));
     }
 
@@ -32,7 +32,7 @@ public class Service {
      * @param button   button
      * @param disabled button disabled
      */
-    public void toggleButtonDisable(Button button, Button zoomIn, Button zoomOut, boolean disabled) {
+    public void toggleZoomButtonDisable(Button button, Button zoomIn, Button zoomOut, boolean disabled) {
         if (button.getId().equals(zoomIn.getId()) && !disabled) {
             zoomOut.disableProperty().set(false);
         }
@@ -41,6 +41,10 @@ public class Service {
             zoomIn.disableProperty().set(false);
         }
         button.disableProperty().set(disabled);
+    }
+
+    public void toggleButtonDisable(Button button, boolean visible) {
+        button.setDisable(visible);
     }
 
     public void togglePaneVisible(Pane pane, boolean visible) {

@@ -79,9 +79,7 @@ public class View {
     }
 
     private void setMinAndMaxSizeOfStage() {
-        this.primaryStage.setMinHeight(470);
+        this.primaryStage.setMinHeight(170);
         this.primaryStage.setMinWidth(250);
-        this.primaryStage.setMaxWidth(950);
-        this.primaryStage.setMaxHeight(950);
     }
 }

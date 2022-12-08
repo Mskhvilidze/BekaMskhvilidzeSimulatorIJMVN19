@@ -3,6 +3,7 @@ package sample.presenter;
 import javafx.scene.canvas.Canvas;
 import javafx.stage.Stage;
 import sample.model.KruemelmonsterAutomaten;
+import sample.util.Simulation;
 import sample.util.StatesColorMapping;
 import sample.model.AbstractAutomaton;
 import sample.util.Pair;
@@ -20,9 +21,8 @@ public class AbstractPresenter {
     protected Random random = new Random();
     protected Service service;
     protected Map<String, Stage> map = new HashMap<>();
-
     protected Pair<Integer> pair;
-
+    protected  Simulation simulation;
     protected AbstractAutomaton automaton;
     protected PopulationPanel populationPanel;
     private Canvas canvas;

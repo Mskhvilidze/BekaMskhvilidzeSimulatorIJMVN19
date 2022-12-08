@@ -54,7 +54,7 @@ public abstract class AbstractAutomaton implements Automaton {
      *
      * @return die Anzahl an Zuständen des Automaten
      */
-    public int getNumberOfStates() {
+    public synchronized int getNumberOfStates() {
         return this.numberOfStates;
     }
 
@@ -63,7 +63,7 @@ public abstract class AbstractAutomaton implements Automaton {
      *
      * @return die Anzahl an Reihen
      */
-    public int getRows() {
+    public synchronized int getRows() {
         return this.rows;
     }
 
@@ -72,7 +72,7 @@ public abstract class AbstractAutomaton implements Automaton {
      *
      * @return die Anzahl an Spalten
      */
-    public int getColumns() {
+    public synchronized int getColumns() {
         return this.columns;
     }
 
@@ -84,7 +84,7 @@ public abstract class AbstractAutomaton implements Automaton {
      * @param rows    die neue Anzahl an Reihen
      * @param columns die neue Anzahl an Spalten
      */
-    public void changeSize(int rows, int columns) {
+    public synchronized void changeSize(int rows, int columns) {
         Cell[][] temp = new Cell[rows][columns];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
@@ -106,7 +106,7 @@ public abstract class AbstractAutomaton implements Automaton {
      * @return true, falls der Automat als Torus betrachtet wird; false
      * sonst
      */
-    public boolean isTorus() {
+    public synchronized boolean isTorus() {
         return this.isTorus;
     }
 
@@ -116,7 +116,7 @@ public abstract class AbstractAutomaton implements Automaton {
      * @param isTorus true, falls der Automat als Torus betrachtet wird;
      *                false sonst
      */
-    public void setTorus(boolean isTorus) {
+    public synchronized void setTorus(boolean isTorus) {
         this.isTorus = isTorus;
     }
 
@@ -128,14 +128,14 @@ public abstract class AbstractAutomaton implements Automaton {
      * @return true, falls der Automat die Moore-Nachbarschaft berücksicht;
      * false, falls er die von-Neumann-Nachbarschaft berücksichtigt
      */
-    public boolean isMooreNeighborHood() {
+    public synchronized boolean isMooreNeighborHood() {
         return this.isMooreNeighborHood;
     }
 
     /**
      * setzt alle Zellen in den Zustand 0
      */
-    public void clearPopulation() {
+    public synchronized void clearPopulation() {
         for (int r = 0; r < this.rows; r++) {
             for (int c = 0; c < this.columns; c++) {
                 this.cells[r][c].setState(0);
@@ -146,7 +146,7 @@ public abstract class AbstractAutomaton implements Automaton {
     /**
      * setzt für jede Zelle einen zufällig erzeugten Zustand
      */
-    public void randomPopulation() {
+    public synchronized void randomPopulation() {
         for (int r = 0; r < this.rows; r++) {
             for (int c = 0; c < this.columns; c++) {
                 this.cells[r][c].setState(rand.nextInt(numberOfStates));
@@ -159,9 +159,9 @@ public abstract class AbstractAutomaton implements Automaton {
      *
      * @param row    Reihe der Zelle
      * @param column Spalte der Zelle
-     * @return Cell-Objekt an Position row/column
+     * @return xv
      */
-    public Cell getCell(int row, int column) {
+    public synchronized Cell getCell(int row, int column) {
         return this.cells[row][column];
     }
 
@@ -172,7 +172,7 @@ public abstract class AbstractAutomaton implements Automaton {
      * @param column Spalte der Zelle
      * @param state  neuer Zustand der Zelle
      */
-    public void setState(int row, int column, int state) {
+    public synchronized void setState(int row, int column, int state) {
         if (this.cells[row][column].getState() != state) {
             this.cells[row][column].setState(state);
         }
@@ -187,7 +187,7 @@ public abstract class AbstractAutomaton implements Automaton {
      * @param toColumn   Spalte der untersten Zelle
      * @param state      neuer Zustand der Zellen
      */
-    public void setState(int fromRow, int fromColumn, int toRow, int toColumn, int state) {
+    public synchronized void setState(int fromRow, int fromColumn, int toRow, int toColumn, int state) {
         for (int r = fromRow; r <= toRow; r++) {
             for (int c = fromColumn; c <= toColumn; c++) {
                 if (this.cells[r][c].getState() != state) {
@@ -204,7 +204,7 @@ public abstract class AbstractAutomaton implements Automaton {
      * Torus-Eigenschaft des Automaten
      *
      */
-    public void nextGeneration()  {
+    public synchronized void nextGeneration()  {
         Cell[][] temp = new Cell[this.cells.length][this.cells[0].length];
         if (this.isMooreNeighborHood()) {
             torusMoorNeighborsChecker(temp);
@@ -260,11 +260,7 @@ public abstract class AbstractAutomaton implements Automaton {
     }
 
     private boolean aLive(int i, int j) {
-        boolean valid = false;
-        if (i < rows && j < columns && i >= 0 && j >= 0 && this.cells[i][j].getState() == 1) {
-            valid = true;
-        }
-        return valid;
+        return i < rows && j < columns && i >= 0 && j >= 0 && this.cells[i][j].getState() == 1;
     }
 
     private Cell[] getMoorNeighbors(int row, int col) {
@@ -313,7 +309,7 @@ public abstract class AbstractAutomaton implements Automaton {
         return list.stream().filter(Objects::nonNull).toArray(Cell[]::new);
     }
 
-    public void setNumberOfStates(int numberOfStates) {
+    public synchronized void setNumberOfStates(int numberOfStates) {
         this.numberOfStates = numberOfStates;
     }
 
