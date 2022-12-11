@@ -1,5 +1,4 @@
 package sample.presenter;
-
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,7 +10,6 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import sample.util.AudioCache;
 import sample.util.Simulation;
-
 import java.net.URL;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
