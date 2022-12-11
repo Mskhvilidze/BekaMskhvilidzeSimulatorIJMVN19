@@ -439,7 +439,7 @@
               style="-fx-background-color: #A9A9A9; -fx-effect: dropshadowshadow(three-pass-box, grey, 10, 0, 0, 15)">
             <ScrollPane fx:id="scrollPane">
                 <Pane fx:id="stackPane">
-                    <Canvas fx:id="canvas" onMouseDragged="#onTest" onMousePressed="#onMousePressed" styleClass="canvas"/>
+                    <Canvas fx:id="canvas" onMouseDragged="#onMouseDragged" onMousePressed="#onMousePressed" styleClass="canvas"/>
                     <DialogPane fx:id="dialogWindow" expanded="true" maxHeight="150.0" maxWidth="190.0" prefHeight="150.0" prefWidth="190.0"
                                 styleClass="dialog" translateY="50.0" visible="false">
                         <graphic>

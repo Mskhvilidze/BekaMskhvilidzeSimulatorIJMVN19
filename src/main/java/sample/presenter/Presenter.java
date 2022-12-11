@@ -252,7 +252,7 @@ public class Presenter extends AbstractPresenter implements Initializable {
     }
 
     @FXML
-    private void onTest(MouseEvent mouseEvent) {
+    private void onMouseDragged(MouseEvent mouseEvent) {
         pair = this.populationPanel.getCell(mouseEvent.getX(), mouseEvent.getY());
         if (pair != null) {
             automaton.setState(oy, ox, pair.getValue2(), pair.getValue1(), activeCell);
