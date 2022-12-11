@@ -38,7 +38,7 @@ public abstract class AbstractAutomaton implements Automaton {
         initMatrix(this.cells);
     }
 
-    public void initMatrix(Cell[][] cells) {
+    public synchronized void initMatrix(Cell[][] cells) {
         for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells[i].length; j++) {
                 this.cells[i][j] = new Cell(0);
@@ -340,7 +340,7 @@ public abstract class AbstractAutomaton implements Automaton {
          *
          * @return Zustand der Zelle
          */
-        public int getState() {
+        public synchronized int getState() {
             return state;
         }
 
@@ -349,7 +349,7 @@ public abstract class AbstractAutomaton implements Automaton {
          *
          * @param state der neue Zustand der Zelle
          */
-        public void setState(int state) {
+        public synchronized void setState(int state) {
             this.state = state;
         }
 

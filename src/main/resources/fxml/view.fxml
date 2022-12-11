@@ -35,7 +35,7 @@
                     </graphic>
                 </MenuItem>
                 <SeparatorMenuItem/>
-                <MenuItem text="_Editor">
+                <MenuItem text="_Editor" onAction="#onEdit">
                     <accelerator>
                         <KeyCodeCombination alt="UP" code="E" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
                     </accelerator>

@@ -126,6 +126,14 @@ public class Presenter extends AbstractPresenter implements Initializable {
         HBox.setHgrow(this.scrollPane, Priority.ALWAYS);
     }
 
+    public void closeStage(){
+        this.service.onPlatformExit(map.get(this.beenden.getId()));
+        for (Map.Entry<String,Stage> entry : map.entrySet()) {
+            if (this.beenden.getId().equals(entry.getKey().substring(0, entry.getKey().length() - 1))){
+                this.service.onPlatformExit(map.get(entry.getKey()));
+            }
+        }
+    }
     //Menu
     @FXML
     private void onNewGameWindow() {
@@ -134,7 +142,7 @@ public class Presenter extends AbstractPresenter implements Initializable {
 
     @FXML
     private void onPlatformExit() {
-        this.service.onPlatformExit(map.get(this.beenden.getId()));
+        closeStage();
     }
 
     //Button
@@ -250,5 +258,12 @@ public class Presenter extends AbstractPresenter implements Initializable {
             automaton.setState(oy, ox, pair.getValue2(), pair.getValue1(), activeCell);
             Platform.runLater(() -> initPopulationView(automaton));
         }
+    }
+
+    @FXML
+    public void onEdit() {
+        Stage stage = new Stage();
+        map.put(this.beenden.getId() + "1", stage);
+        service.onNewEditorStage(stage);
     }
 }
