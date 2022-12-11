@@ -168,7 +168,7 @@ public class Presenter extends AbstractPresenter implements Initializable {
             public void run() {
                 Platform.runLater(() -> {
                     automaton.randomPopulation();
-                    initPopulationView(automaton);
+                    populationPanel.paintPopulation();
                 });
             }
         }, 1000);
@@ -180,7 +180,7 @@ public class Presenter extends AbstractPresenter implements Initializable {
         AudioCache.getAudio("clear.mp3").play();
         Platform.runLater(() -> {
             this.automaton.clearPopulation();
-            initPopulationView(automaton);
+            populationPanel.paintPopulation();
         });
     }
 
@@ -202,7 +202,7 @@ public class Presenter extends AbstractPresenter implements Initializable {
                 alert.showAndWait();
             } else {
                 automaton.changeSize(Integer.parseInt(rowSize.getText()), Integer.parseInt(colSize.getText()));
-                initPopulationView(automaton);
+                populationPanel.paintPopulation();
             }
         });
         this.service.togglePaneVisible(dialogWindow, false);
@@ -239,7 +239,7 @@ public class Presenter extends AbstractPresenter implements Initializable {
             RadioButton radioButton = (RadioButton) event.getSource();
             activeCell = Integer.parseInt(radioButton.getText());
             automaton.setNumberOfStates(Integer.parseInt(radioButton.getText()) + 1);
-            initPopulationView(automaton);
+            populationPanel.paintPopulation();
         });
     }
 
@@ -247,7 +247,7 @@ public class Presenter extends AbstractPresenter implements Initializable {
     private void onMousePressed(MouseEvent mouseEvent) {
         if (isPairNotNull(this.populationPanel.getCell(mouseEvent.getX(), mouseEvent.getY()))) {
             automaton.setState(pair.getValue2(), pair.getValue1(), activeCell);
-            Platform.runLater(() -> initPopulationView(automaton));
+            Platform.runLater(() -> populationPanel.paintPopulation());
         }
     }
 
@@ -256,7 +256,7 @@ public class Presenter extends AbstractPresenter implements Initializable {
         pair = this.populationPanel.getCell(mouseEvent.getX(), mouseEvent.getY());
         if (pair != null) {
             automaton.setState(oy, ox, pair.getValue2(), pair.getValue1(), activeCell);
-            Platform.runLater(() -> initPopulationView(automaton));
+            Platform.runLater(() -> populationPanel.paintPopulation());
         }
     }
 
