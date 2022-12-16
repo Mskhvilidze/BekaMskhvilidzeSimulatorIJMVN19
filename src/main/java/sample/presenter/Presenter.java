@@ -1,5 +1,6 @@
 package sample.presenter;
 
+import automata.Test;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,8 +11,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import sample.model.AbstractAutomaton;
+import sample.model.GameOfLifeAutomaton;
+import sample.model.KruemelmonsterAutomaten;
 import sample.util.AudioCache;
 import sample.util.Simulation;
+
 import java.io.File;
 import java.net.URL;
 import java.util.*;
@@ -208,6 +213,17 @@ public class Presenter extends AbstractPresenter implements Initializable {
                 populationPanel.paintPopulation();
             }
         });
+        if (automaton instanceof GameOfLifeAutomaton){
+            System.out.println("A");
+        }
+
+        if (automaton instanceof KruemelmonsterAutomaten){
+            System.out.println("B");
+        }
+
+        if (automaton instanceof Test){
+            System.out.println("V");
+        }
         this.service.togglePaneVisible(dialogWindow, false);
     }
 

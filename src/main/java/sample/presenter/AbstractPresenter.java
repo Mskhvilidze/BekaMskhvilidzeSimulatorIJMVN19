@@ -1,7 +1,9 @@
 package sample.presenter;
 
+import automata.Test;
 import javafx.scene.canvas.Canvas;
 import javafx.stage.Stage;
+import sample.model.GameOfLifeAutomaton;
 import sample.model.KruemelmonsterAutomaten;
 import sample.util.Simulation;
 import sample.util.StatesColorMapping;
@@ -29,7 +31,6 @@ public class AbstractPresenter {
 
     public AbstractPresenter() {
         automaton = new KruemelmonsterAutomaten(45, 45, false);
-        setAutomaton(automaton);
     }
 
     public void setService(Service service) {
@@ -55,7 +56,7 @@ public class AbstractPresenter {
         return false;
     }
 
-    public static void setAutomaton(AbstractAutomaton newAutomaton) {
-        System.out.println(newAutomaton.getRows());
+    public void setAutomaton(AbstractAutomaton newAutomaton) {
+        automaton = newAutomaton;
     }
 }

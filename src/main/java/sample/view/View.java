@@ -100,8 +100,21 @@ public class View {
     }
 
     @Subscribe
-    public void onLoadNewAutomaton(RequestNewAutomaton newAutomaton){
-        System.out.println("asas");
+    public void onLoadNewAutomaton(RequestNewAutomaton newAutomaton) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource(Presenter.FXML));
+        Parent rootParent = loader.load();
+        Presenter presenter = loader.getController();
+        presenter.simulatorPresenter(this.service);
+        presenter.setAutomaton(newAutomaton.getAutomaton());
+        Platform.runLater(() -> {
+            primaryStage.setTitle(SIMULATOR);
+            scene = new Scene(rootParent, 815, 850);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        });
+        presenter.setStage(primaryStage);
+        primaryStage.setOnCloseRequest(event -> presenter.closeStage());
     }
     private void setMinAndMaxSizeOfStage() {
         this.primaryStage.setMinHeight(170);
