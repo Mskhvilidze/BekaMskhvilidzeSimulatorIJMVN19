@@ -1,4 +1,5 @@
 package sample.presenter;
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -7,9 +8,11 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import sample.util.AudioCache;
 import sample.util.Simulation;
+import java.io.File;
 import java.net.URL;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
@@ -75,11 +78,12 @@ public class Presenter extends AbstractPresenter implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        System.out.println(automaton.getRows());
         setCanvas(canvas);
         Platform.runLater(() -> {
             this.rowSize.setText(String.valueOf(automaton.getRows()));
             this.colSize.setText(String.valueOf(automaton.getColumns()));
-            this.scrollPane.viewportBoundsProperty().addListener((observable, oldValue, newValue) -> this.populationPanel.center(newValue));
+            this.scrollPane.viewportBoundsProperty().addListener((observable, oldValue, newValue) -> populationPanel.center(newValue));
             initPopulationView(automaton);
             setTooltip();
             setHgrowAndVgrow();
@@ -124,14 +128,15 @@ public class Presenter extends AbstractPresenter implements Initializable {
         HBox.setHgrow(this.scrollPane, Priority.ALWAYS);
     }
 
-    public void closeStage(){
+    public void closeStage() {
         this.service.onPlatformExit(map.get(this.beenden.getId()));
-        for (Map.Entry<String,Stage> entry : map.entrySet()) {
-            if (this.beenden.getId().equals(entry.getKey().substring(0, entry.getKey().length() - 1))){
+        for (Map.Entry<String, Stage> entry : map.entrySet()) {
+            if (this.beenden.getId().equals(entry.getKey().substring(0, entry.getKey().length() - 1))) {
                 this.service.onPlatformExit(map.get(entry.getKey()));
             }
         }
     }
+
     //Menu
     @FXML
     private void onNewGameWindow() {
@@ -146,16 +151,16 @@ public class Presenter extends AbstractPresenter implements Initializable {
     //Button
     @FXML
     private void onZoomIn() {
-        this.populationPanel.incZoom();
+        populationPanel.incZoom();
         Platform.runLater(() -> stackPane.setPrefSize(populationPanel.getMinStackPaneWidth(), populationPanel.getMinStackPaneHeight()));
-        this.service.toggleZoomButtonDisable(zoomIn, this.zoomIn, this.zoomOut, this.populationPanel.isDisableZoomIn());
+        this.service.toggleZoomButtonDisable(zoomIn, this.zoomIn, this.zoomOut, populationPanel.isDisableZoomIn());
     }
 
     @FXML
     private void onZoomOut() {
-        this.populationPanel.decZoom();
+        populationPanel.decZoom();
         Platform.runLater(() -> stackPane.setPrefSize(populationPanel.getMinStackPaneWidth(), populationPanel.getMinStackPaneHeight()));
-        this.service.toggleZoomButtonDisable(zoomOut, this.zoomOut, this.zoomIn, this.populationPanel.isDisableZoomOut());
+        this.service.toggleZoomButtonDisable(zoomOut, this.zoomOut, this.zoomIn, populationPanel.isDisableZoomOut());
     }
 
     @FXML
@@ -177,7 +182,7 @@ public class Presenter extends AbstractPresenter implements Initializable {
     private void onResetPopulation() throws ExecutionException {
         AudioCache.getAudio("clear.mp3").play();
         Platform.runLater(() -> {
-            this.automaton.clearPopulation();
+            automaton.clearPopulation();
             populationPanel.paintPopulation();
         });
     }
@@ -220,15 +225,15 @@ public class Presenter extends AbstractPresenter implements Initializable {
     private void onStart() {
         simulation = new Simulation(automaton, populationPanel);
         simulation.start();
-        service.toggleButtonDisable(this.startSimulation, true);
-        service.toggleButtonDisable(this.stepSimulation, true);
+        service.toggleNodeDisable(this.startSimulation, true);
+        service.toggleNodeDisable(this.stepSimulation, true);
     }
 
     @FXML
     private void onStop() {
         this.simulation.stop();
-        service.toggleButtonDisable(this.startSimulation, false);
-        service.toggleButtonDisable(this.stepSimulation, false);
+        service.toggleNodeDisable(this.startSimulation, false);
+        service.toggleNodeDisable(this.stepSimulation, false);
     }
 
     @FXML
@@ -243,7 +248,7 @@ public class Presenter extends AbstractPresenter implements Initializable {
 
     @FXML
     private void onMousePressed(MouseEvent mouseEvent) {
-        if (isPairNotNull(this.populationPanel.getCell(mouseEvent.getX(), mouseEvent.getY()))) {
+        if (isPairNotNull(populationPanel.getCell(mouseEvent.getX(), mouseEvent.getY()))) {
             automaton.setState(pair.getValue2(), pair.getValue1(), activeCell);
             Platform.runLater(() -> populationPanel.paintPopulation());
         }
@@ -251,7 +256,7 @@ public class Presenter extends AbstractPresenter implements Initializable {
 
     @FXML
     private void onMouseDragged(MouseEvent mouseEvent) {
-        pair = this.populationPanel.getCell(mouseEvent.getX(), mouseEvent.getY());
+        pair = populationPanel.getCell(mouseEvent.getX(), mouseEvent.getY());
         if (pair != null) {
             automaton.setState(oy, ox, pair.getValue2(), pair.getValue1(), activeCell);
             Platform.runLater(() -> populationPanel.paintPopulation());
@@ -263,5 +268,16 @@ public class Presenter extends AbstractPresenter implements Initializable {
         Stage stage = new Stage();
         map.put(this.beenden.getId() + "1", stage);
         service.onNewEditorStage(stage);
+    }
+
+    @FXML
+    private void onClassLoad() {
+        final FileChooser chooser = new FileChooser();
+        chooser.setTitle("Open my File");
+        chooser.setInitialDirectory(new File(EditorPresenter.PATH));
+        File selectedFile = chooser.showOpenDialog(null);
+        if (selectedFile != null) {
+            this.service.onLoadNewAutomaton(service.loadProgram(selectedFile.getName().split("\\.")[0]));
+        }
     }
 }

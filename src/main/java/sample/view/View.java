@@ -10,11 +10,11 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import sample.message.request.RequestEditorStage;
 import sample.message.request.RequestExitStage;
+import sample.message.request.RequestNewAutomaton;
 import sample.message.request.RequestNewStage;
 import sample.presenter.EditorPresenter;
 import sample.presenter.Presenter;
 import sample.presenter.Service;
-
 import java.io.IOException;
 
 @SuppressWarnings("UnstableApiUsage")
@@ -28,7 +28,6 @@ public class View {
     public View(Stage stage, EventBus eventBus) {
         this.eventBus = eventBus;
         this.primaryStage = stage;
-
     }
 
     public void show() throws IOException {
@@ -100,6 +99,10 @@ public class View {
         stage.close();
     }
 
+    @Subscribe
+    public void onLoadNewAutomaton(RequestNewAutomaton newAutomaton){
+        System.out.println("asas");
+    }
     private void setMinAndMaxSizeOfStage() {
         this.primaryStage.setMinHeight(170);
         this.primaryStage.setMinWidth(250);

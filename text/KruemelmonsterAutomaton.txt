@@ -1,9 +1,9 @@
-package sample.model;
+package automata;
+import sample.model.AbstractAutomaton;
 
-public class KruemelmonsterAutomaten extends AbstractAutomaton {
-
-    public KruemelmonsterAutomaten(int rows, int columns, boolean isTorus) {
-        super(rows, columns, 8, isTorus);
+  public Automata extends AbstractAutomaton{
+  public Automata(int rows, int columns, boolean isTorus) {
+        super(rows, columns, numberOfState, false);
     }
 
     public Cell transform(Cell cell, Cell[] neighbors) {
@@ -16,4 +16,4 @@ public class KruemelmonsterAutomaten extends AbstractAutomaton {
         }
         return new Cell(cell);
     }
-}
+    }

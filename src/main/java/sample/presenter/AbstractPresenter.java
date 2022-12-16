@@ -9,7 +9,6 @@ import sample.model.AbstractAutomaton;
 import sample.util.Pair;
 import sample.view.PopulationPanel;
 import sample.view.PopulationPanelImpl;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -29,7 +28,8 @@ public class AbstractPresenter {
     private Canvas canvas;
 
     public AbstractPresenter() {
-        automaton = new KruemelmonsterAutomaten(45, 45, true);
+        automaton = new KruemelmonsterAutomaten(45, 45, false);
+        setAutomaton(automaton);
     }
 
     public void setService(Service service) {
@@ -53,5 +53,9 @@ public class AbstractPresenter {
             return true;
         }
         return false;
+    }
+
+    public static void setAutomaton(AbstractAutomaton newAutomaton) {
+        System.out.println(newAutomaton.getRows());
     }
 }

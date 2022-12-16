@@ -1,6 +1,7 @@
 package sample.presenter;
 
 import com.google.common.eventbus.EventBus;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -8,8 +9,17 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import sample.message.request.RequestEditorStage;
 import sample.message.request.RequestExitStage;
+import sample.message.request.RequestNewAutomaton;
 import sample.message.request.RequestNewStage;
 import sample.model.AbstractAutomaton;
+import javax.tools.JavaCompiler;
+import javax.tools.ToolProvider;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -37,6 +47,10 @@ public class Service {
         this.eventBus.post(requestEditorStage);
     }
 
+    public void onLoadNewAutomaton(AbstractAutomaton automaton){
+        RequestNewAutomaton newAutomaton = new RequestNewAutomaton(automaton);
+        this.eventBus.post(newAutomaton);
+    }
     public void onPlatformExit(Stage stageID) {
         this.eventBus.post(new RequestExitStage(stageID));
     }
@@ -58,7 +72,7 @@ public class Service {
         button.disableProperty().set(disabled);
     }
 
-    public void toggleButtonDisable(Button button, boolean visible) {
+    public void toggleNodeDisable(Node button, boolean visible) {
         button.setDisable(visible);
     }
 
@@ -70,38 +84,27 @@ public class Service {
         return !isTorus;
     }
 
-    public void saveCodeAndSetAutomaton(AbstractAutomaton automaton, String code) {
+    public void save(String code, String path) {
         code = code.replace("\n", System.lineSeparator());
         ArrayList<String> lines = new ArrayList<>();
         lines.add(code);
+        Path createdFile = Paths.get(path);
         try {
-            Path pathTo = Paths.get(EditorPresenter.FILENAME);
-            Files.write(pathTo, lines, StandardCharsets.UTF_8);
-        } catch (Exception exc) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Ups, da ist was schief gelaufen!", ButtonType.OK);
-            alert.showAndWait();
-            return;
-        }
-        setAutomaton(automaton, code);
-    }
-
-    private static void setAutomaton(AbstractAutomaton automaton, String code) {
-        code = code.replaceAll(System.lineSeparator(), "");
-        for (int i = 0; i < code.length(); i++) {
-            if (code.charAt(i) == EditorPresenter.SWITCH) {
-                int row = i / automaton.getColumns();
-                int col = i % automaton.getColumns();
-                if (row >= automaton.getRows()) {
-                    return;
-                }
-                automaton.changeSize(row, col);
+            if (!Files.exists(createdFile)) {
+                Files.createFile(createdFile);
+                Path pathTo = Paths.get(createdFile.toUri());
+                Files.write(pathTo, lines, StandardCharsets.UTF_8);
+            } else {
+                alert("File existiert schon");
             }
+        } catch (Exception exc) {
+            alert("Ups, da ist was schief gelaufen!");
         }
     }
 
-    public static String getCodeAndSetAutomaton(AbstractAutomaton automaton) {
+    public static String getCode(String name, String filename) {
         try {
-            Path file = Paths.get(EditorPresenter.FILENAME);
+            Path file = Paths.get(EditorPresenter.SOURCE + filename);
             StringBuilder text = new StringBuilder();
             List<String> lines = Files.readAllLines(file, StandardCharsets.UTF_8);
             for (int l = 0; l < lines.size(); l++) {
@@ -109,12 +112,43 @@ public class Service {
                 if (l < lines.size() - 1) {
                     text.append(System.lineSeparator());
                 }
-                System.out.println(text);
             }
-            setAutomaton(automaton, text.toString());
-            return text.toString();
+            return text.toString().replaceAll("Automata", name);
         } catch (Exception exc) {
             return "";
         }
     }
+
+    public void compile(String name) {
+        JavaCompiler javac = ToolProvider.getSystemJavaCompiler();
+        ByteArrayOutputStream err = new ByteArrayOutputStream();
+        boolean success = javac.run(null, null, err, name) == 0;
+        if (!success) {
+            String msg = err.toString();
+            Alert alert = new Alert(Alert.AlertType.ERROR, msg, ButtonType.OK);
+            alert.setTitle("Compilierergebnis");
+            alert.showAndWait();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Compilieren erfolgreich!", ButtonType.OK);
+            alert.setTitle("Compilierergebnis");
+            alert.showAndWait();
+        }
+    }
+
+    public AbstractAutomaton loadProgram(String name) {
+        try (URLClassLoader classLoader = new URLClassLoader(new URL[]{new File(".").toURI().toURL()})) {
+            return (AbstractAutomaton) classLoader.loadClass("automata." + name).getConstructor().newInstance();
+        } catch (IOException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException |
+                 SecurityException | NoSuchMethodException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private void alert(String text) {
+        Alert alert = new Alert(Alert.AlertType.ERROR, text, ButtonType.OK);
+        alert.showAndWait();
+    }
+
+
 }

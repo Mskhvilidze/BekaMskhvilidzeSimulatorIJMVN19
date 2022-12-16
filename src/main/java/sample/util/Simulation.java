@@ -4,7 +4,6 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import sample.model.AbstractAutomaton;
 import sample.view.PopulationPanel;
-import sample.view.PopulationPanelImpl;
 
 public class Simulation {
     public static final int MIN_SPEED = 0;
@@ -56,7 +55,7 @@ public class Simulation {
                     automaton.nextGeneration();
                     populationPanel.paintPopulation();
                     try {
-                        Thread.sleep(1 + MAX_SPEED * 5 - getSpeed() * 5);
+                        Thread.sleep(20 + MAX_SPEED * 5 - getSpeed() * 5);
                     } catch (InterruptedException e) {
                         interrupt();
                     }

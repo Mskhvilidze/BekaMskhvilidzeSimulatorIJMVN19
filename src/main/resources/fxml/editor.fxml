@@ -3,28 +3,47 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.input.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<VBox prefHeight="400.0" prefWidth="600.0" stylesheets="/css/css.css" xmlns="http://javafx.com/javafx/17.0.2-ea"
-      xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.presenter.EditorPresenter">
-    <MenuBar styleClass="menuBar">
+<VBox prefHeight="400.0" prefWidth="600.0" stylesheets="/css/css.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.presenter.EditorPresenter">
+    <MenuBar fx:id="menu" disable="true" styleClass="menuBar">
         <Menu styleClass="menu" text="_File">
-            <MenuItem text="Save" onAction="#onSaveCode">
+            <MenuItem onAction="#onSaveCode" text="Save">
                 <accelerator>
-                    <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                    <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                 </accelerator>
             </MenuItem>
-            <MenuItem text="Compilieren">
+            <MenuItem onAction="#onCompile" text="Compilieren">
                 <accelerator>
-                    <KeyCodeCombination alt="UP" code="K" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                    <KeyCodeCombination alt="UP" code="K" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                 </accelerator>
             </MenuItem>
-            <SeparatorMenuItem/>
-            <MenuItem text="Close" onAction="#onClose">
+            <SeparatorMenuItem />
+            <MenuItem onAction="#onClose" text="Close">
                 <accelerator>
-                    <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                    <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                 </accelerator>
             </MenuItem>
         </Menu>
     </MenuBar>
-    <TextArea fx:id="area" prefHeight="374.0" prefWidth="600.0"/>
+    <ScrollPane prefHeight="611.0" prefWidth="600.0">
+        <Pane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
+            <TextArea fx:id="area" disable="true" prefHeight="374.0" prefWidth="600.0" />
+            <Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="480.0" styleClass="dialogPane">
+                <Label alignment="CENTER" layoutX="153.0" layoutY="4.0" text="Classname bitte eingeben!">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="name" layoutX="91.0" layoutY="100.0" prefHeight="25.0" prefWidth="305.0" styleClass="text-field" />
+                <Button fx:id="ja" disable="true" layoutX="98.0" layoutY="62.0" onAction="#onCreateClass" prefHeight="25.0" prefWidth="75.0" text="YES" translateY="100.0" />
+                <Button layoutX="331.0" layoutY="162.0" onAction="#onStageClose" prefHeight="25.0" prefWidth="75.0" text="CANCEL" />
+            <RadioButton layoutX="92.0" layoutY="39.0" mnemonicParsing="false" selected="true" text="GameOfLifeAutomaton.txt">
+               <toggleGroup>
+                  <ToggleGroup fx:id="toggle" />
+               </toggleGroup></RadioButton>
+            <RadioButton layoutX="92.0" layoutY="72.0" mnemonicParsing="false" text="KruemelmonsterAutomaton.txt" toggleGroup="$toggle" />
+            </Pane>
+        </Pane>
+    </ScrollPane>
 </VBox>

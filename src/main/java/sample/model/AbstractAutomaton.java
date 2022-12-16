@@ -25,16 +25,13 @@ public abstract class AbstractAutomaton implements Automaton {
      *                            Moore-Nachbarschaft
      *                            benutzt; false, falls der Automat die
      *                            von-Neumann-Nachbarschaft benutzt
-     * @param isTorus             true, falls die Zellen als
-     *                            Torus betrachtet werden
      */
-     AbstractAutomaton(int rows, int columns, int numberOfStates, boolean isMooreNeighborHood, boolean isTorus) {
+    public AbstractAutomaton(int rows, int columns, int numberOfStates, boolean isMooreNeighborHood) {
         this.rows = rows;
         this.columns = columns;
         this.numberOfStates = numberOfStates;
         this.isMooreNeighborHood = isMooreNeighborHood;
-        this.isTorus = isTorus;
-        this.cells = new Cell[rows][columns];
+         this.cells = new Cell[rows][columns];
         initMatrix(this.cells);
     }
 
@@ -331,7 +328,7 @@ public abstract class AbstractAutomaton implements Automaton {
          *
          * @param cell Zelle
          */
-        Cell(Cell cell) {
+        public Cell(Cell cell) {
             this.state = cell.state;
         }
 

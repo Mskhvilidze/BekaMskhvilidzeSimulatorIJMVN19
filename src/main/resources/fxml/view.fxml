@@ -150,7 +150,7 @@
                     </graphic>
                 </Button>
 
-                <Button fx:id="laden" maxHeight="40.0" maxWidth="30.0" minHeight="15.0" minWidth="15.0" mnemonicParsing="false"
+                <Button fx:id="laden" onAction="#onClassLoad" maxHeight="40.0" maxWidth="30.0" minHeight="15.0" minWidth="15.0" mnemonicParsing="false"
                         prefHeight="33.0" prefWidth="30.0" styleClass="buttonHeader">
                     <graphic>
                         <ImageView pickOnBounds="true" preserveRatio="true">

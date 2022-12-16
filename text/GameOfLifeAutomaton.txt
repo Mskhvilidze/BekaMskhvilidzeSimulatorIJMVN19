@@ -1,9 +1,8 @@
-package sample.model;
-
-public class GameOfLifeAutomaton extends AbstractAutomaton {
-
-    public GameOfLifeAutomaton(int rows, int columns, boolean isTorus) {
-        super(rows, columns, 2, isTorus);
+package automata;
+import sample.model.AbstractAutomaton;
+public class Automata extends AbstractAutomaton {
+    public Automata() {
+        super(rows, columns, numberOfStates, isTorus);
     }
 
     @Override
