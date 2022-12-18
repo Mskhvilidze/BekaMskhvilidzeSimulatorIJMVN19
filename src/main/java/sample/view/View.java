@@ -8,11 +8,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import sample.message.request.RequestEditorStage;
-import sample.message.request.RequestExitStage;
-import sample.message.request.RequestNewAutomaton;
-import sample.message.request.RequestNewStage;
+import sample.message.request.*;
 import sample.presenter.EditorPresenter;
+import sample.presenter.LoaderPresenter;
 import sample.presenter.Presenter;
 import sample.presenter.Service;
 import java.io.IOException;
@@ -53,8 +51,8 @@ public class View {
             scene = new Scene(rootParent, 815, 850);
             primaryStage.setScene(scene);
             primaryStage.show();
+            presenter.setStage(primaryStage);
         });
-        presenter.setStage(primaryStage);
         primaryStage.setOnCloseRequest(event -> presenter.closeStage());
     }
 
@@ -67,12 +65,12 @@ public class View {
         Presenter presenter = loader.getController();
         presenter.simulatorPresenter(this.service);
         Platform.runLater(() -> {
-            stage.setTitle(SIMULATOR);
+            stage.setTitle(LoaderPresenter.getTextName());
             scene = new Scene(rootParent, 815, 850);
             stage.setScene(scene);
             stage.show();
+            presenter.setStage(stage);
         });
-        presenter.setStage(stage);
         stage.setOnCloseRequest(event -> presenter.closeStage());
     }
 
@@ -85,12 +83,13 @@ public class View {
         EditorPresenter presenter = loader.getController();
         presenter.simulatorPresenter(this.service);
         Platform.runLater(() -> {
-            stage.setTitle(SIMULATOR);
+            stage.setTitle(Service.getMap().get(stage));
             scene = new Scene(rootParent, 600, 400);
             stage.setScene(scene);
             stage.show();
+            presenter.setStage(stage);
         });
-        presenter.setStage(stage);
+
     }
 
     @Subscribe
@@ -116,6 +115,7 @@ public class View {
         presenter.setStage(primaryStage);
         primaryStage.setOnCloseRequest(event -> presenter.closeStage());
     }
+
     private void setMinAndMaxSizeOfStage() {
         this.primaryStage.setMinHeight(170);
         this.primaryStage.setMinWidth(250);

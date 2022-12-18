@@ -5,17 +5,14 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import sample.message.request.RequestEditorStage;
-import sample.message.request.RequestExitStage;
-import sample.message.request.RequestNewAutomaton;
-import sample.message.request.RequestNewStage;
+import sample.message.request.*;
 import sample.model.AbstractAutomaton;
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
@@ -25,34 +22,46 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @SuppressWarnings("UnstableApiUsage")
 public class Service {
 
-    private EventBus eventBus;
+    private static EventBus eventBus;
+    private static Map<Stage, String> map = new HashMap<>();
 
     public Service(EventBus eventBus) {
-        this.eventBus = eventBus;
+        setEventBus(eventBus);
         eventBus.register(true);
     }
 
-    public void onNewGameWindow() {
+    public static void setEventBus(EventBus bus){
+        eventBus = bus;
+    }
+
+    public static void onNewGameWindow() {
         RequestNewStage newStage = new RequestNewStage();
-        this.eventBus.post(newStage);
+        eventBus.post(newStage);
     }
 
     public void onNewEditorStage(Stage stage) {
         RequestEditorStage requestEditorStage = new RequestEditorStage(stage);
-        this.eventBus.post(requestEditorStage);
+        eventBus.post(requestEditorStage);
     }
 
-    public void onLoadNewAutomaton(AbstractAutomaton automaton){
-        RequestNewAutomaton newAutomaton = new RequestNewAutomaton(automaton);
-        this.eventBus.post(newAutomaton);
+    public static Map<Stage, String> getMap() {
+        return map;
     }
+
+    public void onLoadNewAutomaton(AbstractAutomaton automaton) {
+        RequestNewAutomaton newAutomaton = new RequestNewAutomaton(automaton);
+        eventBus.post(newAutomaton);
+    }
+
     public void onPlatformExit(Stage stageID) {
-        this.eventBus.post(new RequestExitStage(stageID));
+        eventBus.post(new RequestExitStage(stageID));
     }
 
     /**
@@ -72,33 +81,37 @@ public class Service {
         button.disableProperty().set(disabled);
     }
 
-    public void toggleNodeDisable(Node button, boolean visible) {
-        button.setDisable(visible);
+    public void toggleNodeDisable(Node node, boolean visible) {
+        node.setDisable(visible);
     }
 
-    public void togglePaneVisible(Pane pane, boolean visible) {
-        pane.setVisible(visible);
+    public static void toggleNodeVisible(Node node, boolean visible) {
+        node.setVisible(visible);
     }
 
     public boolean isToggleTorus(boolean isTorus) {
         return !isTorus;
     }
 
-    public void save(String code, String path) {
+    public static void add(Stage stage, String name){
+        map.put(stage, name);
+    }
+
+    public void save(String code, String path)  {
         code = code.replace("\n", System.lineSeparator());
         ArrayList<String> lines = new ArrayList<>();
         lines.add(code);
         Path createdFile = Paths.get(path);
-        try {
+        try (FileOutputStream outputStream = new FileOutputStream(new File(createdFile.toUri()))) {
             if (!Files.exists(createdFile)) {
                 Files.createFile(createdFile);
                 Path pathTo = Paths.get(createdFile.toUri());
                 Files.write(pathTo, lines, StandardCharsets.UTF_8);
             } else {
-                alert("File existiert schon");
+                outputStream.write(code.getBytes());
             }
         } catch (Exception exc) {
-            alert("Ups, da ist was schief gelaufen!");
+            alert();
         }
     }
 
@@ -145,8 +158,8 @@ public class Service {
         return null;
     }
 
-    private void alert(String text) {
-        Alert alert = new Alert(Alert.AlertType.ERROR, text, ButtonType.OK);
+    private void alert() {
+        Alert alert = new Alert(Alert.AlertType.ERROR, "Ups, da ist was schief gelaufen!", ButtonType.OK);
         alert.showAndWait();
     }
 

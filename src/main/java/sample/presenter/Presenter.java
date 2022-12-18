@@ -1,6 +1,5 @@
 package sample.presenter;
 
-import automata.Test;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,9 +10,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import sample.model.AbstractAutomaton;
-import sample.model.GameOfLifeAutomaton;
-import sample.model.KruemelmonsterAutomaten;
 import sample.util.AudioCache;
 import sample.util.Simulation;
 
@@ -24,6 +20,8 @@ import java.util.concurrent.ExecutionException;
 
 public class Presenter extends AbstractPresenter implements Initializable {
     public static final String FXML = "/fxml/view.fxml";
+    @FXML
+    public Pane paneForNewLoader;
     @FXML
     private Slider slider;
     @FXML
@@ -76,14 +74,13 @@ public class Presenter extends AbstractPresenter implements Initializable {
     private Button laden;
     @FXML
     private Button generate;
-
+    private Stage temp;
     public Presenter() {
         super();
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println(automaton.getRows());
         setCanvas(canvas);
         Platform.runLater(() -> {
             this.rowSize.setText(String.valueOf(automaton.getRows()));
@@ -103,6 +100,7 @@ public class Presenter extends AbstractPresenter implements Initializable {
     }
 
     public void setStage(Stage stage) {
+        this.temp = stage;
         this.beenden.setId("" + random.nextInt());
         map.put(this.beenden.getId(), stage);
     }
@@ -145,7 +143,7 @@ public class Presenter extends AbstractPresenter implements Initializable {
     //Menu
     @FXML
     private void onNewGameWindow() {
-        service.onNewGameWindow();
+        Service.toggleNodeVisible(paneForNewLoader, true);
     }
 
     @FXML
@@ -196,7 +194,7 @@ public class Presenter extends AbstractPresenter implements Initializable {
     private void onDialogWindowOpen() {
         this.ok.disableProperty().bind(rowSize.textProperty().greaterThan("\\d+$").or(rowSize.textProperty().isEmpty())
                 .or(colSize.textProperty().greaterThan("\\d+$")).or(colSize.textProperty().isEmpty()));
-        this.service.togglePaneVisible(dialogWindow, true);
+        Service.toggleNodeVisible(dialogWindow, true);
     }
 
     @FXML
@@ -210,26 +208,15 @@ public class Presenter extends AbstractPresenter implements Initializable {
                 alert.showAndWait();
             } else {
                 automaton.changeSize(Integer.parseInt(rowSize.getText()), Integer.parseInt(colSize.getText()));
-                populationPanel.paintPopulation();
+                initPopulationView(automaton);
             }
         });
-        if (automaton instanceof GameOfLifeAutomaton){
-            System.out.println("A");
-        }
-
-        if (automaton instanceof KruemelmonsterAutomaten){
-            System.out.println("B");
-        }
-
-        if (automaton instanceof Test){
-            System.out.println("V");
-        }
-        this.service.togglePaneVisible(dialogWindow, false);
+        Service.toggleNodeVisible(dialogWindow, false);
     }
 
     @FXML
     private void onDialogWindowClose() {
-        this.service.togglePaneVisible(dialogWindow, false);
+        Service.toggleNodeVisible(dialogWindow, false);
     }
 
     @FXML
@@ -284,12 +271,15 @@ public class Presenter extends AbstractPresenter implements Initializable {
         Stage stage = new Stage();
         map.put(this.beenden.getId() + "1", stage);
         service.onNewEditorStage(stage);
+        Service.add(stage, temp.getTitle());
     }
 
     @FXML
     private void onClassLoad() {
         final FileChooser chooser = new FileChooser();
         chooser.setTitle("Open my File");
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TEXT files (*.java)", "*.java");
+        chooser.getExtensionFilters().add(extFilter);
         chooser.setInitialDirectory(new File(EditorPresenter.PATH));
         File selectedFile = chooser.showOpenDialog(null);
         if (selectedFile != null) {

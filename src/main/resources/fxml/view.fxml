@@ -9,131 +9,130 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<VBox fx:id="vBox" stylesheets="/css/css.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="sample.presenter.Presenter">
+<VBox fx:id="vBox" stylesheets="/css/css.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.presenter.Presenter">
     <VBox style="-fx-border-insets: 5;" styleClass="vBox1">
         <MenuBar styleClass="menuBar">
             <Menu styleClass="menu" text="_Automat">
                 <MenuItem onAction="#onNewGameWindow" styleClass="menu-item" text="_Neu">
                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                        <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                     </accelerator>
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../icons/Compile24.gif"/>
+                            <Image url="@../icons/Compile24.gif" />
                         </ImageView>
                     </graphic>
                 </MenuItem>
                 <MenuItem text="_Laden">
                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="L" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                        <KeyCodeCombination alt="UP" code="L" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                     </accelerator>
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../icons/Open24.gif"/>
+                            <Image url="@../icons/Open24.gif" />
                         </ImageView>
                     </graphic>
                 </MenuItem>
-                <SeparatorMenuItem/>
-                <MenuItem text="_Editor" onAction="#onEdit">
+                <SeparatorMenuItem />
+                <MenuItem onAction="#onEdit" text="_Editor">
                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="E" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                        <KeyCodeCombination alt="UP" code="E" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                     </accelerator>
                 </MenuItem>
-                <SeparatorMenuItem/>
+                <SeparatorMenuItem />
                 <MenuItem fx:id="beenden" onAction="#onPlatformExit" text="_Beenden">
                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                        <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                     </accelerator>
                 </MenuItem>
             </Menu>
             <Menu styleClass="menu" text="_Population">
                 <MenuItem onAction="#onDialogWindowOpen" text="_Größe ändern...">
                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="G" control="DOWN" meta="UP" shift="DOWN" shortcut="UP"/>
+                        <KeyCodeCombination alt="UP" code="G" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
                     </accelerator>
                 </MenuItem>
                 <MenuItem onAction="#onResetPopulation" text="_Löschen">
                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="L" control="DOWN" meta="UP" shift="DOWN" shortcut="UP"/>
+                        <KeyCodeCombination alt="UP" code="L" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
                     </accelerator>
                 </MenuItem>
                 <MenuItem text="_Erzeugen">
                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="Z" control="DOWN" meta="UP" shift="DOWN" shortcut="UP"/>
+                        <KeyCodeCombination alt="UP" code="Z" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
                     </accelerator>
                 </MenuItem>
                 <CheckMenuItem onAction="#onSetTorus" text="_Torus">
                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="T" control="DOWN" meta="UP" shift="DOWN" shortcut="UP"/>
+                        <KeyCodeCombination alt="UP" code="T" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
                     </accelerator>
                 </CheckMenuItem>
-                <SeparatorMenuItem/>
+                <SeparatorMenuItem />
                 <MenuItem onAction="#onZoomIn" text="_Vergrößern">
                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="I" control="DOWN" meta="UP" shift="DOWN" shortcut="UP"/>
+                        <KeyCodeCombination alt="UP" code="I" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
                     </accelerator>
                 </MenuItem>
                 <MenuItem onAction="#onZoomOut" text="_Verkleinern">
                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="DOWN" shortcut="UP"/>
+                        <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
                     </accelerator>
                 </MenuItem>
-                <SeparatorMenuItem/>
+                <SeparatorMenuItem />
                 <Menu text="_Speichern">
                     <MenuItem text="XML">
                         <accelerator>
-                            <KeyCodeCombination alt="UP" code="X" control="DOWN" meta="UP" shift="DOWN" shortcut="UP"/>
+                            <KeyCodeCombination alt="UP" code="X" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
                         </accelerator>
                     </MenuItem>
                     <MenuItem text="_Serialisieren">
                         <accelerator>
-                            <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="DOWN" shortcut="UP"/>
+                            <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
                         </accelerator>
                     </MenuItem>
                 </Menu>
                 <Menu text="Laden">
                     <MenuItem text="_XML">
                         <accelerator>
-                            <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="DOWN" shortcut="UP"/>
+                            <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
                         </accelerator>
                     </MenuItem>
                     <MenuItem text="_Deserialisieren">
                         <accelerator>
-                            <KeyCodeCombination alt="UP" code="M" control="DOWN" meta="UP" shift="DOWN" shortcut="UP"/>
+                            <KeyCodeCombination alt="UP" code="M" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
                         </accelerator>
                     </MenuItem>
                 </Menu>
-                <SeparatorMenuItem/>
+                <SeparatorMenuItem />
                 <MenuItem text="_Drücken">
                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="P" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                        <KeyCodeCombination alt="UP" code="P" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                     </accelerator>
                 </MenuItem>
             </Menu>
             <Menu styleClass="menu" text="_Simulation">
                 <MenuItem text="_Schritt">
                     <accelerator>
-                        <KeyCodeCombination alt="DOWN" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                        <KeyCodeCombination alt="DOWN" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                     </accelerator>
                 </MenuItem>
                 <MenuItem text="_Start">
                     <accelerator>
-                        <KeyCodeCombination alt="DOWN" code="A" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                        <KeyCodeCombination alt="DOWN" code="A" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                     </accelerator>
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../icons/Start24.gif"/>
+                            <Image url="@../icons/Start24.gif" />
                         </ImageView>
                     </graphic>
                 </MenuItem>
                 <MenuItem disable="true" text="_Stop">
                     <accelerator>
-                        <KeyCodeCombination alt="DOWN" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                        <KeyCodeCombination alt="DOWN" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                     </accelerator>
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../icons/Stop24.gif"/>
+                            <Image url="@../icons/Stop24.gif" />
                         </ImageView>
                     </graphic>
                 </MenuItem>
@@ -141,325 +140,282 @@
         </MenuBar>
         <HBox prefHeight="44.0" prefWidth="0.0">
             <ToolBar prefHeight="44.0" prefWidth="558.0" style="-fx-background-color: #FFE4C4">
-                <Button fx:id="generate" maxHeight="40.0" maxWidth="30.0" minHeight="15.0" minWidth="15.0" mnemonicParsing="false"
-                        onAction="#onNewGameWindow" prefHeight="33.0" prefWidth="30.0" styleClass="buttonHeader">
+                <Button fx:id="generate" maxHeight="40.0" maxWidth="30.0" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" onAction="#onNewGameWindow" prefHeight="33.0" prefWidth="30.0" styleClass="buttonHeader">
                     <graphic>
                         <ImageView pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../icons/Compile24.gif"/>
+                            <Image url="@../icons/Compile24.gif" />
                         </ImageView>
                     </graphic>
                 </Button>
 
-                <Button fx:id="laden" onAction="#onClassLoad" maxHeight="40.0" maxWidth="30.0" minHeight="15.0" minWidth="15.0" mnemonicParsing="false"
-                        prefHeight="33.0" prefWidth="30.0" styleClass="buttonHeader">
+                <Button fx:id="laden" maxHeight="40.0" maxWidth="30.0" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" onAction="#onClassLoad" prefHeight="33.0" prefWidth="30.0" styleClass="buttonHeader">
                     <graphic>
                         <ImageView pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../icons/Open24.gif"/>
+                            <Image url="@../icons/Open24.gif" />
                         </ImageView>
                     </graphic>
                 </Button>
 
-                <Button fx:id="sizeChange" layoutX="94.0" layoutY="3.0" maxHeight="40.0" maxWidth="30.0" minHeight="15.0" minWidth="15.0"
-                        mnemonicParsing="false" onAction="#onDialogWindowOpen" prefHeight="33.0" prefWidth="30.0" styleClass="buttonHeader"
-                        translateY="2.0">
+                <Button fx:id="sizeChange" layoutX="94.0" layoutY="3.0" maxHeight="40.0" maxWidth="30.0" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" onAction="#onDialogWindowOpen" prefHeight="33.0" prefWidth="30.0" styleClass="buttonHeader" translateY="2.0">
                     <graphic>
                         <ImageView fitHeight="28.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../icons/Size24.gif"/>
+                            <Image url="@../icons/Size24.gif" />
                         </ImageView>
                     </graphic>
                 </Button>
 
-                <Button fx:id="breakUp" layoutX="134.0" layoutY="5.0" maxHeight="40.0" maxWidth="30.0" minHeight="15.0" minWidth="15.0"
-                        mnemonicParsing="false" onAction="#onResetPopulation" prefHeight="33.0" prefWidth="30.0" styleClass="buttonHeader">
+                <Button fx:id="breakUp" layoutX="134.0" layoutY="5.0" maxHeight="40.0" maxWidth="30.0" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" onAction="#onResetPopulation" prefHeight="33.0" prefWidth="30.0" styleClass="buttonHeader">
                     <graphic>
                         <ImageView pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../icons/Delete24.gif"/>
+                            <Image url="@../icons/Delete24.gif" />
                         </ImageView>
                     </graphic>
                 </Button>
 
-                <Button fx:id="createRandomPopulation" layoutX="174.0" layoutY="5.0" maxHeight="40.0" maxWidth="30.0" minHeight="15.0"
-                        minWidth="15.0" mnemonicParsing="false" onAction="#onCreateRandomPopulation" prefHeight="33.0" prefWidth="30.0"
-                        styleClass="buttonHeader">
+                <Button fx:id="createRandomPopulation" layoutX="174.0" layoutY="5.0" maxHeight="40.0" maxWidth="30.0" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" onAction="#onCreateRandomPopulation" prefHeight="33.0" prefWidth="30.0" styleClass="buttonHeader">
                     <graphic>
                         <ImageView pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../icons/Random24.gif"/>
+                            <Image url="@../icons/Random24.gif" />
                         </ImageView>
                     </graphic>
                 </Button>
 
-                <Button fx:id="torus" layoutX="214.0" layoutY="5.0" maxHeight="40.0" maxWidth="30.0" minHeight="15.0" minWidth="15.0"
-                        mnemonicParsing="false" onAction="#onSetTorus" prefHeight="33.0" prefWidth="30.0" styleClass="buttonHeader">
+                <Button fx:id="torus" layoutX="214.0" layoutY="5.0" maxHeight="40.0" maxWidth="30.0" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" onAction="#onSetTorus" prefHeight="33.0" prefWidth="30.0" styleClass="buttonHeader">
                     <graphic>
                         <ImageView pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../icons/Torus24.gif"/>
+                            <Image url="@../icons/Torus24.gif" />
                         </ImageView>
                     </graphic>
                 </Button>
-                <Button fx:id="print" layoutX="254.0" layoutY="5.0" maxHeight="40.0" maxWidth="30.0" minHeight="15.0" minWidth="15.0"
-                        mnemonicParsing="false" prefHeight="33.0" prefWidth="30.0" styleClass="buttonHeader">
+                <Button fx:id="print" layoutX="254.0" layoutY="5.0" maxHeight="40.0" maxWidth="30.0" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="30.0" styleClass="buttonHeader">
                     <graphic>
                         <ImageView pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../icons/Print24.gif"/>
-                        </ImageView>
-                    </graphic>
-                </Button>
-
-                <Button fx:id="zoomIn" layoutX="294.0" layoutY="5.0" maxHeight="40.0" maxWidth="30.0" minHeight="15.0" minWidth="15.0"
-                        mnemonicParsing="false" onAction="#onZoomIn" prefHeight="33.0" prefWidth="30.0" styleClass="buttonHeader">
-                    <graphic>
-                        <ImageView pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../icons/ZoomIn24.gif"/>
+                            <Image url="@../icons/Print24.gif" />
                         </ImageView>
                     </graphic>
                 </Button>
 
-                <Button fx:id="zoomOut" layoutX="334.0" layoutY="5.0" maxHeight="40.0" maxWidth="30.0" minHeight="15.0" minWidth="15.0"
-                        mnemonicParsing="false" onAction="#onZoomOut" prefHeight="33.0" prefWidth="30.0" styleClass="buttonHeader">
+                <Button fx:id="zoomIn" layoutX="294.0" layoutY="5.0" maxHeight="40.0" maxWidth="30.0" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" onAction="#onZoomIn" prefHeight="33.0" prefWidth="30.0" styleClass="buttonHeader">
                     <graphic>
                         <ImageView pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../icons/ZoomOut24.gif"/>
+                            <Image url="@../icons/ZoomIn24.gif" />
                         </ImageView>
                     </graphic>
                 </Button>
 
-                <Button fx:id="stepSimulation" layoutX="374.0" layoutY="5.0" maxHeight="40.0" maxWidth="30.0" minHeight="15.0"
-                        minWidth="15.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="30.0" styleClass="buttonHeader">
+                <Button fx:id="zoomOut" layoutX="334.0" layoutY="5.0" maxHeight="40.0" maxWidth="30.0" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" onAction="#onZoomOut" prefHeight="33.0" prefWidth="30.0" styleClass="buttonHeader">
                     <graphic>
                         <ImageView pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../icons/Step24.gif"/>
+                            <Image url="@../icons/ZoomOut24.gif" />
                         </ImageView>
                     </graphic>
                 </Button>
 
-                <Button fx:id="startSimulation" layoutX="414.0" layoutY="5.0" maxHeight="40.0" maxWidth="30.0" minHeight="15.0"
-                        minWidth="15.0" mnemonicParsing="false" onAction="#onStart" prefHeight="33.0" prefWidth="30.0"
-                        styleClass="buttonHeader">
+                <Button fx:id="stepSimulation" layoutX="374.0" layoutY="5.0" maxHeight="40.0" maxWidth="30.0" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="30.0" styleClass="buttonHeader">
                     <graphic>
                         <ImageView pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../icons/Start24.gif"/>
+                            <Image url="@../icons/Step24.gif" />
                         </ImageView>
                     </graphic>
                 </Button>
 
-                <Button fx:id="stopSimulation" layoutX="454.0" layoutY="5.0" maxHeight="40.0" maxWidth="30.0" minHeight="15.0"
-                        minWidth="15.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="30.0" styleClass="buttonHeader" onAction="#onStop">
+                <Button fx:id="startSimulation" layoutX="414.0" layoutY="5.0" maxHeight="40.0" maxWidth="30.0" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" onAction="#onStart" prefHeight="33.0" prefWidth="30.0" styleClass="buttonHeader">
                     <graphic>
                         <ImageView pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../icons/Stop24.gif"/>
+                            <Image url="@../icons/Start24.gif" />
+                        </ImageView>
+                    </graphic>
+                </Button>
+
+                <Button fx:id="stopSimulation" layoutX="454.0" layoutY="5.0" maxHeight="40.0" maxWidth="30.0" minHeight="15.0" minWidth="15.0" mnemonicParsing="false" onAction="#onStop" prefHeight="33.0" prefWidth="30.0" styleClass="buttonHeader">
+                    <graphic>
+                        <ImageView pickOnBounds="true" preserveRatio="true">
+                            <Image url="@../icons/Stop24.gif" />
                         </ImageView>
                     </graphic>
                 </Button>
             </ToolBar>
-            <Slider fx:id="slider" layoutX="800.0" layoutY="2.0" majorTickUnit="50.0" showTickLabels="true" showTickMarks="true" styleClass="slider"/>
+            <Slider fx:id="slider" layoutX="800.0" layoutY="2.0" majorTickUnit="50.0" showTickLabels="true" showTickMarks="true" styleClass="slider" />
         </HBox>
     </VBox>
     <HBox fx:id="hbox" layoutY="72.0" minHeight="400.0" prefWidth="240.0" styleClass="hBox">
-        <VBox fx:id="pane" maxWidth="192.0" minHeight="400.0" minWidth="100.0" prefHeight="730.0" prefWidth="185.0"
-              styleClass="paneForHbox">
+        <VBox fx:id="pane" maxWidth="192.0" minHeight="400.0" minWidth="100.0" prefHeight="730.0" prefWidth="185.0" styleClass="paneForHbox">
             <HBox minHeight="20.0" prefHeight="45.0" prefWidth="184.0">
-                <RadioButton minHeight="5.0" minWidth="25.0" mnemonicParsing="false" onAction="#onStateGenerate" prefHeight="38.0"
-                             prefWidth="39.0" selected="true" styleClass="radio-button" text="0">
+                <RadioButton minHeight="5.0" minWidth="25.0" mnemonicParsing="false" onAction="#onStateGenerate" prefHeight="38.0" prefWidth="39.0" selected="true" styleClass="radio-button" text="0">
                     <toggleGroup>
-                        <ToggleGroup fx:id="toggleGroup"/>
+                        <ToggleGroup fx:id="toggleGroup" />
                     </toggleGroup>
                     <HBox.margin>
-                        <Insets right="10.0" top="2.0"/>
+                        <Insets right="10.0" top="2.0" />
                     </HBox.margin>
                 </RadioButton>
                 <ColorPicker minHeight="15.0" minWidth="15.0" prefHeight="30.0" prefWidth="117.0" styleClass="picker">
                     <HBox.margin>
-                        <Insets top="5.0"/>
+                        <Insets top="5.0" />
                     </HBox.margin>
                 </ColorPicker>
             </HBox>
             <HBox minHeight="20.0" prefHeight="45.0" prefWidth="184.0">
-                <RadioButton layoutX="14" layoutY="50.0" minHeight="5.0" minWidth="25.0" mnemonicParsing="false" onAction="#onStateGenerate"
-                             prefHeight="18.0" prefWidth="39.0" styleClass="radio-button" text="1" toggleGroup="$toggleGroup">
+                <RadioButton layoutX="14" layoutY="50.0" minHeight="5.0" minWidth="25.0" mnemonicParsing="false" onAction="#onStateGenerate" prefHeight="18.0" prefWidth="39.0" styleClass="radio-button" text="1" toggleGroup="$toggleGroup">
                     <HBox.margin>
-                        <Insets right="10.0" top="5.0"/>
+                        <Insets right="10.0" top="5.0" />
                     </HBox.margin>
                 </RadioButton>
-                <ColorPicker layoutX="67.0" layoutY="45.0" minHeight="15.0" minWidth="15.0" prefHeight="30.0" prefWidth="117.0"
-                             styleClass="picker">
+                <ColorPicker layoutX="67.0" layoutY="45.0" minHeight="15.0" minWidth="15.0" prefHeight="30.0" prefWidth="117.0" styleClass="picker">
                     <value>
-                        <Color/>
+                        <Color />
                     </value>
                     <HBox.margin>
-                        <Insets/>
+                        <Insets />
                     </HBox.margin>
                 </ColorPicker>
                 <VBox.margin>
-                    <Insets top="-5.0"/>
+                    <Insets top="-5.0" />
                 </VBox.margin>
             </HBox>
             <HBox minHeight="20.0" prefHeight="45.0" prefWidth="184.0">
-                <RadioButton layoutX="14" layoutY="85.0" minHeight="5.0" minWidth="25.0" mnemonicParsing="false" onAction="#onStateGenerate"
-                             prefHeight="18.0" prefWidth="39.0" styleClass="radio-button" text="2" toggleGroup="$toggleGroup">
+                <RadioButton layoutX="14" layoutY="85.0" minHeight="5.0" minWidth="25.0" mnemonicParsing="false" onAction="#onStateGenerate" prefHeight="18.0" prefWidth="39.0" styleClass="radio-button" text="2" toggleGroup="$toggleGroup">
                     <HBox.margin>
-                        <Insets right="10.0" top="5.0"/>
+                        <Insets right="10.0" top="5.0" />
                     </HBox.margin>
                 </RadioButton>
-                <ColorPicker layoutX="67.0" layoutY="80.0" minHeight="15.0" minWidth="15.0" prefHeight="30.0" prefWidth="117.0"
-                             styleClass="picker">
+                <ColorPicker layoutX="67.0" layoutY="80.0" minHeight="15.0" minWidth="15.0" prefHeight="30.0" prefWidth="117.0" styleClass="picker">
                     <value>
-                        <Color fx:value="#0f7b4e"/>
+                        <Color fx:value="#0f7b4e" />
                     </value>
                 </ColorPicker>
                 <VBox.margin>
-                    <Insets top="-10.0"/>
+                    <Insets top="-10.0" />
                 </VBox.margin>
             </HBox>
             <HBox minHeight="20.0" prefHeight="45.0" prefWidth="184.0">
-                <RadioButton layoutX="14" layoutY="120.0" minHeight="5.0" minWidth="25.0" mnemonicParsing="false"
-                             onAction="#onStateGenerate" prefHeight="18.0" prefWidth="39.0" styleClass="radio-button" text="3"
-                             toggleGroup="$toggleGroup">
+                <RadioButton layoutX="14" layoutY="120.0" minHeight="5.0" minWidth="25.0" mnemonicParsing="false" onAction="#onStateGenerate" prefHeight="18.0" prefWidth="39.0" styleClass="radio-button" text="3" toggleGroup="$toggleGroup">
                     <HBox.margin>
-                        <Insets right="10.0" top="5.0"/>
+                        <Insets right="10.0" top="5.0" />
                     </HBox.margin>
                 </RadioButton>
-                <ColorPicker layoutX="67.0" layoutY="115.0" minHeight="15.0" minWidth="15.0" prefHeight="30.0" prefWidth="117.0"
-                             styleClass="picker">
+                <ColorPicker layoutX="67.0" layoutY="115.0" minHeight="15.0" minWidth="15.0" prefHeight="30.0" prefWidth="117.0" styleClass="picker">
                     <value>
-                        <Color fx:value="#b6d4e1"/>
+                        <Color fx:value="#b6d4e1" />
                     </value>
                 </ColorPicker>
                 <VBox.margin>
-                    <Insets top="-10.0"/>
+                    <Insets top="-10.0" />
                 </VBox.margin>
             </HBox>
             <HBox minHeight="20.0" prefHeight="45.0" prefWidth="184.0">
-                <RadioButton layoutX="14.0" layoutY="155.0" minHeight="5.0" minWidth="25.0" mnemonicParsing="false"
-                             onAction="#onStateGenerate" prefHeight="18.0" prefWidth="39.0" styleClass="radio-button" text="4"
-                             toggleGroup="$toggleGroup">
+                <RadioButton layoutX="14.0" layoutY="155.0" minHeight="5.0" minWidth="25.0" mnemonicParsing="false" onAction="#onStateGenerate" prefHeight="18.0" prefWidth="39.0" styleClass="radio-button" text="4" toggleGroup="$toggleGroup">
                     <HBox.margin>
-                        <Insets right="10.0" top="5.0"/>
+                        <Insets right="10.0" top="5.0" />
                     </HBox.margin>
                 </RadioButton>
-                <ColorPicker layoutX="67.0" layoutY="150.0" minHeight="15.0" minWidth="15.0" prefHeight="30.0" prefWidth="117.0"
-                             styleClass="picker">
+                <ColorPicker layoutX="67.0" layoutY="150.0" minHeight="15.0" minWidth="15.0" prefHeight="30.0" prefWidth="117.0" styleClass="picker">
                     <value>
-                        <Color fx:value="#f9ee3d"/>
+                        <Color fx:value="#f9ee3d" />
                     </value>
                 </ColorPicker>
                 <VBox.margin>
-                    <Insets top="-10.0"/>
+                    <Insets top="-10.0" />
                 </VBox.margin>
             </HBox>
             <HBox minHeight="20.0" prefHeight="45.0" prefWidth="184.0">
-                <RadioButton layoutX="14.0" layoutY="190.0" minHeight="5.0" minWidth="25.0" mnemonicParsing="false"
-                             onAction="#onStateGenerate" prefHeight="18.0" prefWidth="39.0" styleClass="radio-button" text="5"
-                             toggleGroup="$toggleGroup">
+                <RadioButton layoutX="14.0" layoutY="190.0" minHeight="5.0" minWidth="25.0" mnemonicParsing="false" onAction="#onStateGenerate" prefHeight="18.0" prefWidth="39.0" styleClass="radio-button" text="5" toggleGroup="$toggleGroup">
                     <HBox.margin>
-                        <Insets right="10.0" top="5.0"/>
+                        <Insets right="10.0" top="5.0" />
                     </HBox.margin>
                 </RadioButton>
-                <ColorPicker layoutX="67.0" layoutY="185.0" minHeight="15.0" minWidth="15.0" prefHeight="30.0" prefWidth="117.0"
-                             styleClass="picker">
+                <ColorPicker layoutX="67.0" layoutY="185.0" minHeight="15.0" minWidth="15.0" prefHeight="30.0" prefWidth="117.0" styleClass="picker">
                     <value>
-                        <Color fx:value="#5f85c4"/>
+                        <Color fx:value="#5f85c4" />
                     </value>
                 </ColorPicker>
                 <VBox.margin>
-                    <Insets top="-10.0"/>
+                    <Insets top="-10.0" />
                 </VBox.margin>
             </HBox>
             <HBox minHeight="20.0" prefHeight="45.0" prefWidth="184.0">
-                <RadioButton layoutX="14.0" layoutY="225.0" minHeight="5.0" minWidth="25.0" mnemonicParsing="false"
-                             onAction="#onStateGenerate" prefHeight="18.0" prefWidth="39.0" styleClass="radio-button" text="6"
-                             toggleGroup="$toggleGroup">
+                <RadioButton layoutX="14.0" layoutY="225.0" minHeight="5.0" minWidth="25.0" mnemonicParsing="false" onAction="#onStateGenerate" prefHeight="18.0" prefWidth="39.0" styleClass="radio-button" text="6" toggleGroup="$toggleGroup">
                     <HBox.margin>
-                        <Insets right="10.0" top="5.0"/>
+                        <Insets right="10.0" top="5.0" />
                     </HBox.margin>
                 </RadioButton>
-                <ColorPicker layoutX="67.0" layoutY="220.0" minHeight="15.0" minWidth="15.0" prefHeight="30.0" prefWidth="117.0"
-                             styleClass="picker">
+                <ColorPicker layoutX="67.0" layoutY="220.0" minHeight="15.0" minWidth="15.0" prefHeight="30.0" prefWidth="117.0" styleClass="picker">
                     <value>
-                        <Color fx:value="#eaa8fe"/>
+                        <Color fx:value="#eaa8fe" />
                     </value>
                 </ColorPicker>
                 <VBox.margin>
-                    <Insets top="-10.0"/>
+                    <Insets top="-10.0" />
                 </VBox.margin>
             </HBox>
             <HBox minHeight="20.0" prefHeight="45.0" prefWidth="184.0">
-                <RadioButton layoutX="14.0" layoutY="260.0" minHeight="5.0" minWidth="25.0" mnemonicParsing="false"
-                             onAction="#onStateGenerate" prefHeight="18.0" prefWidth="39.0" styleClass="radio-button" text="7"
-                             toggleGroup="$toggleGroup">
+                <RadioButton layoutX="14.0" layoutY="260.0" minHeight="5.0" minWidth="25.0" mnemonicParsing="false" onAction="#onStateGenerate" prefHeight="18.0" prefWidth="39.0" styleClass="radio-button" text="7" toggleGroup="$toggleGroup">
                     <HBox.margin>
-                        <Insets right="10.0" top="5.0"/>
+                        <Insets right="10.0" top="5.0" />
                     </HBox.margin>
                 </RadioButton>
                 <ColorPicker layoutX="67.0" layoutY="255.0" prefHeight="30.0" prefWidth="117.0" styleClass="picker">
                     <value>
-                        <Color fx:value="#2f8789"/>
+                        <Color fx:value="#2f8789" />
                     </value>
                 </ColorPicker>
                 <VBox.margin>
-                    <Insets top="-10.0"/>
+                    <Insets top="-10.0" />
                 </VBox.margin>
             </HBox>
             <HBox minHeight="20.0" prefHeight="45.0" prefWidth="184.0">
-                <RadioButton layoutX="14.0" layoutY="295.0" minHeight="5.0" minWidth="25.0" mnemonicParsing="false"
-                             onAction="#onStateGenerate" prefHeight="18.0" prefWidth="39.0" styleClass="radio-button" text="8"
-                             toggleGroup="$toggleGroup">
+                <RadioButton layoutX="14.0" layoutY="295.0" minHeight="5.0" minWidth="25.0" mnemonicParsing="false" onAction="#onStateGenerate" prefHeight="18.0" prefWidth="39.0" styleClass="radio-button" text="8" toggleGroup="$toggleGroup">
                     <HBox.margin>
-                        <Insets right="10.0" top="5.0"/>
+                        <Insets right="10.0" top="5.0" />
                     </HBox.margin>
                 </RadioButton>
                 <ColorPicker layoutX="67.0" layoutY="290.0" prefHeight="30.0" prefWidth="117.0" styleClass="picker">
                     <value>
-                        <Color fx:value="#213968"/>
+                        <Color fx:value="#213968" />
                     </value>
                 </ColorPicker>
                 <VBox.margin>
-                    <Insets top="-10.0"/>
+                    <Insets top="-10.0" />
                 </VBox.margin>
             </HBox>
             <HBox minHeight="20.0" prefHeight="45.0" prefWidth="184.0">
-                <RadioButton layoutX="14.0" layoutY="330.0" minHeight="5.0" minWidth="25.0" mnemonicParsing="false"
-                             onAction="#onStateGenerate" prefHeight="18.0" prefWidth="39.0" styleClass="radio-button" text="9"
-                             toggleGroup="$toggleGroup">
+                <RadioButton layoutX="14.0" layoutY="330.0" minHeight="5.0" minWidth="25.0" mnemonicParsing="false" onAction="#onStateGenerate" prefHeight="18.0" prefWidth="39.0" styleClass="radio-button" text="9" toggleGroup="$toggleGroup">
                     <HBox.margin>
-                        <Insets right="10.0" top="5.0"/>
+                        <Insets right="10.0" top="5.0" />
                     </HBox.margin>
                 </RadioButton>
                 <ColorPicker layoutX="67.0" layoutY="325.0" prefHeight="30.0" prefWidth="117.0" styleClass="picker">
                     <value>
-                        <Color fx:value="#535c79"/>
+                        <Color fx:value="#535c79" />
                     </value>
                 </ColorPicker>
                 <VBox.margin>
-                    <Insets top="-10.0"/>
+                    <Insets top="-10.0" />
                 </VBox.margin>
-
             </HBox>
         </VBox>
-        <HBox fx:id="hBoxForSimul" minHeight="400.0" minWidth="180.0"
-              style="-fx-background-color: #A9A9A9; -fx-effect: dropshadowshadow(three-pass-box, grey, 10, 0, 0, 15)">
+        <HBox fx:id="hBoxForSimul" minHeight="400.0" minWidth="180.0" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #A9A9A9; -fx-effect: dropshadowshadow(three-pass-box, grey, 10, 0, 0, 15)">
             <ScrollPane fx:id="scrollPane">
                 <Pane fx:id="stackPane">
                     <Canvas fx:id="canvas" onMouseDragged="#onMouseDragged" onMousePressed="#onMousePressed" styleClass="canvas"/>
-                    <DialogPane fx:id="dialogWindow" expanded="true" maxHeight="150.0" maxWidth="190.0" prefHeight="150.0" prefWidth="190.0"
-                                styleClass="dialog" translateY="50.0" visible="false">
+                    <fx:include fx:id="paneForNewLoader" source="createNewLoader.fxml" visible="false"/>
+                    <DialogPane fx:id="dialogWindow" expanded="true" maxHeight="150.0" maxWidth="190.0" prefHeight="150.0" prefWidth="190.0" styleClass="dialog" translateY="50.0" visible="false">
                         <graphic>
                             <Pane prefHeight="150.0" prefWidth="190.0" styleClass="dialogPane">
                                 <Label text="ROW" translateX="150.0" translateY="5.0">
                                     <font>
-                                        <Font name="System Bold" size="12.0"/>
+                                        <Font name="System Bold" size="12.0" />
                                     </font>
                                 </Label>
-                                <TextField fx:id="rowSize" prefHeight="25.0" prefWidth="118.0" translateX="5.0" translateY="50.0"/>
-                                <TextField fx:id="colSize" prefHeight="25.0" prefWidth="118.0" translateX="5.0" translateY="5.0"/>
+                                <TextField fx:id="rowSize" prefHeight="25.0" prefWidth="118.0" translateX="5.0" translateY="50.0" />
+                                <TextField fx:id="colSize" prefHeight="25.0" prefWidth="118.0" translateX="5.0" translateY="5.0" />
                                 <Label layoutX="150.0" layoutY="34.0" text="COL" translateY="20.0">
                                     <font>
-                                        <Font name="System Bold" size="12.0"/>
+                                        <Font name="System Bold" size="12.0" />
                                     </font>
                                 </Label>
-                                <Button fx:id="ok" layoutX="14.0" onAction="#onChangeSize" prefHeight="25.0" prefWidth="75.0" text="YES"
-                                        translateY="100.0"/>
-                                <Button layoutX="98.0" layoutY="100.0" onAction="#onDialogWindowClose" prefHeight="25.0" prefWidth="75.0"
-                                        text="CANCEL"/>
+                                <Button fx:id="ok" layoutX="14.0" onAction="#onChangeSize" prefHeight="25.0" prefWidth="75.0" text="YES" translateY="100.0" />
+                                <Button layoutX="98.0" layoutY="100.0" onAction="#onDialogWindowClose" prefHeight="25.0" prefWidth="75.0" text="CANCEL" />
                             </Pane>
                         </graphic>
                     </DialogPane>

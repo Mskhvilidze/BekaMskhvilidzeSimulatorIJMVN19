@@ -2,8 +2,14 @@ package automata;
 import sample.model.AbstractAutomaton;
 
   public Automata extends AbstractAutomaton{
+
+  private final static int rows = 30;
+  private final static int columns = 50;
+  private final static int numberOfStates = 2;
+  private final static boolean isTorus = false;
+  }
   public Automata(int rows, int columns, boolean isTorus) {
-        super(rows, columns, numberOfState, false);
+        super(rows, columns, numberOfState, isTorus);
     }
 
     public Cell transform(Cell cell, Cell[] neighbors) {

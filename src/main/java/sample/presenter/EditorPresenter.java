@@ -3,12 +3,12 @@ package sample.presenter;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -18,24 +18,19 @@ public class EditorPresenter extends AbstractPresenter implements Initializable 
     public static final String SOURCE = "text/";
     public static final String PATH = "automata/";
     @FXML
+    private Button load;
+    @FXML
     private MenuBar menu;
     @FXML
-    private Pane pane;
-    @FXML
-    private TextField name;
-    @FXML
-    private Button ja;
+    private AnchorPane anchor;
     @FXML
     private TextArea area;
     private Stage stage;
-    @FXML
-    private ToggleGroup toggle;
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         VBox.setVgrow(this.area, Priority.ALWAYS);
-        this.ja.disableProperty()
-                .bind(this.name.textProperty().isEmpty().or(this.name.textProperty().greaterThan("\\^([A-Z])([A-Za-z]*)$")));
+        Text text = new Text(LoaderPresenter.getNameOfGame());
+        load.disableProperty().bind(text.textProperty().isEmpty());
     }
 
     public void setStage(Stage stage) {
@@ -47,35 +42,32 @@ public class EditorPresenter extends AbstractPresenter implements Initializable 
     }
 
     @FXML
-    private void onClose() {
-        this.service.onPlatformExit(this.stage);
-    }
-
-    @FXML
-    private void onSaveCode() {
-        this.service.save(this.area.getText().replaceAll("Automata", name.getText()), PATH + name.getText() + ".java");
-    }
-
-    @FXML
-    private void onCreateClass() {
-        RadioButton button = (RadioButton) toggle.getSelectedToggle();
-        this.area.setText(Service.getCode(name.getText(), button.getText()));
-        this.service.togglePaneVisible(pane, false);
-        this.service.toggleNodeDisable(this.area, false);
-        this.service.toggleNodeDisable(menu, false);
-    }
-
-    public void onStageClose() {
-        this.service.onPlatformExit(stage);
-    }
-
-    public void onCompile() {
+    private void onCompile() {
         final FileChooser chooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TEXT files (*.java)", "*.java");
+        chooser.getExtensionFilters().add(extFilter);
         chooser.setTitle("Open my File");
         chooser.setInitialDirectory(new File(PATH));
         File selectedFile = chooser.showOpenDialog(stage);
         if (selectedFile != null) {
             service.compile(PATH + selectedFile.getName());
         }
+    }
+
+    @FXML
+    private void onClose() {
+        this.service.onPlatformExit(this.stage);
+    }
+
+    @FXML
+    private void onSaveCode() {
+        this.service.save(this.area.getText(), PATH + LoaderPresenter.getTextName() + ".java");
+    }
+
+    @FXML
+    private void onFileLoad() {
+        Service.toggleNodeVisible(anchor, false);
+        menu.setDisable(false);
+        this.area.setText(Service.getCode(Service.getMap().get(stage), LoaderPresenter.getNameOfGame()));
     }
 }
