@@ -23,6 +23,10 @@ public class Presenter extends AbstractPresenter implements Initializable {
     @FXML
     public Pane paneForNewLoader;
     @FXML
+    private MenuItem menuStop;
+    @FXML
+    private MenuItem menuStart;
+    @FXML
     private Slider slider;
     @FXML
     private Button ok;
@@ -92,6 +96,7 @@ public class Presenter extends AbstractPresenter implements Initializable {
         });
         automaton.randomPopulation();
         this.slider.valueProperty().addListener((a, b, c) -> this.simulation.setSpeed(c.intValue()));
+        Service.toggleRadioButton(this.toggleGroup, automaton);
         System.out.println(this.toggleGroup.getUserData());
     }
 
@@ -230,6 +235,9 @@ public class Presenter extends AbstractPresenter implements Initializable {
         simulation.start();
         service.toggleNodeDisable(this.startSimulation, true);
         service.toggleNodeDisable(this.stepSimulation, true);
+        service.toggleNodeDisable(this.stopSimulation, false);
+        this.menuStart.setDisable(true);
+        this.menuStop.setDisable(false);
     }
 
     @FXML
@@ -237,6 +245,8 @@ public class Presenter extends AbstractPresenter implements Initializable {
         this.simulation.stop();
         service.toggleNodeDisable(this.startSimulation, false);
         service.toggleNodeDisable(this.stepSimulation, false);
+        this.menuStart.setDisable(false);
+        this.menuStop.setDisable(true);
     }
 
     @FXML
@@ -283,7 +293,7 @@ public class Presenter extends AbstractPresenter implements Initializable {
         chooser.setInitialDirectory(new File(EditorPresenter.PATH));
         File selectedFile = chooser.showOpenDialog(null);
         if (selectedFile != null) {
-            this.service.onLoadNewAutomaton(service.loadProgram(selectedFile.getName().split("\\.")[0]));
+            this.service.onLoadNewAutomaton(service.loadProgram(selectedFile.getName().split("\\.")[0]), selectedFile.getName().split("\\.")[0]);
         }
     }
 }

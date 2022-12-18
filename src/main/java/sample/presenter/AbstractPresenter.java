@@ -1,9 +1,7 @@
 package sample.presenter;
 
-import automata.Test;
 import javafx.scene.canvas.Canvas;
 import javafx.stage.Stage;
-import sample.model.GameOfLifeAutomaton;
 import sample.model.KruemelmonsterAutomaten;
 import sample.util.Simulation;
 import sample.util.StatesColorMapping;

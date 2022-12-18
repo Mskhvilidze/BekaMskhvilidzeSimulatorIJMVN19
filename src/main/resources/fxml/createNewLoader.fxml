@@ -4,21 +4,30 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane fx:id="pane" prefHeight="463.0" prefWidth="600.0" style="-fx-background-color: #FFE4C4;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.presenter.LoaderPresenter">
-    <Label alignment="CENTER" layoutX="153.0" layoutY="4.0" text="Classname bitte eingeben!">
+<Pane fx:id="pane" prefHeight="463.0" prefWidth="600.0" style="-fx-background-color: #FFE4C4;" xmlns="http://javafx.com/javafx/17.0.2-ea"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.presenter.LoaderPresenter">
+    <Label alignment="CENTER" layoutX="153.0" layoutY="4.0" text="Classname bitte eingeben!" style="-fx-padding: 2px 8px 3px 5px;
+    -fx-background-color: derive(#8F1D27, -20%);
+    -fx-text-fill: #FABB00;
+    -fx-font-weight: BOLD;
+    -fx-background-radius: 0 100px 100px 0;
+    -fx-border-radius: 0 100px 100px 0;">
         <font>
-            <Font name="System Bold" size="14.0" />
+            <Font name="System Bold" size="14.0"/>
         </font>
     </Label>
-    <TextField fx:id="name" layoutX="91.0" layoutY="100.0" prefHeight="25.0" prefWidth="305.0" styleClass="text-field" />
-    <Button fx:id="ja" disable="true" layoutX="98.0" layoutY="62.0" onAction="#onCreateClass" prefHeight="25.0" prefWidth="75.0" text="YES" translateY="100.0" />
-    <Button layoutX="331.0" layoutY="162.0" onAction="#onStageClose" prefHeight="25.0" prefWidth="75.0" text="CANCEL" />
+    <TextField fx:id="name" layoutX="91.0" layoutY="100.0" prefHeight="25.0" prefWidth="305.0" styleClass="text-field"/>
+    <Button fx:id="ja" disable="true" layoutX="98.0" layoutY="62.0" onAction="#onCreateClass" prefHeight="42.0" prefWidth="88.0"
+            styleClass="loaderYesButton" text="YES" translateY="100.0"/>
+    <Button layoutX="308.0" layoutY="162.0" onAction="#onStageClose" prefHeight="42.0" prefWidth="88.0" styleClass="loaderCancelButton"
+            text="CANCEL"/>
     <RadioButton layoutX="92.0" layoutY="39.0" mnemonicParsing="false" selected="true" text="GameOfLifeAutomaton.txt">
         <toggleGroup>
-            <ToggleGroup fx:id="toggle" />
+            <ToggleGroup fx:id="toggle"/>
         </toggleGroup>
-      <font>
-         <Font name="System Bold" size="12.0" />
-      </font></RadioButton>
-    <RadioButton layoutX="92.0" layoutY="72.0" mnemonicParsing="false" text="KruemelmonsterAutomaton.txt" toggleGroup="$toggle" />
+        <font>
+            <Font name="System Bold" size="12.0"/>
+        </font>
+    </RadioButton>
+    <RadioButton layoutX="92.0" layoutY="72.0" mnemonicParsing="false" text="KruemelmonsterAutomaton.txt" toggleGroup="$toggle"/>
 </Pane>

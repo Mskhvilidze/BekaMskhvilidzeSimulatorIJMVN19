@@ -5,9 +5,12 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import sample.message.request.*;
 import sample.model.AbstractAutomaton;
+import sample.util.AutomatonHelper;
+
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
 import java.io.ByteArrayOutputStream;
@@ -37,7 +40,7 @@ public class Service {
         eventBus.register(true);
     }
 
-    public static void setEventBus(EventBus bus){
+    public static void setEventBus(EventBus bus) {
         eventBus = bus;
     }
 
@@ -55,9 +58,14 @@ public class Service {
         return map;
     }
 
-    public void onLoadNewAutomaton(AbstractAutomaton automaton) {
-        RequestNewAutomaton newAutomaton = new RequestNewAutomaton(automaton);
-        eventBus.post(newAutomaton);
+    public void onLoadNewAutomaton(AbstractAutomaton automaton, String name) {
+        System.out.println(name);
+        for (Map.Entry<Stage, String> entry : map.entrySet()){
+            if (entry.getValue().equals(name)){
+                RequestNewAutomaton newAutomaton = new RequestNewAutomaton(automaton, entry.getKey(), entry.getValue());
+                eventBus.post(newAutomaton);
+            }
+        }
     }
 
     public void onPlatformExit(Stage stageID) {
@@ -93,11 +101,20 @@ public class Service {
         return !isTorus;
     }
 
-    public static void add(Stage stage, String name){
+    public static void toggleRadioButton(ToggleGroup group, AbstractAutomaton automaton) {
+        System.out.println(automaton.getNumberOfStates());
+        for (int i = 0; i < automaton.getNumberOfStates(); i++) {
+            Node node = (Node) group.getToggles().get(i);
+            node.setDisable(false);
+        }
+    }
+
+    public static void add(Stage stage, String name) {
         map.put(stage, name);
     }
 
-    public void save(String code, String path)  {
+    public void save(String code, String path) {
+        System.out.println(path);
         code = code.replace("\n", System.lineSeparator());
         ArrayList<String> lines = new ArrayList<>();
         lines.add(code);
@@ -118,18 +135,25 @@ public class Service {
     public static String getCode(String name, String filename) {
         try {
             Path file = Paths.get(EditorPresenter.SOURCE + filename);
-            StringBuilder text = new StringBuilder();
-            List<String> lines = Files.readAllLines(file, StandardCharsets.UTF_8);
-            for (int l = 0; l < lines.size(); l++) {
-                text.append(lines.get(l));
-                if (l < lines.size() - 1) {
-                    text.append(System.lineSeparator());
+            File searchFile = new File(file.toUri());
+            if (!searchFile.exists()) {
+                AutomatonHelper automatonHelper = new AutomatonHelper(searchFile);
+                automatonHelper.createAutomaton(filename);
+            } else {
+                StringBuilder text = new StringBuilder();
+                List<String> lines = Files.readAllLines(file, StandardCharsets.UTF_8);
+                for (int l = 0; l < lines.size(); l++) {
+                    text.append(lines.get(l));
+                    if (l < lines.size() - 1) {
+                        text.append(System.lineSeparator());
+                    }
                 }
+                return text.toString().replaceAll("Automata", name);
             }
-            return text.toString().replaceAll("Automata", name);
         } catch (Exception exc) {
             return "";
         }
+        return "";
     }
 
     public void compile(String name) {

@@ -22,7 +22,6 @@ public class View {
     private Scene scene;
     private Service service;
     private EventBus eventBus;
-
     public View(Stage stage, EventBus eventBus) {
         this.eventBus = eventBus;
         this.primaryStage = stage;
@@ -107,13 +106,13 @@ public class View {
         presenter.simulatorPresenter(this.service);
         presenter.setAutomaton(newAutomaton.getAutomaton());
         Platform.runLater(() -> {
-            primaryStage.setTitle(SIMULATOR);
+            newAutomaton.getStage().setTitle(newAutomaton.getName());
             scene = new Scene(rootParent, 815, 850);
-            primaryStage.setScene(scene);
-            primaryStage.show();
+            newAutomaton.getStage().setScene(scene);
+            newAutomaton.getStage().show();
         });
-        presenter.setStage(primaryStage);
-        primaryStage.setOnCloseRequest(event -> presenter.closeStage());
+        presenter.setStage(newAutomaton.getStage());
+        newAutomaton.getStage().setOnCloseRequest(event -> presenter.closeStage());
     }
 
     private void setMinAndMaxSizeOfStage() {
