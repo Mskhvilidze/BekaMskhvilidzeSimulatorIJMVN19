@@ -44,11 +44,11 @@ public class AutomatonHelper {
 
     private String getKruemelmonster() {
         return "package automata;\n" + "import sample.model.AbstractAutomaton;\n" + "\n" +
-               "  public Automata extends AbstractAutomaton{\n" + "\n" + "  private final static int rows = 30;\n" +
+               "  public class Automata extends AbstractAutomaton{\n" + "\n" + "  private final static int rows = 30;\n" +
                "  private final static int columns = 50;\n" + "  private final static int numberOfStates = 2;\n" +
-               "  private final static boolean isTorus = false;\n" + "  }\n" +
-               "  public Automata(int rows, int columns, boolean isTorus) {\n" + "        super(rows, columns, numberOfState, isTorus);\n" +
-               "    }\n" + "\n" + "    public Cell transform(Cell cell, Cell[] neighbors) {\n" + "        int state;\n" +
+               "  private final static boolean isTorus = false;\n" + " \n" + "  public Automata() {\n" +
+               "        super(rows, columns, numberOfStates, isTorus);\n" + "    }\n" + "\n" +
+               "    public Cell transform(Cell cell, Cell[] neighbors) {\n" + "        int state;\n" +
                "        for (Cell neighbor : neighbors) {\n" +
                "            state = (cell.getState() + 1) < getNumberOfStates() ? cell.getState() + 1 : 0;\n" +
                "            if (state == neighbor.getState()) {\n" + "                return new Cell(neighbor.getState());\n" +

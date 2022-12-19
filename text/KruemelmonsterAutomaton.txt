@@ -5,11 +5,11 @@ import sample.model.AbstractAutomaton;
 
   private final static int rows = 30;
   private final static int columns = 50;
-  private final static int numberOfStates = 2;
+  private final static int numberOfStates = 5;
   private final static boolean isTorus = false;
  
   public Automata() {
-        super(rows, columns, numberOfState, isTorus);
+        super(rows, columns, numberOfStates, isTorus);
     }
 
     public Cell transform(Cell cell, Cell[] neighbors) {
