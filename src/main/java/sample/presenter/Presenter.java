@@ -12,7 +12,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import sample.util.AudioCache;
 import sample.util.Simulation;
-
 import java.io.File;
 import java.net.URL;
 import java.util.*;
@@ -90,13 +89,13 @@ public class Presenter extends AbstractPresenter implements Initializable {
             this.rowSize.setText(String.valueOf(automaton.getRows()));
             this.colSize.setText(String.valueOf(automaton.getColumns()));
             this.scrollPane.viewportBoundsProperty().addListener((observable, oldValue, newValue) -> populationPanel.center(newValue));
+            Service.toggleRadioButton(this.toggleGroup, automaton);
             initPopulationView(automaton);
             setTooltip();
             setHgrowAndVgrow();
         });
         automaton.randomPopulation();
         this.slider.valueProperty().addListener((a, b, c) -> this.simulation.setSpeed(c.intValue()));
-        Service.toggleRadioButton(this.toggleGroup, automaton);
         System.out.println(this.toggleGroup.getUserData());
     }
 
@@ -293,7 +292,15 @@ public class Presenter extends AbstractPresenter implements Initializable {
         chooser.setInitialDirectory(new File(EditorPresenter.PATH));
         File selectedFile = chooser.showOpenDialog(null);
         if (selectedFile != null) {
-            this.service.onLoadNewAutomaton(service.loadProgram(selectedFile.getName().split("\\.")[0]), selectedFile.getName().split("\\.")[0]);
+            this.service.onLoadNewAutomaton(service.loadProgram(selectedFile.getName().split("\\.")[0]),
+                    selectedFile.getName().split("\\.")[0]);
+            setAutomaton(service.loadProgram(selectedFile.getName().split("\\.")[0]));
+        }
+        this.service.onPlatformExit(map.get(this.beenden.getId()));
+        for (Map.Entry<String, Stage> entry : map.entrySet()) {
+            if (this.beenden.getId().equals(entry.getKey().substring(0, entry.getKey().length() - 1))) {
+                this.service.onPlatformExit(map.get(entry.getKey()));
+            }
         }
     }
 }

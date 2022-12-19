@@ -1,12 +1,13 @@
 package sample.util;
 
+import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import sample.model.AbstractAutomaton;
 import sample.view.PopulationPanel;
 
 public class Simulation {
-    public static final int MIN_SPEED = 0;
+    public static final int MIN_SPEED = 20;
     public static final int MAX_SPEED = 100;
     public static final int DEF_SPEED = 50;
     private BooleanProperty running = new SimpleBooleanProperty(false);
@@ -53,9 +54,9 @@ public class Simulation {
                 running.set(true);
                 while (!isInterrupted()) {
                     automaton.nextGeneration();
-                    populationPanel.paintPopulation();
+                    Platform.runLater(() -> populationPanel.paintPopulation());
                     try {
-                        Thread.sleep(20 + MAX_SPEED * 5 - getSpeed() * 5);
+                        Thread.sleep(MIN_SPEED + MAX_SPEED * 5 - getSpeed() * 5);
                     } catch (InterruptedException e) {
                         interrupt();
                     }

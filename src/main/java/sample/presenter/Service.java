@@ -59,10 +59,13 @@ public class Service {
     }
 
     public void onLoadNewAutomaton(AbstractAutomaton automaton, String name) {
-        System.out.println(name);
-        for (Map.Entry<Stage, String> entry : map.entrySet()){
-            if (entry.getValue().equals(name)){
-                RequestNewAutomaton newAutomaton = new RequestNewAutomaton(automaton, entry.getKey(), entry.getValue());
+        if (map.size() < 1) {
+            RequestNewAutomaton newAutomaton = new RequestNewAutomaton(automaton, new Stage(), name);
+            eventBus.post(newAutomaton);
+        }
+        for (Map.Entry<Stage, String> entry : map.entrySet()) {
+            if (entry.getValue().equals(name)) {
+                RequestNewAutomaton newAutomaton = new RequestNewAutomaton(automaton, entry.getKey(), name);
                 eventBus.post(newAutomaton);
             }
         }
@@ -102,7 +105,6 @@ public class Service {
     }
 
     public static void toggleRadioButton(ToggleGroup group, AbstractAutomaton automaton) {
-        System.out.println(automaton.getNumberOfStates());
         for (int i = 0; i < automaton.getNumberOfStates(); i++) {
             Node node = (Node) group.getToggles().get(i);
             node.setDisable(false);
@@ -114,7 +116,6 @@ public class Service {
     }
 
     public void save(String code, String path) {
-        System.out.println(path);
         code = code.replace("\n", System.lineSeparator());
         ArrayList<String> lines = new ArrayList<>();
         lines.add(code);

@@ -9,6 +9,7 @@ import sample.model.AbstractAutomaton;
 import sample.util.Pair;
 import sample.view.PopulationPanel;
 import sample.view.PopulationPanelImpl;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -24,6 +25,7 @@ public class AbstractPresenter {
     protected Pair<Integer> pair;
     protected Simulation simulation;
     protected AbstractAutomaton automaton;
+    protected AbstractAutomaton newAutomaton;
     protected PopulationPanel populationPanel;
     private Canvas canvas;
 
@@ -55,6 +57,7 @@ public class AbstractPresenter {
     }
 
     public void setAutomaton(AbstractAutomaton newAutomaton) {
-        automaton = newAutomaton;
+        this.automaton = newAutomaton;
     }
+
 }

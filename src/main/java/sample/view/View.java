@@ -9,10 +9,9 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import sample.message.request.*;
-import sample.presenter.EditorPresenter;
-import sample.presenter.LoaderPresenter;
-import sample.presenter.Presenter;
-import sample.presenter.Service;
+import sample.model.AbstractAutomaton;
+import sample.model.KruemelmonsterAutomaten;
+import sample.presenter.*;
 import java.io.IOException;
 
 @SuppressWarnings("UnstableApiUsage")
@@ -39,6 +38,9 @@ public class View {
     }
 
     private void showScene() throws IOException {
+        AbstractAutomaton automaton = new KruemelmonsterAutomaten(45, 45, false);
+        AbstractPresenter abstractPresenter = new AbstractPresenter();
+        abstractPresenter.setAutomaton(automaton);
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource(Presenter.FXML));
         Parent rootParent = loader.load();

@@ -26,6 +26,11 @@ public class EditorPresenter extends AbstractPresenter implements Initializable 
     @FXML
     private TextArea area;
     private Stage stage;
+
+    public EditorPresenter() {
+        super();
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         VBox.setVgrow(this.area, Priority.ALWAYS);
@@ -61,6 +66,7 @@ public class EditorPresenter extends AbstractPresenter implements Initializable 
 
     @FXML
     private void onSaveCode() {
+        //TODO Bug mus gefixt werden
         this.service.save(this.area.getText(), PATH + LoaderPresenter.getTextName() + ".java");
     }
 
