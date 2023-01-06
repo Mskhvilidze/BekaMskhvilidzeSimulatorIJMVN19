@@ -1,5 +1,6 @@
 package automata;
 import sample.model.AbstractAutomaton;
+import sample.model.Callable;
 public class Automata extends AbstractAutomaton {
 private final static int rows = 30;
 private final static int columns = 50;
@@ -32,4 +33,9 @@ private final static boolean isTorus = false;
             }
         }
     }
+
+        @Callable
+        public void setGlier(int row) {
+            System.out.println("huhu ");
+        }
 }

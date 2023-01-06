@@ -224,7 +224,7 @@
                 </Button>
 
                 <Button fx:id="stepSimulation" layoutX="374.0" layoutY="5.0" maxHeight="40.0" maxWidth="30.0" minHeight="15.0"
-                        minWidth="15.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="30.0" styleClass="buttonHeader">
+                        minWidth="15.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="30.0" styleClass="buttonHeader" onAction="#onStepSimulate">
                     <graphic>
                         <ImageView pickOnBounds="true" preserveRatio="true">
                             <Image url="@../icons/Step24.gif"/>
@@ -439,7 +439,7 @@
         <HBox fx:id="hBoxForSimul" minHeight="400.0" minWidth="180.0" prefHeight="400.0" prefWidth="600.0"
               style="-fx-background-color: #A9A9A9; -fx-effect: dropshadowshadow(three-pass-box, grey, 10, 0, 0, 15)">
             <ScrollPane fx:id="scrollPane">
-                <Pane fx:id="stackPane">
+                <Pane fx:id="stackPane" onContextMenuRequested="#onMakeContextMenuEvent">
                     <Canvas fx:id="canvas" onMouseDragged="#onMouseDragged" onMousePressed="#onMousePressed" styleClass="canvas"/>
                     <fx:include fx:id="paneForNewLoader" source="createNewLoader.fxml" visible="false"/>
                     <DialogPane fx:id="dialogWindow" expanded="true" maxHeight="150.0" maxWidth="190.0" prefHeight="150.0" prefWidth="190.0"

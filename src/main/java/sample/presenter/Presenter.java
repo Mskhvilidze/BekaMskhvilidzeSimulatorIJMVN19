@@ -6,13 +6,21 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
+import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import sample.model.AbstractAutomaton;
+import sample.model.Callable;
 import sample.util.AudioCache;
 import sample.util.Simulation;
+import sample.view.PopulationPanel;
+
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.net.URL;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
@@ -77,7 +85,7 @@ public class Presenter extends AbstractPresenter implements Initializable {
     private Button laden;
     @FXML
     private Button generate;
-    private Stage temp;
+
     public Presenter() {
         super();
     }
@@ -104,7 +112,6 @@ public class Presenter extends AbstractPresenter implements Initializable {
     }
 
     public void setStage(Stage stage) {
-        this.temp = stage;
         this.beenden.setId("" + random.nextInt());
         map.put(this.beenden.getId(), stage);
     }
@@ -280,7 +287,7 @@ public class Presenter extends AbstractPresenter implements Initializable {
         Stage stage = new Stage();
         map.put(this.beenden.getId() + "1", stage);
         service.onNewEditorStage(stage);
-        Service.add(stage, temp.getTitle());
+        Service.add(stage, map.get(this.beenden.getId()).getTitle());
     }
 
     @FXML
@@ -294,13 +301,62 @@ public class Presenter extends AbstractPresenter implements Initializable {
         if (selectedFile != null) {
             this.service.onLoadNewAutomaton(service.loadProgram(selectedFile.getName().split("\\.")[0]),
                     selectedFile.getName().split("\\.")[0]);
-            setAutomaton(service.loadProgram(selectedFile.getName().split("\\.")[0]));
-        }
-        this.service.onPlatformExit(map.get(this.beenden.getId()));
-        for (Map.Entry<String, Stage> entry : map.entrySet()) {
-            if (this.beenden.getId().equals(entry.getKey().substring(0, entry.getKey().length() - 1))) {
-                this.service.onPlatformExit(map.get(entry.getKey()));
+            this.service.onPlatformExit(map.get(this.beenden.getId()));
+            for (Map.Entry<String, Stage> entry : map.entrySet()) {
+                if (this.beenden.getId().equals(entry.getKey().substring(0, entry.getKey().length() - 1))) {
+                    this.service.onPlatformExit(map.get(entry.getKey()));
+                }
             }
+        }
+    }
+
+    @FXML
+    private void onStepSimulate() {
+        automaton.nextGeneration();
+        populationPanel.paintPopulation();
+    }
+
+    @FXML
+    private void onMakeContextMenuEvent(ContextMenuEvent event) {
+        if (pair != null) {
+            ContextMenu menu = new ContextMenu(automaton, pair.getValue1(), pair.getValue2(), populationPanel);
+            menu.show(stackPane.getScene().getWindow(), event.getScreenX(), event.getScreenY());
+        }
+    }
+
+    private static class ContextMenu extends javafx.scene.control.ContextMenu {
+        public ContextMenu(AbstractAutomaton automaton, int col, int row, PopulationPanel p) {
+            Object[] o = new Object[]{row, col};
+            List<Method> methods = getMethods(automaton);
+            run(methods, automaton, p, o);
+        }
+
+        private void run(List<Method> methods, AbstractAutomaton automaton, PopulationPanel p, Object... o){
+            for (Method method : methods) {
+                Label lbl = new Label(method.getName());
+                CustomMenuItem item = new CustomMenuItem(lbl);
+                lbl.setOnMouseClicked(event -> {
+                    try {
+                        method.invoke(automaton, o[0], o[1]);
+                        p.paintPopulation();
+                    } catch (IllegalAccessException | InvocationTargetException e) {
+                        Alert alert =
+                                new Alert(Alert.AlertType.ERROR, "Beim Ausfuehren der Methode ist ein Fehler aufgetreten!", ButtonType.OK);
+                        alert.showAndWait();
+                    }
+                });
+                getItems().add(item);
+            }
+        }
+        private List<Method> getMethods(AbstractAutomaton automaton) {
+            List<Method> res = new ArrayList<>();
+            for (Method method : automaton.getClass().getDeclaredMethods()) {
+                if (Modifier.isPublic(method.getModifiers()) && method.getParameterCount() != 0 &&
+                    method.isAnnotationPresent(Callable.class)) {
+                    res.add(method);
+                }
+            }
+            return res;
         }
     }
 }

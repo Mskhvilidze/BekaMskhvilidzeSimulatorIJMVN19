@@ -31,7 +31,7 @@ public abstract class AbstractAutomaton implements Automaton {
         this.columns = columns;
         this.numberOfStates = numberOfStates;
         this.isMooreNeighborHood = isMooreNeighborHood;
-         this.cells = new Cell[rows][columns];
+        this.cells = new Cell[rows][columns];
         initMatrix(this.cells);
     }
 
@@ -199,9 +199,8 @@ public abstract class AbstractAutomaton implements Automaton {
      * abstrakte Methode "transform" für alle Zellen auf; Hinweis: zu
      * berücksichtigen sind die Nachbarschaftseigenschaft und die
      * Torus-Eigenschaft des Automaten
-     *
      */
-    public synchronized void nextGeneration()  {
+    public synchronized void nextGeneration() {
         Cell[][] temp = new Cell[this.cells.length][this.cells[0].length];
         if (this.isMooreNeighborHood()) {
             torusMoorNeighborsChecker(temp);
@@ -210,7 +209,7 @@ public abstract class AbstractAutomaton implements Automaton {
         }
     }
 
-    private void torusMoorNeighborsChecker(Cell[][] temp){
+    private void torusMoorNeighborsChecker(Cell[][] temp) {
         if (isTorus) {
             for (int r = 0; r < this.cells.length; r++) {
                 for (int c = 0; c < this.cells[r].length; c++) {
@@ -228,7 +227,7 @@ public abstract class AbstractAutomaton implements Automaton {
         this.cells = temp;
     }
 
-    private void neumannNeighborsChecker(Cell[][] temp){
+    private void neumannNeighborsChecker(Cell[][] temp) {
         for (int r = 0; r < this.cells.length; r++) {
             for (int c = 0; c < this.cells[r].length; c++) {
                 temp[r][c] = new Cell(this.transform(getCell(r, c), this.getNeumannNeighbors(r, c)));
@@ -236,6 +235,7 @@ public abstract class AbstractAutomaton implements Automaton {
         }
         this.cells = temp;
     }
+
     private Cell[] getTorusMoorNeighbors(int row, int col) {
         List<Cell> list = new ArrayList<>();
         int resultOfTempRowAndRows =
