@@ -42,9 +42,6 @@ public class Simulation {
         return this.speed;
     }
 
-    public BooleanProperty isRunning() {
-        return running;
-    }
 
     class SimulationThread extends Thread {
 
@@ -56,7 +53,7 @@ public class Simulation {
                     automaton.nextGeneration();
                     Platform.runLater(() -> populationPanel.paintPopulation());
                     try {
-                        Thread.sleep(MIN_SPEED + MAX_SPEED * 5 - getSpeed() * 5);
+                        Thread.sleep((MIN_SPEED + MAX_SPEED * 5) - getSpeed() * 5L);
                     } catch (InterruptedException e) {
                         interrupt();
                     }

@@ -133,9 +133,9 @@ public class Service {
         }
     }
 
-    public static String getCode(String name, String filename) {
+    public static String getCode(String name, String filename, boolean isExist) {
         try {
-            Path file = Paths.get(EditorPresenter.SOURCE + filename);
+            Path file = Paths.get(isExist ? EditorPresenter.PATH + name + ".java" : EditorPresenter.SOURCE + filename);
             File searchFile = new File(file.toUri());
             if (!searchFile.exists()) {
                 AutomatonHelper automatonHelper = new AutomatonHelper(searchFile);
@@ -181,6 +181,19 @@ public class Service {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static boolean isFileExists(String filename){
+        File file = new File(EditorPresenter.PATH);
+        File[] files = file.listFiles();
+        assert files != null;
+        for (File name : files) {
+            String foundFile = name.getName().substring(0, name.getName().length() - 5);
+            if (foundFile.equals(filename)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void alert() {

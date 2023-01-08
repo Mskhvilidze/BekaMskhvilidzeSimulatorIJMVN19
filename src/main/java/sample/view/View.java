@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import sample.message.request.*;
 import sample.model.AbstractAutomaton;
-import sample.model.KruemelmonsterAutomaten;
+import sample.model.KruemelmonsterAutomaton;
 import sample.presenter.*;
 import java.io.IOException;
 
@@ -38,7 +38,7 @@ public class View {
     }
 
     private void showScene() throws IOException {
-        AbstractAutomaton automaton = new KruemelmonsterAutomaten(45, 45, false);
+        AbstractAutomaton automaton = new KruemelmonsterAutomaton(45, 45, false);
         AbstractPresenter abstractPresenter = new AbstractPresenter();
         abstractPresenter.setAutomaton(automaton);
         FXMLLoader loader = new FXMLLoader();

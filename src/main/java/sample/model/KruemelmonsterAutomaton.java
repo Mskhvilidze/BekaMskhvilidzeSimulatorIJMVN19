@@ -1,8 +1,8 @@
 package sample.model;
 
-public class KruemelmonsterAutomaten extends AbstractAutomaton {
+public class KruemelmonsterAutomaton extends AbstractAutomaton {
 
-    public KruemelmonsterAutomaten(int rows, int columns, boolean isTorus) {
+    public KruemelmonsterAutomaton(int rows, int columns, boolean isTorus) {
         super(rows, columns, 8, isTorus);
     }
 

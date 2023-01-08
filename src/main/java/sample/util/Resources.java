@@ -9,6 +9,9 @@ public class Resources {
 
     public static String path;
 
+    private Resources(){
+
+    }
     static {
         try {
             URI uri = Resources.class.getResource("/resources").toURI();

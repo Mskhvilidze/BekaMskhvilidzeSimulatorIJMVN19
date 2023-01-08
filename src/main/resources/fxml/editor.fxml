@@ -4,32 +4,34 @@
 <?import javafx.scene.input.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox prefHeight="400.0" prefWidth="600.0" stylesheets="/css/css.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.presenter.EditorPresenter">
+<VBox prefHeight="400.0" prefWidth="600.0" stylesheets="/css/css.css" xmlns="http://javafx.com/javafx/17.0.2-ea"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.presenter.EditorPresenter">
     <MenuBar fx:id="menu" disable="true" styleClass="menuBar">
         <Menu styleClass="menu" text="_File">
             <MenuItem onAction="#onSaveCode" text="Save">
                 <accelerator>
-                    <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                    <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
                 </accelerator>
             </MenuItem>
             <MenuItem onAction="#onCompile" text="Compilieren">
                 <accelerator>
-                    <KeyCodeCombination alt="UP" code="K" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                    <KeyCodeCombination alt="UP" code="K" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
                 </accelerator>
             </MenuItem>
-            <SeparatorMenuItem />
+            <SeparatorMenuItem/>
             <MenuItem onAction="#onClose" text="Close">
                 <accelerator>
-                    <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                    <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
                 </accelerator>
             </MenuItem>
         </Menu>
     </MenuBar>
     <ScrollPane prefHeight="611.0" prefWidth="600.0">
         <Pane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
-            <TextArea fx:id="area" prefHeight="374.0" prefWidth="600.0" style="-fx-text-fill: #FABB00; -fx-font-weight: BOLD;" />
+            <TextArea fx:id="area" prefHeight="374.0" prefWidth="600.0" style="-fx-text-fill: #FABB00; -fx-font-weight: BOLD;"/>
             <AnchorPane fx:id="anchor" prefHeight="400" prefWidth="600.0" style="-fx-background-color: #FFE4C4;">
-                <Button fx:id="load" layoutX="256.0" layoutY="154.0" onAction="#onFileLoad" prefHeight="26.0" prefWidth="126.0" styleClass="buttonHeader" text="Load File">
+                <Button fx:id="load" layoutX="256.0" layoutY="154.0" onAction="#onFileLoad" prefHeight="26.0" prefWidth="126.0"
+                        styleClass="buttonHeader" text="Load File">
                 </Button>
             </AnchorPane>
         </Pane>

@@ -16,7 +16,6 @@ import sample.model.Callable;
 import sample.util.AudioCache;
 import sample.util.Simulation;
 import sample.view.PopulationPanel;
-
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -301,7 +300,6 @@ public class Presenter extends AbstractPresenter implements Initializable {
         if (selectedFile != null) {
             this.service.onLoadNewAutomaton(service.loadProgram(selectedFile.getName().split("\\.")[0]),
                     selectedFile.getName().split("\\.")[0]);
-            this.service.onPlatformExit(map.get(this.beenden.getId()));
             for (Map.Entry<String, Stage> entry : map.entrySet()) {
                 if (this.beenden.getId().equals(entry.getKey().substring(0, entry.getKey().length() - 1))) {
                     this.service.onPlatformExit(map.get(entry.getKey()));
@@ -337,7 +335,7 @@ public class Presenter extends AbstractPresenter implements Initializable {
                 CustomMenuItem item = new CustomMenuItem(lbl);
                 lbl.setOnMouseClicked(event -> {
                     try {
-                        method.invoke(automaton, o[0], o[1]);
+                        method.invoke(automaton, o);
                         p.paintPopulation();
                     } catch (IllegalAccessException | InvocationTargetException e) {
                         Alert alert =

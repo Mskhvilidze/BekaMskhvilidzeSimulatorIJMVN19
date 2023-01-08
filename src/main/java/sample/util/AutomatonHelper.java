@@ -29,17 +29,25 @@ public class AutomatonHelper {
     }
 
     private String getGameOfLife() {
-        return "package automata;\n" + "import sample.model.AbstractAutomaton;\n" + "public class Automata extends AbstractAutomaton {\n" +
-               "private final static int rows = 30;\n" + "private final static int columns = 50;\n" +
-               "private final static int numberOfStates = 2;\n" + "private final static boolean isTorus = false;\n" + "\n" +
-               "    public Automata() {\n" + "        super(rows, columns, numberOfStates, isTorus);\n" + "    }\n" + "\n" +
-               "    @Override\n" + "    public Cell transform(Cell cell, Cell[] neighbors) {\n" + "        int numberOfNeighbors = 0;\n" +
+        return "package automata;\n" + "import sample.model.AbstractAutomaton;\n" + "import sample.model.Callable;\n" +
+               "public class Automata extends AbstractAutomaton {\n" + "private final static int rows = 30;\n" +
+               "private final static int columns = 50;\n" + "private final static int numberOfStates = 2;\n" +
+               "private final static boolean isTorus = false;\n" + "\n" + "    public Automata() {\n" +
+               "        super(rows, columns, numberOfStates, isTorus);\n" + "    }\n" + "\n" + "    @Override\n" +
+               "    public Cell transform(Cell cell, Cell[] neighbors) {\n" + "        int numberOfNeighbors = 0;\n" +
                "        for (Cell neighbor : neighbors) {\n" + "            if (neighbor.getState() == 1) {\n" +
                "                numberOfNeighbors++;\n" + "            }\n" + "        }\n" + "        if (cell.getState() == 0) {\n" +
                "            if (numberOfNeighbors == 3) {\n" + "                return new Cell(1);\n" + "            } else {\n" +
                "                return new Cell(cell);\n" + "            }\n" + "        } else {\n" +
                "            if (numberOfNeighbors < 2 || numberOfNeighbors > 3) {\n" + "                return new Cell(0);\n" +
-               "            } else {\n" + "                return new Cell(cell);\n" + "            }\n" + "        }\n" + "    }\n" + "}";
+               "            } else {\n" + "                return new Cell(cell);\n" + "            }\n" + "        }\n" + "    }\n" +
+               "\n" + "    @Callable\n" + "    public void setGlider(int i, int j) {\n" + "        setState(i, j, 1);\n" +
+               "        setState(i + 1, j, 1);\n" + "        setState(i + 2, j, 1);\n" + "    }\n" + "\n" + "   @Callable\n" +
+               "    public void setOscillator(int i, int j) {\n" + "     setState(i, j,1);\n" + "     setState(i + 1, j + 1,1);\n" +
+               "     setState(i + 2, j - 1,1);\n" + "     setState(i + 2, j,1);\n" + "     setState(i + 2, j + 1,1);\n" + "     }\n" +
+               "     \n" + "     @Callable\n" + "      public void setCross(int i, int j){\n" + "       setState(i, j,1);\n" +
+               "       setState(i, j - 1, 1);\n" + "       setState(i, j + 1, 1);\n" + "       setState(i - 1, j, 1);\n" +
+               "       setState(i + 1, j, 1);\n" + "      }\n" + "}\n";
     }
 
     private String getKruemelmonster() {
