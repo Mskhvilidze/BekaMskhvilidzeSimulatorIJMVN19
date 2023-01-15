@@ -58,7 +58,7 @@ public class Service {
         return map;
     }
 
-    public void onLoadNewAutomaton(AbstractAutomaton automaton, String name) {
+    public static void onLoadNewAutomaton(AbstractAutomaton automaton, String name) {
         if (map.size() < 1) {
             RequestNewAutomaton newAutomaton = new RequestNewAutomaton(automaton, new Stage(), name);
             eventBus.post(newAutomaton);
@@ -129,7 +129,7 @@ public class Service {
                 outputStream.write(code.getBytes());
             }
         } catch (Exception exc) {
-            alert();
+            alert("Ups, da ist was schief gelaufen!", "Information");
         }
     }
 
@@ -163,13 +163,9 @@ public class Service {
         boolean success = javac.run(null, null, err, name) == 0;
         if (!success) {
             String msg = err.toString();
-            Alert alert = new Alert(Alert.AlertType.ERROR, msg, ButtonType.OK);
-            alert.setTitle("Compilierergebnis");
-            alert.showAndWait();
+            alert(msg, "Compilierergebnis");
         } else {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Compilieren erfolgreich!", ButtonType.OK);
-            alert.setTitle("Compilierergebnis");
-            alert.showAndWait();
+            alert("Compilieren erfolgreich!", "Compilierergebnis");
         }
     }
 
@@ -196,8 +192,9 @@ public class Service {
         return false;
     }
 
-    private void alert() {
-        Alert alert = new Alert(Alert.AlertType.ERROR, "Ups, da ist was schief gelaufen!", ButtonType.OK);
+    public static void alert(String message, String title) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, message, ButtonType.OK);
+        alert.setTitle(title);
         alert.showAndWait();
     }
 

@@ -1,5 +1,6 @@
 package sample.model;
 
+import java.io.Serializable;
 import java.util.*;
 
 public abstract class AbstractAutomaton implements Automaton {
@@ -53,6 +54,18 @@ public abstract class AbstractAutomaton implements Automaton {
      */
     public synchronized int getNumberOfStates() {
         return this.numberOfStates;
+    }
+
+    public synchronized void setRows(int rows) {
+        this.rows = rows;
+    }
+
+    public synchronized void setColumns(int columns) {
+        this.columns = columns;
+    }
+
+    public void setCells(int rows, int columns) {
+        this.cells = new Cell[rows][columns];
     }
 
     /**
@@ -151,6 +164,10 @@ public abstract class AbstractAutomaton implements Automaton {
         }
     }
 
+    public synchronized void setMooreNeighborHood(boolean mooreNeighborHood) {
+        isMooreNeighborHood = mooreNeighborHood;
+    }
+
     /**
      * Liefert eine Zelle des Automaten
      *
@@ -194,6 +211,10 @@ public abstract class AbstractAutomaton implements Automaton {
         }
     }
 
+    public synchronized void setNewState(int row, int columns, int state) {
+        this.cells[row][columns] = new Cell(state);
+    }
+
     /**
      * überführt den Automaten in die nächste Generation; ruft dabei die
      * abstrakte Methode "transform" für alle Zellen auf; Hinweis: zu
@@ -217,7 +238,6 @@ public abstract class AbstractAutomaton implements Automaton {
                 }
             }
         } else {
-            System.out.println("CC");
             for (int r = 0; r < this.cells.length; r++) {
                 for (int c = 0; c < this.cells[r].length; c++) {
                     temp[r][c] = new Cell(this.transform(getCell(r, c), this.getMoorNeighbors(r, c)));
@@ -310,7 +330,7 @@ public abstract class AbstractAutomaton implements Automaton {
         this.numberOfStates = numberOfStates;
     }
 
-    public static class Cell {
+    public static class Cell implements Serializable {
         private int state;
 
         /**

@@ -1,6 +1,8 @@
 package sample.model;
 
-public interface Automaton {
+import java.io.Serializable;
+
+public interface Automaton extends Serializable {
 
     void initMatrix(AbstractAutomaton.Cell[][] cells);
     int getNumberOfStates();
@@ -10,8 +12,12 @@ public interface Automaton {
     boolean isTorus();
     void setTorus(boolean isTorus);
     boolean isMooreNeighborHood();
+    void setRows(int rows);
+    void setColumns(int columns);
+    void setMooreNeighborHood(boolean mooreNeighborHood);
     void clearPopulation();
     void randomPopulation();
     void nextGeneration();
     void setNumberOfStates(int numberOfStates);
+    void setNewState(int row, int columns, int state);
 }

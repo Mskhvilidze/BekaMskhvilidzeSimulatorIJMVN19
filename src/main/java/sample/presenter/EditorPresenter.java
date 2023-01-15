@@ -54,9 +54,7 @@ public class EditorPresenter extends AbstractPresenter implements Initializable 
         if (file.exists()) {
             service.compile(file.getPath());
         } else {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "File muss erst gespeichert werden!", ButtonType.OK);
-            alert.setTitle("Compilierergebnis");
-            alert.showAndWait();
+            Service.alert("File muss erst gespeichert werden!", "Compilierergebnis");
         }
     }
 

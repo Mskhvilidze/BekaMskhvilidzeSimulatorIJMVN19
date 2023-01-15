@@ -11,15 +11,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import sample.model.AbstractAutomaton;
-import sample.model.Callable;
+import sample.message.AbstractNewAutomatonMessage;
 import sample.util.AudioCache;
 import sample.util.Simulation;
-import sample.view.PopulationPanel;
+import sample.view.PopulationContextMenu;
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 import java.net.URL;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
@@ -211,11 +207,9 @@ public class Presenter extends AbstractPresenter implements Initializable {
     private void onChangeSize() {
         Platform.runLater(() -> {
             if (Integer.parseInt(rowSize.getText()) > 100 || Integer.parseInt(colSize.getText()) > 100) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Maximale Größe ist 100");
-                alert.showAndWait();
+                Service.alert("Maximale Größe ist 100", "");
             } else if (Integer.parseInt(rowSize.getText()) < 5 || Integer.parseInt(colSize.getText()) < 5) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Minimale Größe ist 5");
-                alert.showAndWait();
+                Service.alert("Minimale Größe ist 5", "");
             } else {
                 automaton.changeSize(Integer.parseInt(rowSize.getText()), Integer.parseInt(colSize.getText()));
                 initPopulationView(automaton);
@@ -298,8 +292,7 @@ public class Presenter extends AbstractPresenter implements Initializable {
         chooser.setInitialDirectory(new File(EditorPresenter.PATH));
         File selectedFile = chooser.showOpenDialog(null);
         if (selectedFile != null) {
-            this.service.onLoadNewAutomaton(service.loadProgram(selectedFile.getName().split("\\.")[0]),
-                    selectedFile.getName().split("\\.")[0]);
+            Service.onLoadNewAutomaton(service.loadProgram(selectedFile.getName().split("\\.")[0]), selectedFile.getName().split("\\.")[0]);
             for (Map.Entry<String, Stage> entry : map.entrySet()) {
                 if (this.beenden.getId().equals(entry.getKey().substring(0, entry.getKey().length() - 1))) {
                     this.service.onPlatformExit(map.get(entry.getKey()));
@@ -317,44 +310,34 @@ public class Presenter extends AbstractPresenter implements Initializable {
     @FXML
     private void onMakeContextMenuEvent(ContextMenuEvent event) {
         if (pair != null) {
-            ContextMenu menu = new ContextMenu(automaton, pair.getValue1(), pair.getValue2(), populationPanel);
+            PopulationContextMenu menu = new PopulationContextMenu(automaton, pair.getValue1(), pair.getValue2(), populationPanel);
             menu.show(stackPane.getScene().getWindow(), event.getScreenX(), event.getScreenY());
         }
     }
 
-    private static class ContextMenu extends javafx.scene.control.ContextMenu {
-        public ContextMenu(AbstractAutomaton automaton, int col, int row, PopulationPanel p) {
-            Object[] o = new Object[]{row, col};
-            List<Method> methods = getMethods(automaton);
-            run(methods, automaton, p, o);
-        }
+    @FXML
+    private void onSaveAutomatonSerialize() {
+        Serialization serialization = new Serialization();
+        serialization.saveAutomaton(new AbstractNewAutomatonMessage(automaton), map.get(this.beenden.getId()));
+    }
 
-        private void run(List<Method> methods, AbstractAutomaton automaton, PopulationPanel p, Object... o){
-            for (Method method : methods) {
-                Label lbl = new Label(method.getName());
-                CustomMenuItem item = new CustomMenuItem(lbl);
-                lbl.setOnMouseClicked(event -> {
-                    try {
-                        method.invoke(automaton, o);
-                        p.paintPopulation();
-                    } catch (IllegalAccessException | InvocationTargetException e) {
-                        Alert alert =
-                                new Alert(Alert.AlertType.ERROR, "Beim Ausfuehren der Methode ist ein Fehler aufgetreten!", ButtonType.OK);
-                        alert.showAndWait();
-                    }
-                });
-                getItems().add(item);
-            }
-        }
-        private List<Method> getMethods(AbstractAutomaton automaton) {
-            List<Method> res = new ArrayList<>();
-            for (Method method : automaton.getClass().getDeclaredMethods()) {
-                if (Modifier.isPublic(method.getModifiers()) && method.getParameterCount() != 0 &&
-                    method.isAnnotationPresent(Callable.class)) {
-                    res.add(method);
-                }
-            }
-            return res;
-        }
+    @FXML
+    private void onLoadAutomatonDeserialize() {
+        Serialization serialization = new Serialization();
+        setAutomaton(serialization.loadAutomaton(automaton, map.get(this.beenden.getId())));
+        initPopulationView(automaton);
+    }
+
+    @FXML
+    private void onSaveAutomatonXMLSerialize() {
+        Serialization serialization = new Serialization();
+        serialization.saveXML(new AbstractNewAutomatonMessage(automaton), map.get(this.beenden.getId()));
+    }
+
+    @FXML
+    private void onLoadXMLAutomatonDeserialize() {
+        Serialization serialization = new Serialization();
+        setAutomaton(serialization.loadXML(automaton, map.get(this.beenden.getId())));
+        initPopulationView(automaton);
     }
 }

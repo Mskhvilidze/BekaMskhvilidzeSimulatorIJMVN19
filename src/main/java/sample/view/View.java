@@ -12,6 +12,7 @@ import sample.message.request.*;
 import sample.model.AbstractAutomaton;
 import sample.model.KruemelmonsterAutomaton;
 import sample.presenter.*;
+
 import java.io.IOException;
 
 @SuppressWarnings("UnstableApiUsage")
@@ -21,6 +22,7 @@ public class View {
     private Scene scene;
     private Service service;
     private EventBus eventBus;
+
     public View(Stage stage, EventBus eventBus) {
         this.eventBus = eventBus;
         this.primaryStage = stage;
