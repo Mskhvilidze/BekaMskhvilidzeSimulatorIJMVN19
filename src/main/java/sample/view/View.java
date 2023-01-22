@@ -12,7 +12,7 @@ import sample.message.request.*;
 import sample.model.AbstractAutomaton;
 import sample.model.KruemelmonsterAutomaton;
 import sample.presenter.*;
-
+import sample.presenter.database.DatabaseAutomatonStore;
 import java.io.IOException;
 
 @SuppressWarnings("UnstableApiUsage")
@@ -22,15 +22,17 @@ public class View {
     private Scene scene;
     private Service service;
     private EventBus eventBus;
+    private DatabaseAutomatonStore store;
 
     public View(Stage stage, EventBus eventBus) {
         this.eventBus = eventBus;
         this.primaryStage = stage;
+        this.store = new DatabaseAutomatonStore();
     }
 
     public void show() throws IOException {
         eventBus.register(this);
-        this.service = new Service(eventBus);
+        this.service = new Service(eventBus, null);
         initView();
         setMinAndMaxSizeOfStage();
     }
@@ -56,7 +58,10 @@ public class View {
             primaryStage.show();
             presenter.setStage(primaryStage);
         });
-        primaryStage.setOnCloseRequest(event -> presenter.closeStage());
+        primaryStage.setOnCloseRequest(event -> {
+            presenter.closeStage();
+            store.shutdown();
+        });
     }
 
     @Subscribe
@@ -74,7 +79,10 @@ public class View {
             stage.show();
             presenter.setStage(stage);
         });
-        stage.setOnCloseRequest(event -> presenter.closeStage());
+        stage.setOnCloseRequest(event -> {
+            presenter.closeStage();
+            store.shutdown();
+        });
     }
 
     @Subscribe
@@ -116,7 +124,63 @@ public class View {
             newAutomaton.getStage().show();
         });
         presenter.setStage(newAutomaton.getStage());
-        newAutomaton.getStage().setOnCloseRequest(event -> presenter.closeStage());
+        newAutomaton.getStage().setOnCloseRequest(event -> {
+            presenter.closeStage();
+            store.shutdown();
+        });
+    }
+
+    @Subscribe
+    public void onSaveTable(RequestSaveTableStage saveTableStage) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource(CreateTablePresenter.FXML));
+        Parent rootParent = loader.load();
+        CreateTablePresenter presenter = loader.getController();
+        presenter.setDataBaseConnection(this.store);
+        presenter.setPresenterService(this.service);
+        presenter.setSaveTableStage(saveTableStage.getStage());
+        presenter.addFields(saveTableStage.getWidth(), saveTableStage.getHeight(), saveTableStage.getPaneWidth(),
+                saveTableStage.getPaneHeight(), saveTableStage.getSpeed());
+        Platform.runLater(() -> {
+            saveTableStage.getStage().setTitle("Speichern");
+            scene = new Scene(rootParent, 589.0, 198.0);
+            saveTableStage.getStage().setScene(scene);
+            saveTableStage.getStage().show();
+        });
+    }
+
+    @Subscribe
+    public void onDeleteTable(RequestDeleteTableStage deleteTableStage) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource(DropTablePresenter.FXML));
+        Parent rootParent = loader.load();
+        DropTablePresenter presenter = loader.getController();
+        presenter.setDropTableStage(deleteTableStage.getStage());
+        presenter.setDataBaseConnection(this.store);
+        presenter.setDropTableService(this.service);
+        Platform.runLater(() -> {
+            deleteTableStage.getStage().setTitle("Löschen");
+            scene = new Scene(rootParent, 501.0, 198.0);
+            deleteTableStage.getStage().setScene(scene);
+            deleteTableStage.getStage().show();
+        });
+    }
+
+    @Subscribe
+    public void onRestoreTable(RequestRestoreTableStage requestRestoreTableStage) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource(RestorePresenter.FXML));
+        Parent rootParent = loader.load();
+        RestorePresenter presenter = loader.getController();
+        presenter.setRestoredTableStage(requestRestoreTableStage.getStage());
+        presenter.setDataBaseConnection(this.store);
+        presenter.setRestoredTableService(this.service);
+        Platform.runLater(() -> {
+            requestRestoreTableStage.getStage().setTitle("Wiederherstellen");
+            scene = new Scene(rootParent, 533.0, 198.0);
+            requestRestoreTableStage.getStage().setScene(scene);
+            requestRestoreTableStage.getStage().show();
+        });
     }
 
     private void setMinAndMaxSizeOfStage() {

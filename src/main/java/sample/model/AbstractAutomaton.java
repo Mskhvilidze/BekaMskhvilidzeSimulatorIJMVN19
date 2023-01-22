@@ -330,6 +330,24 @@ public abstract class AbstractAutomaton implements Automaton {
         this.numberOfStates = numberOfStates;
     }
 
+    @Callable
+    public void setOscillator(int i, int j) {
+        setState(i, j,1);
+        setState(i + 1, j + 1,1);
+        setState(i + 2, j - 1,1);
+        setState(i + 2, j,1);
+        setState(i + 2, j + 1,1);
+    }
+
+    @Callable
+    public void setCross(int i, int j){
+        setState(i, j,1);
+        setState(i, j - 1, 1);
+        setState(i, j + 1, 1);
+        setState(i - 1, j, 1);
+        setState(i + 1, j, 1);
+    }
+
     public static class Cell implements Serializable {
         private int state;
 

@@ -1,5 +1,6 @@
 package sample.presenter;
 
+
 import javafx.scene.canvas.Canvas;
 import javafx.stage.Stage;
 import sample.model.KruemelmonsterAutomaton;
@@ -9,7 +10,6 @@ import sample.model.AbstractAutomaton;
 import sample.util.Pair;
 import sample.view.PopulationPanel;
 import sample.view.PopulationPanelImpl;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -27,7 +27,6 @@ public class AbstractPresenter {
     protected AbstractAutomaton automaton;
     protected PopulationPanel populationPanel;
     private Canvas canvas;
-
     public AbstractPresenter() {
         automaton = new KruemelmonsterAutomaton(45, 45, false);
     }

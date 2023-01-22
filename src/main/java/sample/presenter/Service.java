@@ -33,15 +33,26 @@ import java.util.Map;
 public class Service {
 
     private static EventBus eventBus;
+    private static EventBus event;
     private static Map<Stage, String> map = new HashMap<>();
 
-    public Service(EventBus eventBus) {
-        setEventBus(eventBus);
-        eventBus.register(true);
+    public Service(EventBus eventBus, EventBus bus) {
+        if (eventBus != null) {
+            setEventBus(eventBus);
+            eventBus.register(true);
+        }
+        if (bus != null) {
+            setEventBusForPresenter(bus);
+            bus.register(true);
+        }
     }
 
     public static void setEventBus(EventBus bus) {
         eventBus = bus;
+    }
+
+    public static void setEventBusForPresenter(EventBus bus) {
+        event = bus;
     }
 
     public static void onNewGameWindow() {
@@ -52,6 +63,26 @@ public class Service {
     public void onNewEditorStage(Stage stage) {
         RequestEditorStage requestEditorStage = new RequestEditorStage(stage);
         eventBus.post(requestEditorStage);
+    }
+
+    public void onSaveTable(Stage stage, double width, double height, double paneWidth, double paneHeight, double speed) {
+        RequestSaveTableStage saveTableStage = new RequestSaveTableStage(stage, width, height, paneWidth, paneHeight, speed);
+        eventBus.post(saveTableStage);
+    }
+
+    public void onDeleteTable(Stage stage) {
+        RequestDeleteTableStage deleteTableStage = new RequestDeleteTableStage(stage);
+        eventBus.post(deleteTableStage);
+    }
+
+    public void onRestoreTable(Stage stage) {
+        RequestRestoreTableStage requestRestoreTableStage = new RequestRestoreTableStage(stage);
+        eventBus.post(requestRestoreTableStage);
+    }
+
+    public void onRestoreAutomaton(List<String> list) {
+        RequestRestoreAutomaton<String> requestRestoreAutomaton = new RequestRestoreAutomaton<>(list);
+        event.post(requestRestoreAutomaton);
     }
 
     public static Map<Stage, String> getMap() {
@@ -179,7 +210,7 @@ public class Service {
         return null;
     }
 
-    public static boolean isFileExists(String filename){
+    public static boolean isFileExists(String filename) {
         File file = new File(EditorPresenter.PATH);
         File[] files = file.listFiles();
         assert files != null;

@@ -96,16 +96,19 @@ public class Serialization {
         if (file == null) {
             return;
         }
-        String filename = StringUtils.splitPreserveAllTokens(file.getName(), ".")[0];
-        String appendIfMissing = StringUtils.appendIfMissing(filename, ".xml");
-        file = new File(file.getParent() + File.separator + appendIfMissing);
-        Document xmlDoc = Objects.requireNonNull(getDoc()).newDocument();
-        if (xmlDoc != null && automaton.getAutomaton() != null) {
-            Element element = createElement(xmlDoc, automaton.getAutomaton());
-            xmlDoc.appendChild(element);
-            writeXML(xmlDoc, file.toPath());
-        } else {
-            Service.alert("XML konnte nicht erstellt werden! Gründe: Automaton ist leer oder Document lässt sich nicht erzeugen", "XML");
+        synchronized (automaton.getAutomaton()) {
+            String filename = StringUtils.splitPreserveAllTokens(file.getName(), ".")[0];
+            String appendIfMissing = StringUtils.appendIfMissing(filename, ".xml");
+            file = new File(file.getParent() + File.separator + appendIfMissing);
+            Document xmlDoc = Objects.requireNonNull(getDoc()).newDocument();
+            if (xmlDoc != null && automaton.getAutomaton() != null) {
+                Element element = createElement(xmlDoc, automaton.getAutomaton());
+                xmlDoc.appendChild(element);
+                writeXML(xmlDoc, file.toPath());
+            } else {
+                Service.alert("XML konnte nicht erstellt werden! Gründe: Automaton ist leer oder Document lässt sich nicht erzeugen",
+                        "XML");
+            }
         }
     }
 
@@ -124,8 +127,9 @@ public class Serialization {
 
     /**
      * Falls Document konnte nicht erstellt werden oder XML-Datei ist kaput, bleibt aktuelles Automaton, sonst wird gespeichertes geladen
+     *
      * @param automaton Aktuelles Automaton
-     * @param input File
+     * @param input     File
      * @return Entweder aktuelles oder gespeichertes Automaton
      */
     private AbstractAutomaton loadXMLAutomaton(AbstractAutomaton automaton, InputStream input) {

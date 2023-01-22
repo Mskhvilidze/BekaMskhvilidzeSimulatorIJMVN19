@@ -1,5 +1,7 @@
 package sample.presenter;
 
+import com.google.common.eventbus.EventBus;
+import com.google.common.eventbus.Subscribe;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,14 +14,16 @@ import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import sample.message.AbstractNewAutomatonMessage;
+import sample.message.request.RequestRestoreAutomaton;
 import sample.util.AudioCache;
 import sample.util.Simulation;
 import sample.view.PopulationContextMenu;
+
 import java.io.File;
 import java.net.URL;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
-
+@SuppressWarnings("UnstableApiUsage")
 public class Presenter extends AbstractPresenter implements Initializable {
     public static final String FXML = "/fxml/view.fxml";
     @FXML
@@ -83,6 +87,9 @@ public class Presenter extends AbstractPresenter implements Initializable {
 
     public Presenter() {
         super();
+        EventBus bus = new EventBus();
+        bus.register(this);
+        new Service(null, bus);
     }
 
     @Override
@@ -339,5 +346,37 @@ public class Presenter extends AbstractPresenter implements Initializable {
         Serialization serialization = new Serialization();
         setAutomaton(serialization.loadXML(automaton, map.get(this.beenden.getId())));
         initPopulationView(automaton);
+    }
+
+    @FXML
+    private void onSaveTable() {
+        Stage stage = new Stage();
+        map.put(this.beenden.getId() + "2", stage);
+        service.onSaveTable(stage, map.get(beenden.getId()).getWidth(), map.get(beenden.getId()).getHeight(),
+                populationPanel.getMinStackPaneWidth(), populationPanel.getMinStackPaneHeight(), slider.getValue());
+    }
+
+    @FXML
+    private void onDeleteTable() {
+        Stage stage = new Stage();
+        map.put(this.beenden.getId() + "3", stage);
+        service.onDeleteTable(stage);
+    }
+
+    @FXML
+    private void onRestoreTable() {
+        Stage stage = new Stage();
+        map.put(this.beenden.getId() + "4", stage);
+        service.onRestoreTable(stage);
+    }
+
+    @Subscribe
+    public void onRestoreAutomaton(RequestRestoreAutomaton<String> requestRestoreAutomaton){
+        List<String> list = requestRestoreAutomaton.getList();
+        Stage stage = map.get(beenden.getId());
+        stage.setWidth(Double.parseDouble(list.get(0)));
+        stage.setHeight(Double.parseDouble(list.get(1)));
+        stackPane.setPrefSize(Double.parseDouble(list.get(2)), Double.parseDouble(list.get(3)));
+        slider.setValue(Double.parseDouble(list.get(4)));
     }
 }

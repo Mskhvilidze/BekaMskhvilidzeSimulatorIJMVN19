@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+
+<Pane prefHeight="198.0" prefWidth="501.0" stylesheets="/css/css.css" xmlns="http://javafx.com/javafx/17.0.2-ea"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.presenter.DropTablePresenter">
+    <Label alignment="CENTER" layoutX="70.0" layoutY="29.0" prefHeight="17.0" prefWidth="361.0"
+           style="-fx-padding: 2px 8px 3px 5px; -fx-background-color: derive(#8F1D27, -20%); -fx-text-fill: #FABB00; -fx-font-weight: BOLD; -fx-background-radius: 0 100px 100px 0; -fx-border-radius: 0 100px 100px 0;"
+           text="Einstellungen Löschen"/>
+    <Line endX="501.0" endY="99.00001525878906" layoutY="-14.0" startX="1.220703143189894E-5" startY="99.00001525878906"/>
+    <Label alignment="CENTER" layoutY="102.0" prefHeight="23.0" prefWidth="247.0"
+           style="-fx-padding: 2px 8px 3px 5px; -fx-background-color: derive(#8F1D27, -20%); -fx-text-fill: #FABB00; -fx-font-weight: BOLD; -fx-background-radius: 0 100px 100px 0; -fx-border-radius: 0 100px 100px 0;"
+           text="Unter folgendem Namen löschen"/>
+    <ComboBox fx:id="tables" layoutX="263.0" layoutY="101.0" prefHeight="25.0" prefWidth="238.0" visible="false">
+        <effect>
+            <InnerShadow/>
+        </effect>
+    </ComboBox>
+    <Button fx:id="delete" layoutX="70.0" layoutY="140.0" mnemonicParsing="false" onAction="#onDeleteTable" prefHeight="25.0"
+            prefWidth="128.0" styleClass="loaderYesButton" text="Delete"/>
+    <Button layoutX="303.0" layoutY="140.0" mnemonicParsing="false" onAction="#onStageCancel" prefHeight="25.0" prefWidth="128.0"
+            styleClass="loaderCancelButton" text="Abbrechen"/>
+    <Button layoutX="263.0" layoutY="101.0" mnemonicParsing="false" onAction="#onShowAllTables" prefHeight="25.0" prefWidth="238.0"
+            text="Tabellen auflisten"
+            style="    -fx-background-color:
+        #3c7fb1,
+        linear-gradient(#fafdfe, #e8f5fc),
+        linear-gradient(#eaf6fd 0%, #d9f0fc 49%, #bee6fd 50%, #a7d9f5 100%);
+    -fx-background-insets: 0,1,2;
+    -fx-background-radius: 3,2,1;
+    -fx-padding: 3 30 3 30;
+    -fx-text-fill: black;
+    -fx-font-size: 14px;">
+        <effect>
+            <InnerShadow/>
+        </effect>
+    </Button>
+    <effect>
+        <InnerShadow/>
+    </effect>
+</Pane>

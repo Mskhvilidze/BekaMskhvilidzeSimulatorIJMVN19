@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+
+<Pane prefHeight="198.0" prefWidth="589.0" stylesheets="/css/css.css" xmlns="http://javafx.com/javafx/17.0.2-ea"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.presenter.CreateTablePresenter">
+    <Line endY="78.90001678466797" startX="589.0" startY="78.90000915527344"/>
+    <Label alignment="CENTER" layoutX="70.0" layoutY="29.0" prefHeight="17.0" prefWidth="361.0"
+           style="-fx-padding: 2px 8px 3px 5px; -fx-background-color: derive(#8F1D27, -20%); -fx-text-fill: #FABB00; -fx-font-weight: BOLD; -fx-background-radius: 0 100px 100px 0; -fx-border-radius: 0 100px 100px 0;"
+           text="Einstellungen speichern"/>
+    <TextField fx:id="tableName" layoutX="342.0" layoutY="98.0" prefHeight="25.0" prefWidth="247.0" styleClass="text-field">
+        <effect>
+            <InnerShadow/>
+        </effect>
+    </TextField>
+    <Label alignment="CENTER" layoutX="-1.0" layoutY="99.0" prefHeight="23.0" prefWidth="334.0"
+           style="-fx-padding: 2px 8px 3px 5px; -fx-background-color: derive(#8F1D27, -20%); -fx-text-fill: #FABB00; -fx-font-weight: BOLD; -fx-background-radius: 0 100px 100px 0; -fx-border-radius: 0 100px 100px 0;"
+           text="Unter folgendem Namen abspeichern"/>
+    <Button fx:id="create" layoutX="123.0" layoutY="139.0" mnemonicParsing="false" onAction="#onCreateTable" prefHeight="25.0"
+            prefWidth="128.0" styleClass="loaderYesButton" text="create"/>
+    <Button layoutX="367.0" layoutY="139.0" mnemonicParsing="false" onAction="#onStageCancel" prefHeight="25.0" prefWidth="128.0"
+            styleClass="loaderCancelButton" text="Abbrechen"/>
+    <effect>
+        <InnerShadow/>
+    </effect>
+</Pane>
