@@ -18,7 +18,6 @@ import sample.message.request.RequestRestoreAutomaton;
 import sample.util.AudioCache;
 import sample.util.Simulation;
 import sample.view.PopulationContextMenu;
-
 import java.io.File;
 import java.net.URL;
 import java.util.*;

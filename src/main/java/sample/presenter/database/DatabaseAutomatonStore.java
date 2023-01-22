@@ -15,7 +15,7 @@ public class DatabaseAutomatonStore implements AutomatonStore {
     private static final String HEIGHT = "Height";
     private static final String PANEL_WIDTH = "Panel_Width";
     private static final String PANEL_HEIGHT = "Panel_Height";
-        private static final String SPEED = "Speed";
+    private static final String SPEED = "Speed";
 
     public DatabaseAutomatonStore() {
         DataBaseConnection dataBaseConnection = new DataBaseConnection();
@@ -36,11 +36,9 @@ public class DatabaseAutomatonStore implements AutomatonStore {
                 Service.alert("Tabelle konnte nicht erstellt werden!", "");
             }
         }
-        if (!isValid || checkExistenceAndUpdate) {
+        if (!isValid) {
             query = "INSERT INTO " + tableName + " (Name, Width, Height, Panel_Width, Panel_Height, Speed) VALUES(?, ?, ?, ?, ?, ?)";
             insertAutomaton(query, tableName, width, height, panelWidth, panelHeight, speed);
-        } else {
-            Service.alert("Einfügen ist unmöglich", "Einfügen");
         }
     }
 
@@ -87,10 +85,17 @@ public class DatabaseAutomatonStore implements AutomatonStore {
     public void dropTable(String tableName) {
         String query = "Drop table " + tableName;
         try (PreparedStatement statement = connection.prepareStatement(query)) {
+            connection.setAutoCommit(false);
             statement.execute();
+            connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
             Service.alert("Tabelle konnte nicht gelöscht werden!", "Tabelle");
+            try {
+                connection.rollback();
+            } catch (SQLException i) {
+                i.printStackTrace();
+            }
         }
 
     }
@@ -130,8 +135,10 @@ public class DatabaseAutomatonStore implements AutomatonStore {
     }
 
     //Private Methode
-    private void insertAutomaton(String query, String table, double width, double height, double panelWidth, double panelHeight, double speed) {
+    private void insertAutomaton(String query, String table, double width, double height, double panelWidth, double panelHeight,
+                                 double speed) {
         try (PreparedStatement statement = connection.prepareStatement(query)) {
+            connection.setAutoCommit(false);
             statement.setString(1, table);
             statement.setString(2, String.valueOf(width));
             statement.setString(3, String.valueOf(height));
@@ -139,9 +146,15 @@ public class DatabaseAutomatonStore implements AutomatonStore {
             statement.setString(5, String.valueOf(panelHeight));
             statement.setString(6, String.valueOf(speed));
             statement.execute();
+            connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
             Service.alert("Problem beim Einfügen", "Table");
+            try {
+                connection.rollback();
+            } catch (SQLException i) {
+                i.printStackTrace();
+            }
         }
     }
 
@@ -158,17 +171,24 @@ public class DatabaseAutomatonStore implements AutomatonStore {
             }
             resultSet.close();
             try (PreparedStatement stmt = connection.prepareStatement(query)) {
+                connection.setAutoCommit(false);
                 stmt.setString(1, String.valueOf(width));
                 stmt.setString(2, String.valueOf(height));
                 stmt.setString(3, String.valueOf(panelWidth));
                 stmt.setString(4, String.valueOf(panelHeight));
                 stmt.setString(5, table);
                 stmt.executeUpdate();
+                connection.commit();
                 return true;
             }
         } catch (SQLException e) {
             e.printStackTrace();
             Service.alert("Prüfen, ob die Tabelle schon existiert", "Check");
+            try {
+                connection.rollback();
+            } catch (SQLException i) {
+                i.printStackTrace();
+            }
         }
         return false;
     }
