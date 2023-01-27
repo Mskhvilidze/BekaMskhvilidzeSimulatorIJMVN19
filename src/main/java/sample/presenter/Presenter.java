@@ -86,7 +86,7 @@ public class Presenter extends AbstractPresenter implements Initializable {
     private Button laden;
     @FXML
     private Button generate;
-    static final String PROPFILE = "Test";
+    static final String PROPFILE = "sample.Test";
 
     public Presenter() {
         super();
@@ -110,6 +110,8 @@ public class Presenter extends AbstractPresenter implements Initializable {
         automaton.randomPopulation();
         this.slider.valueProperty().addListener((a, b, c) -> this.simulation.setSpeed(c.intValue()));
         System.out.println(this.toggleGroup.getUserData());
+        ResourceBundle bundle = ResourceBundle.getBundle("Test", new Locale("de", "CH"));
+        System.out.println(bundle.getString("Hi"));
     }
 
     public void simulatorPresenter(Service service) {
