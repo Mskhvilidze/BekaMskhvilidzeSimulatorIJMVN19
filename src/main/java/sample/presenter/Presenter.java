@@ -18,10 +18,13 @@ import sample.message.request.RequestRestoreAutomaton;
 import sample.util.AudioCache;
 import sample.util.Simulation;
 import sample.view.PopulationContextMenu;
+import sample.view.PopulationPanelImpl;
+
 import java.io.File;
 import java.net.URL;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
+
 @SuppressWarnings("UnstableApiUsage")
 public class Presenter extends AbstractPresenter implements Initializable {
     public static final String FXML = "/fxml/view.fxml";
@@ -83,6 +86,7 @@ public class Presenter extends AbstractPresenter implements Initializable {
     private Button laden;
     @FXML
     private Button generate;
+    static final String PROPFILE = "Test";
 
     public Presenter() {
         super();
@@ -145,11 +149,16 @@ public class Presenter extends AbstractPresenter implements Initializable {
 
     public void closeStage() {
         this.service.onPlatformExit(map.get(this.beenden.getId()));
+        String stage = "";
         for (Map.Entry<String, Stage> entry : map.entrySet()) {
             if (this.beenden.getId().equals(entry.getKey().substring(0, entry.getKey().length() - 1))) {
                 this.service.onPlatformExit(map.get(entry.getKey()));
             }
+            if (entry.getValue() == map.get(this.beenden.getId())) {
+                stage = entry.getKey();
+            }
         }
+        map.remove(stage);
     }
 
     //Menu
@@ -351,8 +360,15 @@ public class Presenter extends AbstractPresenter implements Initializable {
     private void onSaveTable() {
         Stage stage = new Stage();
         map.put(this.beenden.getId() + "2", stage);
-        service.onSaveTable(stage, map.get(beenden.getId()).getWidth(), map.get(beenden.getId()).getHeight(),
-                populationPanel.getMinStackPaneWidth(), populationPanel.getMinStackPaneHeight(), slider.getValue());
+        Map<String, Double> columns = new HashMap<>();
+        columns.put("width", map.get(beenden.getId()).getWidth());
+        columns.put("height", map.get(beenden.getId()).getHeight());
+        columns.put("panelWidth", populationPanel.getMinStackPaneWidth());
+        columns.put("panelHeight", populationPanel.getMinStackPaneHeight());
+        columns.put("slider", slider.getValue());
+        columns.put("x", map.get(beenden.getId()).getScene().getWindow().getX());
+        columns.put("y", map.get(beenden.getId()).getScene().getWindow().getY());
+        service.onSaveTable(stage, columns, PopulationPanelImpl.size);
     }
 
     @FXML
@@ -370,12 +386,15 @@ public class Presenter extends AbstractPresenter implements Initializable {
     }
 
     @Subscribe
-    public void onRestoreAutomaton(RequestRestoreAutomaton<String> requestRestoreAutomaton){
+    public void onRestoreAutomaton(RequestRestoreAutomaton<String> requestRestoreAutomaton) {
         List<String> list = requestRestoreAutomaton.getList();
         Stage stage = map.get(beenden.getId());
         stage.setWidth(Double.parseDouble(list.get(0)));
         stage.setHeight(Double.parseDouble(list.get(1)));
         stackPane.setPrefSize(Double.parseDouble(list.get(2)), Double.parseDouble(list.get(3)));
         slider.setValue(Double.parseDouble(list.get(4)));
+        populationPanel.repaint((int) Double.parseDouble(list.get(5)));
+        stage.getScene().getWindow().setX(Double.parseDouble(list.get(6)));
+        stage.getScene().getWindow().setY(Double.parseDouble(list.get(7)));
     }
 }

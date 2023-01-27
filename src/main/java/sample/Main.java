@@ -2,6 +2,8 @@ package sample;
 
 import sample.presenter.EditorPresenter;
 import java.io.File;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 
 public class Main {

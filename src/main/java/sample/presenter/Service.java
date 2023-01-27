@@ -65,8 +65,8 @@ public class Service {
         eventBus.post(requestEditorStage);
     }
 
-    public void onSaveTable(Stage stage, double width, double height, double paneWidth, double paneHeight, double speed) {
-        RequestSaveTableStage saveTableStage = new RequestSaveTableStage(stage, width, height, paneWidth, paneHeight, speed);
+    public void onSaveTable(Stage stage, Map<String, Double> columns, int size) {
+        RequestSaveTableStage saveTableStage = new RequestSaveTableStage(stage, columns, size);
         eventBus.post(saveTableStage);
     }
 

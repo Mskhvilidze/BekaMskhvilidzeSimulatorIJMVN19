@@ -1,11 +1,8 @@
 package sample.presenter.database;
 
 import sample.presenter.Service;
-
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class DatabaseAutomatonStore implements AutomatonStore {
 
@@ -16,6 +13,10 @@ public class DatabaseAutomatonStore implements AutomatonStore {
     private static final String PANEL_WIDTH = "Panel_Width";
     private static final String PANEL_HEIGHT = "Panel_Height";
     private static final String SPEED = "Speed";
+    private static final String SIZE = "Size";
+    private static final String X = "X";
+    private static final String Y = "Y";
+
 
     public DatabaseAutomatonStore() {
         DataBaseConnection dataBaseConnection = new DataBaseConnection();
@@ -23,10 +24,10 @@ public class DatabaseAutomatonStore implements AutomatonStore {
     }
 
     @Override
-    public void createTable(String tableName, double width, double height, double panelWidth, double panelHeight, double speed) {
-        boolean checkExistenceAndUpdate = checkExistenceAndUpdate(tableName, width, height, panelWidth, panelHeight);
+    public void createTable(String tableName, Map<String, Double> columns) {
+        boolean checkExistenceAndUpdate = checkExistenceAndUpdate(tableName, columns);
         String query = "CREATE TABLE " + tableName + " (Name VARCHAR(55) PRIMARY KEY NOT NULL, Width double, Height double," +
-                       "Panel_Width double, Panel_Height double, Speed Double)";
+                       "Panel_Width double, Panel_Height double, Speed Double, Size Double, X Double, Y Double)";
         boolean isValid = true;
         if (!checkExistenceAndUpdate) {
             try (PreparedStatement statement = this.connection.prepareStatement(query)) {
@@ -37,8 +38,9 @@ public class DatabaseAutomatonStore implements AutomatonStore {
             }
         }
         if (!isValid) {
-            query = "INSERT INTO " + tableName + " (Name, Width, Height, Panel_Width, Panel_Height, Speed) VALUES(?, ?, ?, ?, ?, ?)";
-            insertAutomaton(query, tableName, width, height, panelWidth, panelHeight, speed);
+            query = "INSERT INTO " + tableName +
+                    " (Name, Width, Height, Panel_Width, Panel_Height, Speed, Size, X, Y) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            insertAutomaton(query, tableName, columns);
         }
     }
 
@@ -73,6 +75,9 @@ public class DatabaseAutomatonStore implements AutomatonStore {
                 list.add(resultSet.getString(PANEL_WIDTH));
                 list.add(resultSet.getString(PANEL_HEIGHT));
                 list.add(resultSet.getString(SPEED));
+                list.add(resultSet.getString(SIZE));
+                list.add(resultSet.getString(X));
+                list.add(resultSet.getString(Y));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -95,6 +100,12 @@ public class DatabaseAutomatonStore implements AutomatonStore {
                 connection.rollback();
             } catch (SQLException i) {
                 i.printStackTrace();
+            }
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
 
@@ -128,23 +139,25 @@ public class DatabaseAutomatonStore implements AutomatonStore {
             }
         }
         try {
-            DriverManager.getConnection("jdbc:derby:" + DataBaseConnection.DATABASE_NAME + ";shutdown=true");
+            DriverManager.getConnection("jdbc:derby:;shutdown=true");
         } catch (SQLException se) {
             Service.alert("Abschaltung der Datenbank", "DataBase");
         }
     }
 
     //Private Methode
-    private void insertAutomaton(String query, String table, double width, double height, double panelWidth, double panelHeight,
-                                 double speed) {
+    private void insertAutomaton(String query, String table, Map<String, Double> columns) {
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             connection.setAutoCommit(false);
             statement.setString(1, table);
-            statement.setString(2, String.valueOf(width));
-            statement.setString(3, String.valueOf(height));
-            statement.setString(4, String.valueOf(panelWidth));
-            statement.setString(5, String.valueOf(panelHeight));
-            statement.setString(6, String.valueOf(speed));
+            statement.setString(2, String.valueOf(columns.get("width")));
+            statement.setString(3, String.valueOf(columns.get("height")));
+            statement.setString(4, String.valueOf(columns.get("panelWidth")));
+            statement.setString(5, String.valueOf(columns.get("panelHeight")));
+            statement.setString(6, String.valueOf(columns.get("slider")));
+            statement.setString(7, String.valueOf(columns.get("size")));
+            statement.setString(8, String.valueOf(columns.get("x")));
+            statement.setString(9, String.valueOf(columns.get("y")));
             statement.execute();
             connection.commit();
         } catch (SQLException e) {
@@ -155,11 +168,18 @@ public class DatabaseAutomatonStore implements AutomatonStore {
             } catch (SQLException i) {
                 i.printStackTrace();
             }
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    private boolean checkExistenceAndUpdate(String table, double width, double height, double panelWidth, double panelHeight) {
-        String query = "UPDATE  " + table + " SET Width = ?, Height = ?, Panel_Width = ?, Panel_Height = ? WHERE Name = ?";
+    private boolean checkExistenceAndUpdate(String table, Map<String, Double> columns) {
+        String query = "UPDATE  " + table +
+                       " SET Width = ?, Height = ?, Panel_Width = ?, Panel_Height = ?, Speed = ?, Size = ?, X = ?, Y = ?  WHERE Name = ?";
         try {
             DatabaseMetaData databaseMetadata = connection.getMetaData();
             ResultSet resultSet = databaseMetadata.getTables(null, null, table, null);
@@ -172,11 +192,15 @@ public class DatabaseAutomatonStore implements AutomatonStore {
             resultSet.close();
             try (PreparedStatement stmt = connection.prepareStatement(query)) {
                 connection.setAutoCommit(false);
-                stmt.setString(1, String.valueOf(width));
-                stmt.setString(2, String.valueOf(height));
-                stmt.setString(3, String.valueOf(panelWidth));
-                stmt.setString(4, String.valueOf(panelHeight));
-                stmt.setString(5, table);
+                stmt.setString(1, String.valueOf(columns.get("width")));
+                stmt.setString(2, String.valueOf(columns.get("height")));
+                stmt.setString(3, String.valueOf(columns.get("panelWidth")));
+                stmt.setString(4, String.valueOf(columns.get("panelHeight")));
+                stmt.setString(5, String.valueOf(columns.get("slider")));
+                stmt.setString(6, String.valueOf(columns.get("size")));
+                stmt.setString(7, String.valueOf(columns.get("x")));
+                stmt.setString(8, String.valueOf(columns.get("y")));
+                stmt.setString(9, table);
                 stmt.executeUpdate();
                 connection.commit();
                 return true;
@@ -188,6 +212,12 @@ public class DatabaseAutomatonStore implements AutomatonStore {
                 connection.rollback();
             } catch (SQLException i) {
                 i.printStackTrace();
+            }
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
         return false;

@@ -21,7 +21,7 @@ public class AbstractPresenter {
     protected int activeCell = 0;
     protected Random random = new Random();
     protected Service service;
-    protected Map<String, Stage> map = new HashMap<>();
+    public static Map<String, Stage> map = new HashMap<>();
     protected Pair<Integer> pair;
     protected Simulation simulation;
     protected AbstractAutomaton automaton;

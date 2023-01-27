@@ -3,40 +3,24 @@ package sample.message.request;
 import javafx.stage.Stage;
 import sample.message.AbstractStageMessage;
 
+import java.util.Map;
+
 public class RequestSaveTableStage extends AbstractStageMessage {
 
-    private double width;
-    private double height;
-    private double paneWidth;
-    private double paneHeight;
-    private double speed;
+    private Map<String, Double> map;
+    private int size;
 
-    public RequestSaveTableStage(Stage stage, double width, double height, double paneWidth, double paneHeight, double speed) {
+    public RequestSaveTableStage(Stage stage, Map<String, Double> map, int size) {
         super(stage);
-        this.width = width;
-        this.height = height;
-        this.paneWidth = paneWidth;
-        this.paneHeight = paneHeight;
-        this.speed = speed;
+        this.map = map;
+        this.size = size;
     }
 
-    public double getWidth() {
-        return width;
+    public Map<String, Double> getMap() {
+        return map;
     }
 
-    public double getHeight() {
-        return height;
-    }
-
-    public double getPaneWidth() {
-        return paneWidth;
-    }
-
-    public double getPaneHeight() {
-        return paneHeight;
-    }
-
-    public double getSpeed() {
-        return speed;
+    public int getSize() {
+        return size;
     }
 }

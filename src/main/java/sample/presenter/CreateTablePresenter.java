@@ -12,13 +12,15 @@ import java.util.*;
 
 public class CreateTablePresenter extends AbstractPresenter implements Initializable {
 
-    public TextField tableName;
-    public Button create;
+    @FXML
+    private TextField tableName;
+    @FXML
+    private Button create;
     private DatabaseAutomatonStore dataBaseConnection;
     private Stage stage;
     private Map<Stage, List<Double>> map = new HashMap<>();
     private List<Double> list = new ArrayList<>();
-
+    Map<String, Double> columns = new HashMap<>();
     public static final String FXML = "/fxml/save_table.fxml";
 
     @Override
@@ -38,23 +40,29 @@ public class CreateTablePresenter extends AbstractPresenter implements Initializ
         setService(service);
     }
 
-    public void addFields(double width, double height, double panelWidth, double panelHeight, double speed) {
-        list.add(width);
-        list.add(height);
-        list.add(panelWidth);
-        list.add(panelHeight);
-        list.add(speed);
+    public void addFields(Map<String, Double> columns, int size, Stage stage) {
+        list.add(columns.get("width"));
+        list.add(columns.get("height"));
+        list.add(columns.get("panelWidth"));
+        list.add(columns.get("panelHeight"));
+        list.add(columns.get("slider"));
+        list.add((double) size);
+        list.add(columns.get("x"));
+        list.add(columns.get("y"));
         map.put(stage, list);
     }
 
     @FXML
     private void onCreateTable() {
-        double width = map.get(stage).get(0);
-        double height = map.get(stage).get(1);
-        double panelWidth = map.get(stage).get(2);
-        double panelHeight = map.get(stage).get(3);
-        double speed = map.get(stage).get(4);
-        dataBaseConnection.createTable(tableName.getText().toUpperCase(), width, height, panelWidth, panelHeight, speed);
+        columns.put("width", map.get(stage).get(0));
+        columns.put("height", map.get(stage).get(1));
+        columns.put("panelWidth", map.get(stage).get(2));
+        columns.put("panelHeight", map.get(stage).get(3));
+        columns.put("slider", map.get(stage).get(4));
+        columns.put("size", map.get(stage).get(5));
+        columns.put("x", map.get(stage).get(6));
+        columns.put("y", map.get(stage).get(7));
+        dataBaseConnection.createTable(tableName.getText().toUpperCase(), columns);
         this.service.onPlatformExit(this.stage);
     }
 

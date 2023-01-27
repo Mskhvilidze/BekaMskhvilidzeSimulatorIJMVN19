@@ -1,10 +1,6 @@
 
-a
-1src/main/java/sample/view/ViewManagerFactory.java,b\b\bbe0e209e20ab7f87a174afac5316bb830c572c1
 j
 :src/main/java/sample/message/request/RequestExitStage.java,b\1\b148b3deded610c2f6e50f097ef5ddb71c2910dd
-^
-.src/main/java/sample/view/PopulationPanel.java,f\d\fd07e16d6b52dfe0dea84835112d4326820bb903
 i
 9src/main/java/sample/message/request/RequestNewStage.java,d\e\de52cd81867b46b0def765ad05588022305e3041
 X
@@ -15,8 +11,6 @@ c
 3src/main/java/sample/model/GameOfLifeAutomaton.java,e\f\efadb7f7132894fc94556732e34478dc21780540
 a
 1src/main/java/sample/util/StatesColorMapping.java,2\c\2cfbfa2ec612d40f6907da288e23508e723e7ac3
-X
-(src/main/java/sample/util/Resources.java,6\3\6341dd106ba0f8921a90e30a0a26fdaeb8d016b5
 Y
 )src/main/java/sample/util/Simulation.java,2\7\2759c15f5b3853dceec43e7f36b6ff831404c287
 Y
@@ -27,28 +21,16 @@ S
 .src/main/java/sample/util/AutomatonHelper.java,e\4\e4a015d733b1b34c8fdc1d04578b2f39db25238f
 g
 7src/main/java/sample/model/KruemelmonsterAutomaton.java,f\c\fc7ba353194d8490680a7107de795aade4d7412a
-A
-automata/TZT.java,6\e\6e0687e2cad0361f6ccea5b0d33784c15ace281d
 P
  text/KruemelmonsterAutomaton.txt,0\2\0208b60158132fefd91f7a0b5655229e4cc877e5
-d
-4src/main/java/sample/view/PopulationContextMenu.java,0\0\00e4393b0adb0de5339773a7456fb9657d5d06d0
 L
 text/GameOfLifeAutomaton.txt,4\e\4e83a908c8e8607a12e17c55a6cbc457ad7a9211
 9
 	derby.log,a\7\a7c30820953d3058ae34d7c1d585aa37740d72d5
-b
-2src/main/java/sample/view/PopulationPanelImpl.java,b\7\b70cccd79c1345a00601984e0b20dba5d9783f72
 Y
 )src/main/java/sample/model/Automaton.java,b\2\b2ca86879182bae6ed66db2c8cdd14cc925e2a68
 l
 <src/main/java/sample/message/request/RequestEditorStage.java,6\3\63357e8fdf7e091daee314e2961d681ee6a00bf6
-c
-3src/main/java/sample/presenter/EditorPresenter.java,1\6\1647f2c42ef6fa4f1fa29da242804ed0a33e227b
-c
-3src/main/java/sample/presenter/LoaderPresenter.java,f\1\f1ba41efa872a9a7a5588ba51ca246bc72be47ac
-N
-src/main/java/sample/Test.java,1\0\1076d7e2b774a1ddf745c940a7e5e48163d33380
 m
 =src/main/java/sample/message/request/RequestNewAutomaton.java,8\d\8d6445012f3ce41252505eb94ebf7a40aadf5f7e
 Y
@@ -71,8 +53,6 @@ w
 G.idea/sonarlint/issuestore/f/1/f1ba41efa872a9a7a5588ba51ca246bc72be47ac,1\7\171e7c7df240183f50c34d263170d28c97a30d0d
 w
 G.idea/sonarlint/issuestore/c/5/c5b37c67559f6046819c0266950ef4b74bf6cd69,9\4\94ef9d7037082f3778f29887dc5fc4e1d3a88db4
-S
-#BekaMskhvilidzeSimulatorIJMVN19.iml,6\6\66840c6c59cb020a376d1ea792f79913463893f2
 w
 G.idea/sonarlint/issuestore/7/7/777282d36986efff2bed12e14ae7ea1ddd33c0ae,0\5\0588a7e295b190568998340450a97c23f715d119
 w
@@ -113,8 +93,6 @@ o
 ?src/main/java/sample/presenter/database/DataBaseConnection.java,9\2\92bf1365ed8f3be9839b234fdc7b9481ecf64ceb
 f
 6src/main/java/sample/presenter/DropTablePresenter.java,7\e\7e3104bafaae3be51eaa9232dea50f834648ec1b
-N
-src/main/java/sample/Main.java,a\1\a101a599f108b850043533fb382c500b68c01b71
 7
 pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
 q
@@ -127,3 +105,11 @@ a
 1src/main/java/sample/presenter/Serialization.java,4\9\4904e8afe92de116254162015ae1f14b886b1066
 u
 Esrc/main/java/sample/presenter/database/TableManagementException.java,7\e\7e41ece2cffbe91683f635375dbb6da0c9574d68
+c
+3src/main/java/sample/presenter/LoaderPresenter.java,f\1\f1ba41efa872a9a7a5588ba51ca246bc72be47ac
+X
+(src/main/java/sample/util/Resources.java,6\3\6341dd106ba0f8921a90e30a0a26fdaeb8d016b5
+d
+4src/main/java/sample/presenter/RestorePresenter.java,6\e\6e59736474eaff3deb07701817501a0995da1a80
+c
+3src/main/java/sample/presenter/EditorPresenter.java,1\6\1647f2c42ef6fa4f1fa29da242804ed0a33e227b
