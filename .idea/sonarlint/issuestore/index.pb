@@ -43,8 +43,6 @@ M
 src/main/java/sample/App.java,3\8\388a47c72056b30b52e0c7528bcc3c11b0e8ef2b
 w
 G.idea/sonarlint/issuestore/0/2/0208b60158132fefd91f7a0b5655229e4cc877e5,c\8\c846766daef6e424dd94fe4ef1fb7cd40a708b47
-w
-G.idea/sonarlint/issuestore/f/d/fd07e16d6b52dfe0dea84835112d4326820bb903,1\c\1c0481ac6eef8ad3a96a06a5e70878ef6e872872
 o
 ?.idea/libraries/Maven__org_apache_commons_commons_lang3_3_7.xml,a\6\a68e5ca96d8101e3486da860b834f3f00c3cb96b
 w
@@ -93,8 +91,6 @@ o
 ?src/main/java/sample/presenter/database/DataBaseConnection.java,9\2\92bf1365ed8f3be9839b234fdc7b9481ecf64ceb
 f
 6src/main/java/sample/presenter/DropTablePresenter.java,7\e\7e3104bafaae3be51eaa9232dea50f834648ec1b
-7
-pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
 q
 Asrc/main/java/sample/message/request/RequestDeleteTableStage.java,b\d\bdc2d6c08f3382072d317e0909ce29b35da5900c
 q
@@ -107,12 +103,8 @@ u
 Esrc/main/java/sample/presenter/database/TableManagementException.java,7\e\7e41ece2cffbe91683f635375dbb6da0c9574d68
 c
 3src/main/java/sample/presenter/LoaderPresenter.java,f\1\f1ba41efa872a9a7a5588ba51ca246bc72be47ac
-X
-(src/main/java/sample/util/Resources.java,6\3\6341dd106ba0f8921a90e30a0a26fdaeb8d016b5
 d
 4src/main/java/sample/presenter/RestorePresenter.java,6\e\6e59736474eaff3deb07701817501a0995da1a80
-c
-3src/main/java/sample/presenter/EditorPresenter.java,1\6\1647f2c42ef6fa4f1fa29da242804ed0a33e227b
 w
 G.idea/sonarlint/issuestore/d/1/d1579c76b9049adc15df4f31754380b31339c6b5,f\d\fd764717cd551133a14c0905d8e77dac32fe7153
 w
@@ -193,11 +185,19 @@ h
 8src/main/java/sample/presenter/CreateTablePresenter.java,c\6\c6d481c112bc4b250dd93326a9aa3610158864b0
 s
 Csrc/main/java/sample/presenter/database/DatabaseAutomatonStore.java,c\b\cba6019852a45c040e59d890b3c299622a18b86d
-N
-src/main/java/sample/Main.java,a\1\a101a599f108b850043533fb382c500b68c01b71
 o
 ?src/main/java/sample/message/request/RequestSaveTableStage.java,d\f\df2000278c8a1b6786648cda6cbd1d85a0c91d7f
-[
-+src/main/java/sample/presenter/Service.java,5\4\54f9b6a94401ec81633b4f26d2f72da33658cb16
 e
 5src/main/java/sample/presenter/AbstractPresenter.java,3\9\397830f0a580620fee8264f2496ec965ef7efb3f
+N
+src/main/java/sample/Test.java,1\0\1076d7e2b774a1ddf745c940a7e5e48163d33380
+d
+4src/main/java/sample/view/PopulationContextMenu.java,0\0\00e4393b0adb0de5339773a7456fb9657d5d06d0
+^
+.src/main/java/sample/view/PopulationPanel.java,f\d\fd07e16d6b52dfe0dea84835112d4326820bb903
+b
+2src/main/java/sample/view/PopulationPanelImpl.java,b\7\b70cccd79c1345a00601984e0b20dba5d9783f72
+a
+1src/main/java/sample/view/ViewManagerFactory.java,b\b\bbe0e209e20ab7f87a174afac5316bb830c572c1
+X
+(src/main/java/sample/util/Resources.java,6\3\6341dd106ba0f8921a90e30a0a26fdaeb8d016b5

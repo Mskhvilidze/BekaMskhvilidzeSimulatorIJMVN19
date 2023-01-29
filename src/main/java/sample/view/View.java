@@ -13,6 +13,7 @@ import sample.model.AbstractAutomaton;
 import sample.model.KruemelmonsterAutomaton;
 import sample.presenter.*;
 import sample.presenter.database.DatabaseAutomatonStore;
+
 import java.io.IOException;
 
 @SuppressWarnings("UnstableApiUsage")
@@ -58,9 +59,7 @@ public class View {
             primaryStage.show();
             presenter.setStage(primaryStage);
         });
-        primaryStage.setOnCloseRequest(event -> {
-            presenter.closeStage();
-        });
+        primaryStage.setOnCloseRequest(event -> presenter.closeStage());
     }
 
     @Subscribe
@@ -78,9 +77,7 @@ public class View {
             stage.show();
             presenter.setStage(stage);
         });
-        stage.setOnCloseRequest(event -> {
-            presenter.closeStage();
-        });
+        stage.setOnCloseRequest(event -> presenter.closeStage());
     }
 
     @Subscribe
@@ -126,9 +123,7 @@ public class View {
             newAutomaton.getStage().show();
         });
         presenter.setStage(newAutomaton.getStage());
-        newAutomaton.getStage().setOnCloseRequest(event -> {
-            presenter.closeStage();
-        });
+        newAutomaton.getStage().setOnCloseRequest(event -> presenter.closeStage());
     }
 
     @Subscribe

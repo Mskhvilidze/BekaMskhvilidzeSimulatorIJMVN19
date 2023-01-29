@@ -19,7 +19,6 @@ import sample.util.AudioCache;
 import sample.util.Simulation;
 import sample.view.PopulationContextMenu;
 import sample.view.PopulationPanelImpl;
-
 import java.io.File;
 import java.net.URL;
 import java.util.*;
@@ -30,6 +29,14 @@ public class Presenter extends AbstractPresenter implements Initializable {
     public static final String FXML = "/fxml/view.fxml";
     @FXML
     public Pane paneForNewLoader;
+    @FXML
+    private Menu pop;
+    @FXML
+    private Menu sim;
+    @FXML
+    private Menu setting;
+    @FXML
+    private Menu automata;
     @FXML
     private MenuItem menuStop;
     @FXML
@@ -86,7 +93,6 @@ public class Presenter extends AbstractPresenter implements Initializable {
     private Button laden;
     @FXML
     private Button generate;
-    static final String PROPFILE = "sample.Test";
 
     public Presenter() {
         super();
@@ -110,8 +116,6 @@ public class Presenter extends AbstractPresenter implements Initializable {
         automaton.randomPopulation();
         this.slider.valueProperty().addListener((a, b, c) -> this.simulation.setSpeed(c.intValue()));
         System.out.println(this.toggleGroup.getUserData());
-        ResourceBundle bundle = ResourceBundle.getBundle("Test", new Locale("de", "CH"));
-        System.out.println(bundle.getString("Hi"));
     }
 
     public void simulatorPresenter(Service service) {
@@ -398,5 +402,15 @@ public class Presenter extends AbstractPresenter implements Initializable {
         populationPanel.repaint((int) Double.parseDouble(list.get(5)));
         stage.getScene().getWindow().setX(Double.parseDouble(list.get(6)));
         stage.getScene().getWindow().setY(Double.parseDouble(list.get(7)));
+    }
+
+    @FXML
+    private void onChangeEnglishLanguage(){
+        new TestPresenter(automata, pop, sim, setting, true, false);
+    }
+
+    @FXML
+    private void onChangeGermanLanguage() {
+        new TestPresenter(automata, pop, sim, setting, false, true);
     }
 }

@@ -3,6 +3,7 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.canvas.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.input.*?>
 <?import javafx.scene.layout.*?>
@@ -12,165 +13,182 @@
 <VBox fx:id="vBox" stylesheets="/css/css.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="sample.presenter.Presenter">
     <VBox style="-fx-border-insets: 5;" styleClass="vBox1">
-        <MenuBar styleClass="menuBar">
-            <Menu styleClass="menu" text="_Automat">
-                <MenuItem onAction="#onNewGameWindow" styleClass="menu-item" text="_Neu">
-                    <accelerator>
-                        <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
-                    </accelerator>
-                    <graphic>
-                        <ImageView fitHeight="50.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../icons/Compile24.gif"/>
-                        </ImageView>
-                    </graphic>
-                </MenuItem>
-                <MenuItem text="_Laden">
-                    <accelerator>
-                        <KeyCodeCombination alt="UP" code="L" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
-                    </accelerator>
-                    <graphic>
-                        <ImageView fitHeight="50.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../icons/Open24.gif"/>
-                        </ImageView>
-                    </graphic>
-                </MenuItem>
-                <SeparatorMenuItem/>
-                <MenuItem onAction="#onEdit" text="_Editor">
-                    <accelerator>
-                        <KeyCodeCombination alt="UP" code="E" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
-                    </accelerator>
-                </MenuItem>
-                <SeparatorMenuItem/>
-                <MenuItem fx:id="beenden" onAction="#onPlatformExit" text="_Beenden">
-                    <accelerator>
-                        <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
-                    </accelerator>
-                </MenuItem>
-            </Menu>
-            <Menu styleClass="menu" text="_Population">
-                <MenuItem onAction="#onDialogWindowOpen" text="_Größe ändern...">
-                    <accelerator>
-                        <KeyCodeCombination alt="UP" code="G" control="DOWN" meta="UP" shift="DOWN" shortcut="UP"/>
-                    </accelerator>
-                </MenuItem>
-                <MenuItem onAction="#onResetPopulation" text="_Löschen">
-                    <accelerator>
-                        <KeyCodeCombination alt="UP" code="L" control="DOWN" meta="UP" shift="DOWN" shortcut="UP"/>
-                    </accelerator>
-                </MenuItem>
-                <MenuItem text="_Erzeugen">
-                    <accelerator>
-                        <KeyCodeCombination alt="UP" code="Z" control="DOWN" meta="UP" shift="DOWN" shortcut="UP"/>
-                    </accelerator>
-                </MenuItem>
-                <CheckMenuItem onAction="#onSetTorus" text="_Torus">
-                    <accelerator>
-                        <KeyCodeCombination alt="UP" code="T" control="DOWN" meta="UP" shift="DOWN" shortcut="UP"/>
-                    </accelerator>
-                </CheckMenuItem>
-                <SeparatorMenuItem/>
-                <MenuItem onAction="#onZoomIn" text="_Vergrößern">
-                    <accelerator>
-                        <KeyCodeCombination alt="UP" code="I" control="DOWN" meta="UP" shift="DOWN" shortcut="UP"/>
-                    </accelerator>
-                </MenuItem>
-                <MenuItem onAction="#onZoomOut" text="_Verkleinern">
-                    <accelerator>
-                        <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="DOWN" shortcut="UP"/>
-                    </accelerator>
-                </MenuItem>
-                <SeparatorMenuItem/>
-                <Menu text="_Speichern">
-                    <MenuItem onAction="#onSaveAutomatonXMLSerialize" text="XML">
+        <ScrollPane prefHeight="45">
+            <MenuBar styleClass="menuBar">
+                <Menu fx:id="automata" styleClass="menu" text="_Automat">
+                    <MenuItem onAction="#onNewGameWindow" styleClass="menu-item" text="_Neu">
                         <accelerator>
-                            <KeyCodeCombination alt="UP" code="X" control="DOWN" meta="UP" shift="DOWN" shortcut="UP"/>
+                            <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                        </accelerator>
+                        <graphic>
+                            <ImageView fitHeight="50.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                <Image url="@../icons/Compile24.gif"/>
+                            </ImageView>
+                        </graphic>
+                    </MenuItem>
+                    <MenuItem onAction="#onClassLoad" text="_Laden">
+                        <accelerator>
+                            <KeyCodeCombination alt="UP" code="L" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                        </accelerator>
+                        <graphic>
+                            <ImageView fitHeight="50.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                <Image url="@../icons/Open24.gif"/>
+                            </ImageView>
+                        </graphic>
+                    </MenuItem>
+                    <SeparatorMenuItem/>
+                    <MenuItem onAction="#onEdit" text="_Editor">
+                        <accelerator>
+                            <KeyCodeCombination alt="UP" code="E" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
                         </accelerator>
                     </MenuItem>
-                    <MenuItem onAction="#onSaveAutomatonSerialize" text="_Serialisieren">
+                    <SeparatorMenuItem/>
+                    <MenuItem fx:id="beenden" onAction="#onPlatformExit" text="_Beenden">
                         <accelerator>
-                            <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="DOWN" shortcut="UP"/>
+                            <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
                         </accelerator>
                     </MenuItem>
                 </Menu>
-                <Menu text="Laden">
-                    <MenuItem onAction="#onLoadXMLAutomatonDeserialize" text="_XML">
+                <Menu fx:id="pop" styleClass="menu" text="_Population">
+                    <MenuItem onAction="#onDialogWindowOpen" text="_Größe ändern...">
                         <accelerator>
-                            <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="DOWN" shortcut="UP"/>
+                            <KeyCodeCombination alt="UP" code="G" control="DOWN" meta="UP" shift="DOWN" shortcut="UP"/>
                         </accelerator>
                     </MenuItem>
-                    <MenuItem onAction="#onLoadAutomatonDeserialize" text="_Deserialisieren">
+                    <MenuItem onAction="#onResetPopulation" text="_Löschen">
                         <accelerator>
-                            <KeyCodeCombination alt="UP" code="M" control="DOWN" meta="UP" shift="DOWN" shortcut="UP"/>
+                            <KeyCodeCombination alt="UP" code="L" control="DOWN" meta="UP" shift="DOWN" shortcut="UP"/>
+                        </accelerator>
+                    </MenuItem>
+                    <MenuItem text="_Erzeugen">
+                        <accelerator>
+                            <KeyCodeCombination alt="UP" code="Z" control="DOWN" meta="UP" shift="DOWN" shortcut="UP"/>
+                        </accelerator>
+                    </MenuItem>
+                    <CheckMenuItem onAction="#onSetTorus" text="_Torus">
+                        <accelerator>
+                            <KeyCodeCombination alt="UP" code="T" control="DOWN" meta="UP" shift="DOWN" shortcut="UP"/>
+                        </accelerator>
+                    </CheckMenuItem>
+                    <SeparatorMenuItem/>
+                    <MenuItem onAction="#onZoomIn" text="_Vergrößern">
+                        <accelerator>
+                            <KeyCodeCombination alt="UP" code="I" control="DOWN" meta="UP" shift="DOWN" shortcut="UP"/>
+                        </accelerator>
+                    </MenuItem>
+                    <MenuItem onAction="#onZoomOut" text="_Verkleinern">
+                        <accelerator>
+                            <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="DOWN" shortcut="UP"/>
+                        </accelerator>
+                    </MenuItem>
+                    <SeparatorMenuItem/>
+                    <Menu text="_Speichern">
+                        <MenuItem onAction="#onSaveAutomatonXMLSerialize" text="XML">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="X" control="DOWN" meta="UP" shift="DOWN" shortcut="UP"/>
+                            </accelerator>
+                        </MenuItem>
+                        <MenuItem onAction="#onSaveAutomatonSerialize" text="_Serialisieren">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="DOWN" shortcut="UP"/>
+                            </accelerator>
+                        </MenuItem>
+                    </Menu>
+                    <Menu text="Laden">
+                        <MenuItem onAction="#onLoadXMLAutomatonDeserialize" text="_XML">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="DOWN" shortcut="UP"/>
+                            </accelerator>
+                        </MenuItem>
+                        <MenuItem onAction="#onLoadAutomatonDeserialize" text="_Deserialisieren">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="M" control="DOWN" meta="UP" shift="DOWN" shortcut="UP"/>
+                            </accelerator>
+                        </MenuItem>
+                    </Menu>
+                    <SeparatorMenuItem/>
+                    <MenuItem text="_Drücken">
+                        <accelerator>
+                            <KeyCodeCombination alt="UP" code="P" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
                         </accelerator>
                     </MenuItem>
                 </Menu>
-                <SeparatorMenuItem/>
-                <MenuItem text="_Drücken">
-                    <accelerator>
-                        <KeyCodeCombination alt="UP" code="P" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
-                    </accelerator>
-                </MenuItem>
-            </Menu>
-            <Menu styleClass="menu" text="_Simulation">
-                <MenuItem text="_Schritt">
-                    <accelerator>
-                        <KeyCodeCombination alt="DOWN" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
-                    </accelerator>
-                </MenuItem>
-                <MenuItem fx:id="menuStart" onAction="#onStart" text="_Start">
-                    <accelerator>
-                        <KeyCodeCombination alt="DOWN" code="A" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
-                    </accelerator>
-                    <graphic>
-                        <ImageView fitHeight="50.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../icons/Start24.gif"/>
-                        </ImageView>
-                    </graphic>
-                </MenuItem>
-                <MenuItem fx:id="menuStop" disable="true" onAction="#onStop" text="_Stop">
-                    <accelerator>
-                        <KeyCodeCombination alt="DOWN" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
-                    </accelerator>
-                    <graphic>
-                        <ImageView fitHeight="50.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../icons/Stop24.gif"/>
-                        </ImageView>
-                    </graphic>
-                </MenuItem>
-            </Menu>
-            <Menu styleClass="menu" text="_Einstellungen">
-                <MenuItem text="_Speichern" onAction="#onSaveTable">
-                    <accelerator>
-                        <KeyCodeCombination alt="DOWN" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
-                    </accelerator>
-                    <graphic>
-                        <ImageView fitHeight="50.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../icons/Save17.gif"/>
-                        </ImageView>
-                    </graphic>
-                </MenuItem>
-                <MenuItem text="_Wiederherstellen" onAction="#onRestoreTable">
-                    <accelerator>
-                        <KeyCodeCombination alt="DOWN" code="A" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
-                    </accelerator>
-                    <graphic>
-                        <ImageView fitHeight="50.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../icons/refractor.jpg"/>
-                        </ImageView>
-                    </graphic>
-                </MenuItem>
-                <MenuItem text="_Löschen" onAction="#onDeleteTable">
-                    <accelerator>
-                        <KeyCodeCombination alt="DOWN" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
-                    </accelerator>
-                    <graphic>
-                        <ImageView fitHeight="50.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../icons/remove.png"/>
-                        </ImageView>
-                    </graphic>
-                </MenuItem>
-            </Menu>
-        </MenuBar>
+                <Menu fx:id="sim" styleClass="menu" text="_Simulation">
+                    <MenuItem text="_Schritt">
+                        <accelerator>
+                            <KeyCodeCombination alt="DOWN" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                        </accelerator>
+                    </MenuItem>
+                    <MenuItem fx:id="menuStart" onAction="#onStart" text="_Start">
+                        <accelerator>
+                            <KeyCodeCombination alt="DOWN" code="A" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                        </accelerator>
+                        <graphic>
+                            <ImageView fitHeight="50.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                <Image url="@../icons/Start24.gif"/>
+                            </ImageView>
+                        </graphic>
+                    </MenuItem>
+                    <MenuItem fx:id="menuStop" disable="true" onAction="#onStop" text="_Stop">
+                        <accelerator>
+                            <KeyCodeCombination alt="DOWN" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                        </accelerator>
+                        <graphic>
+                            <ImageView fitHeight="50.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                <Image url="@../icons/Stop24.gif"/>
+                            </ImageView>
+                        </graphic>
+                    </MenuItem>
+                </Menu>
+                <Menu fx:id="setting" styleClass="menu" text="_Einstellungen">
+                    <MenuItem onAction="#onSaveTable" text="_SpeichernDB">
+                        <accelerator>
+                            <KeyCodeCombination alt="DOWN" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                        </accelerator>
+                        <graphic>
+                            <ImageView fitHeight="50.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                <Image url="@../icons/Save17.gif"/>
+                            </ImageView>
+                        </graphic>
+                    </MenuItem>
+                    <MenuItem onAction="#onRestoreTable" text="_WiederherstellenDB">
+                        <accelerator>
+                            <KeyCodeCombination alt="DOWN" code="A" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                        </accelerator>
+                        <graphic>
+                            <ImageView fitHeight="50.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                <Image url="@../icons/refractor.jpg"/>
+                            </ImageView>
+                        </graphic>
+                    </MenuItem>
+                    <MenuItem onAction="#onDeleteTable" text="_LöschenDB">
+                        <accelerator>
+                            <KeyCodeCombination alt="DOWN" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                        </accelerator>
+                        <graphic>
+                            <ImageView fitHeight="50.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                <Image url="@../icons/remove.png"/>
+                            </ImageView>
+                        </graphic>
+                    </MenuItem>
+                </Menu>
+                <Menu fx:id="language" styleClass="menu" text="_Language">
+                    <CheckMenuItem text="_English" onAction="#onChangeEnglishLanguage">
+                        <accelerator>
+                            <KeyCodeCombination alt="DOWN" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                        </accelerator>
+                    </CheckMenuItem>
+                    <CheckMenuItem text="_German" onAction="#onChangeGermanLanguage">
+                        <accelerator>
+                            <KeyCodeCombination alt="DOWN" code="A" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                        </accelerator>
+                    </CheckMenuItem>
+                </Menu>
+            </MenuBar>
+            <effect>
+                <InnerShadow/>
+            </effect>
+        </ScrollPane>
         <HBox prefHeight="44.0" prefWidth="0.0">
             <ToolBar prefHeight="44.0" prefWidth="558.0" style="-fx-background-color: #FFE4C4">
                 <Button fx:id="generate" maxHeight="40.0" maxWidth="30.0" minHeight="15.0" minWidth="15.0" mnemonicParsing="false"
@@ -181,7 +199,6 @@
                         </ImageView>
                     </graphic>
                 </Button>
-
                 <Button fx:id="laden" maxHeight="40.0" maxWidth="30.0" minHeight="15.0" minWidth="15.0" mnemonicParsing="false"
                         onAction="#onClassLoad" prefHeight="33.0" prefWidth="30.0" styleClass="buttonHeader">
                     <graphic>
