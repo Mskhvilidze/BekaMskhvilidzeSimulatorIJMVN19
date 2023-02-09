@@ -7,7 +7,6 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.Menu;
 import javafx.scene.control.TextField;
 import sample.util.CreatePropertyFile;
-
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -16,7 +15,7 @@ import java.util.Locale;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
-public class TestPresenter {
+public class PropertyPresenter {
 
     private ObservableResourceFactory resourceFactory;
     private Properties properties;
@@ -33,7 +32,7 @@ public class TestPresenter {
     private String[] basketSettUS;
     private File file;
 
-    public TestPresenter(Menu automata, Menu pop, Menu sim, Menu settings, boolean isChangeEnglish, boolean isChangeGerman) {
+    public PropertyPresenter(Menu automata, Menu pop, Menu sim, Menu settings, boolean isChangeEnglish, boolean isChangeGerman) {
         initList();
         this.properties = new Properties();
         this.resourceFactory = new ObservableResourceFactory();

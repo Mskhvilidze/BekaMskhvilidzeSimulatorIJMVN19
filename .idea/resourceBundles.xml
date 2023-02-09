@@ -5,7 +5,9 @@
     <file url="file://$PROJECT_DIR$/src/internationalization/Test_de_CH.properties" />
     <custom-resource-bundle>
       <file value="file://$PROJECT_DIR$/src/internationalization/Test.properties" />
+      <file value="file://$PROJECT_DIR$/src/internationalization/Test_US_de.properties" />
       <file value="file://$PROJECT_DIR$/src/internationalization/Test_de_CH.properties" />
+      <file value="file://$PROJECT_DIR$/src/internationalization/Test_de_US.properties" />
       <base-name>Test</base-name>
     </custom-resource-bundle>
   </component>

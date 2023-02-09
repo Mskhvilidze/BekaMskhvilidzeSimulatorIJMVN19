@@ -406,11 +406,11 @@ public class Presenter extends AbstractPresenter implements Initializable {
 
     @FXML
     private void onChangeEnglishLanguage(){
-        new TestPresenter(automata, pop, sim, setting, true, false);
+        new PropertyPresenter(automata, pop, sim, setting, true, false);
     }
 
     @FXML
     private void onChangeGermanLanguage() {
-        new TestPresenter(automata, pop, sim, setting, false, true);
+        new PropertyPresenter(automata, pop, sim, setting, false, true);
     }
 }
