@@ -10,6 +10,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import sample.message.AbstractNewAutomatonMessage;
 import sample.model.AbstractAutomaton;
+import sample.model.GameOfLifeAutomaton;
 
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
@@ -145,20 +146,47 @@ public class Serialization {
                 }
                 if (results.getNodeType() == Node.ELEMENT_NODE) {
                     Element element = (Element) results;
-                    automaton.setRows(Integer.parseInt(element.getAttribute(ROWS)));
-                    automaton.setColumns(Integer.parseInt(element.getAttribute(COLUMNS)));
-                    automaton.setNumberOfStates(Integer.parseInt(element.getAttribute(NUMBER_OF_STATE)));
+                    if (Integer.parseInt(element.getAttribute(ROWS)) < 0) {
+                        automaton.setRows(Integer.parseInt(element.getAttribute(ROWS)) * (-1));
+                    } else {
+                        automaton.setRows(Integer.parseInt(element.getAttribute(ROWS)));
+                    }
+                    if (Integer.parseInt(element.getAttribute(COLUMNS)) < 0) {
+                        automaton.setColumns(Integer.parseInt(element.getAttribute(COLUMNS)) * (-1));
+                    } else {
+                        automaton.setColumns(Integer.parseInt(element.getAttribute(COLUMNS)));
+                    }
+                    if (Integer.parseInt(element.getAttribute(NUMBER_OF_STATE)) < 2 ||
+                        Integer.parseInt(element.getAttribute(NUMBER_OF_STATE)) > 9) {
+                        checkNamberOfState(automaton);
+                    } else {
+                        automaton.setNumberOfStates(Integer.parseInt(element.getAttribute(NUMBER_OF_STATE)));
+                    }
                     automaton.setTorus(Boolean.parseBoolean(element.getAttribute(TORUS)));
                     automaton.setMooreNeighborHood(Boolean.parseBoolean(element.getAttribute(MOORE_NEIGHBOR_HOOD)));
                     automaton.setCells(Integer.parseInt(element.getAttribute(ROWS)), Integer.parseInt(element.getAttribute(COLUMNS)));
                     automaton.changeSize(Integer.parseInt(element.getAttribute(ROWS)), Integer.parseInt(element.getAttribute(COLUMNS)));
                     NodeList list = results.getChildNodes();
+                    int activeState;
                     for (int i = 0; i < list.getLength(); i++) {
                         Node a = list.item(i);
                         if (a.getNodeType() == Node.ELEMENT_NODE) {
                             Element e = (Element) a;
-                            automaton.setNewState(Integer.parseInt(e.getAttribute(ROW)), Integer.parseInt(e.getAttribute(COLUMN)),
-                                    Integer.parseInt(e.getAttribute(ACTIVE_STATE)));
+                            activeState = Integer.parseInt(e.getAttribute(ACTIVE_STATE));
+                            if (activeState < 0 || activeState > 9) {
+                                if (automaton instanceof GameOfLifeAutomaton) {
+                                    Service.alert(ACTIVE_STATE + " ist falsch, daher wird auf 2 gesetzt", "");
+                                    activeState = 2;
+                                } else {
+                                    Service.alert(ACTIVE_STATE + " ist falsch, daher wird auf 8 gesetzt", "");
+                                    activeState = 8;
+                                }
+                                automaton.setNewState(Integer.parseInt(e.getAttribute(ROW)), Integer.parseInt(e.getAttribute(COLUMN)),
+                                        activeState);
+                            } else {
+                                automaton.setNewState(Integer.parseInt(e.getAttribute(ROW)), Integer.parseInt(e.getAttribute(COLUMN)),
+                                        activeState);
+                            }
                         }
                     }
                     return automaton;
@@ -244,6 +272,16 @@ public class Serialization {
             transformer.transform(source, result);
         } catch (Exception e) {
             Service.alert("Datei kann nicht gesprieben werden!", "Datei schreiben");
+        }
+    }
+
+    private void checkNamberOfState(AbstractAutomaton automaton) {
+        if (automaton instanceof GameOfLifeAutomaton) {
+            Service.alert(NUMBER_OF_STATE + " ist falsch, daher wird auf 2 gesetzt", "");
+            automaton.setNumberOfStates(2);
+        } else {
+            Service.alert(NUMBER_OF_STATE + " ist falsch, daher wird auf 9 gesetzt", "");
+            automaton.setNumberOfStates(9);
         }
     }
 }

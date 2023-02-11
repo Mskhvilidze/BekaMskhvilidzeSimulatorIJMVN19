@@ -9,8 +9,6 @@ S
 #BekaMskhvilidzeSimulatorIJMVN19.eml,7\4\748e1cacb4a82c96b8b999568392e1701652e217
 c
 3src/main/java/sample/model/GameOfLifeAutomaton.java,e\f\efadb7f7132894fc94556732e34478dc21780540
-a
-1src/main/java/sample/util/StatesColorMapping.java,2\c\2cfbfa2ec612d40f6907da288e23508e723e7ac3
 Y
 )src/main/java/sample/util/Simulation.java,2\7\2759c15f5b3853dceec43e7f36b6ff831404c287
 Y
@@ -21,10 +19,6 @@ S
 .src/main/java/sample/util/AutomatonHelper.java,e\4\e4a015d733b1b34c8fdc1d04578b2f39db25238f
 g
 7src/main/java/sample/model/KruemelmonsterAutomaton.java,f\c\fc7ba353194d8490680a7107de795aade4d7412a
-P
- text/KruemelmonsterAutomaton.txt,0\2\0208b60158132fefd91f7a0b5655229e4cc877e5
-L
-text/GameOfLifeAutomaton.txt,4\e\4e83a908c8e8607a12e17c55a6cbc457ad7a9211
 9
 	derby.log,a\7\a7c30820953d3058ae34d7c1d585aa37740d72d5
 Y
@@ -75,8 +69,6 @@ l
 <.idea/libraries/Maven__mysql_mysql_connector_java_8_0_22.xml,7\b\7ba8a7cc5fb4b8cf241ad97a1fe820ce7dbad4c0
 w
 G.idea/sonarlint/issuestore/b/1/b148b3deded610c2f6e50f097ef5ddb71c2910dd,d\1\d1579c76b9049adc15df4f31754380b31339c6b5
-w
-G.idea/sonarlint/issuestore/2/c/2cfbfa2ec612d40f6907da288e23508e723e7ac3,8\b\8b3e977eaf5d2949158e4c95813f671b2fc366a4
 k
 ;.idea/libraries/Maven__org_apache_derby_derby_10_14_2_0.xml,d\4\d4f09400bc759fb2daba0d5bea24f8df1dd19e9b
 w
@@ -87,8 +79,6 @@ a
 1src/main/java/sample/model/AbstractAutomaton.java,7\b\7bb987fcfdece4064ce61d7027f7ac1ac97c05ef
 j
 :src/main/java/sample/message/AbstractRestoreAutomaton.java,1\8\180ec129776b1fb411787d95d38df8150179f360
-o
-?src/main/java/sample/presenter/database/DataBaseConnection.java,9\2\92bf1365ed8f3be9839b234fdc7b9481ecf64ceb
 f
 6src/main/java/sample/presenter/DropTablePresenter.java,7\e\7e3104bafaae3be51eaa9232dea50f834648ec1b
 q
@@ -97,14 +87,8 @@ q
 Asrc/main/java/sample/message/request/RequestRestoreAutomaton.java,c\a\cad91ce0adbf6201c3c015f56bda80497042b160
 r
 Bsrc/main/java/sample/message/request/RequestRestoreTableStage.java,2\4\240188cce23d7a2ebe6d0817f90e69b5564b7b45
-a
-1src/main/java/sample/presenter/Serialization.java,4\9\4904e8afe92de116254162015ae1f14b886b1066
 u
 Esrc/main/java/sample/presenter/database/TableManagementException.java,7\e\7e41ece2cffbe91683f635375dbb6da0c9574d68
-c
-3src/main/java/sample/presenter/LoaderPresenter.java,f\1\f1ba41efa872a9a7a5588ba51ca246bc72be47ac
-d
-4src/main/java/sample/presenter/RestorePresenter.java,6\e\6e59736474eaff3deb07701817501a0995da1a80
 w
 G.idea/sonarlint/issuestore/d/1/d1579c76b9049adc15df4f31754380b31339c6b5,f\d\fd764717cd551133a14c0905d8e77dac32fe7153
 w
@@ -121,8 +105,6 @@ w
 G.idea/sonarlint/issuestore/9/4/943f0a69fdae55baa84614c564e27a9096d825f7,a\9\a94929e7b0587c283cc804aa21ef3a4f4bd74f0f
 w
 G.idea/sonarlint/issuestore/9/4/94ef9d7037082f3778f29887dc5fc4e1d3a88db4,7\e\7e21209fb345e3af5d0349b5497a7b8eda81c8e9
-w
-G.idea/sonarlint/issuestore/8/b/8b3e977eaf5d2949158e4c95813f671b2fc366a4,b\e\be30476d372be059bde982fd93c3955c33df3dad
 w
 G.idea/sonarlint/issuestore/4/3/430d75e17400a6eabce8cd9fce7a38353d3a697f,d\1\d10cc82a11a9182075cc351459bac2c0d625f1d7
 w
@@ -183,18 +165,10 @@ k
 ;src/main/java/sample/presenter/database/AutomatonStore.java,b\1\b1b8730215cc928c97c8f40946b841d1d01cbe0a
 h
 8src/main/java/sample/presenter/CreateTablePresenter.java,c\6\c6d481c112bc4b250dd93326a9aa3610158864b0
-s
-Csrc/main/java/sample/presenter/database/DatabaseAutomatonStore.java,c\b\cba6019852a45c040e59d890b3c299622a18b86d
 o
 ?src/main/java/sample/message/request/RequestSaveTableStage.java,d\f\df2000278c8a1b6786648cda6cbd1d85a0c91d7f
-e
-5src/main/java/sample/presenter/AbstractPresenter.java,3\9\397830f0a580620fee8264f2496ec965ef7efb3f
-d
-4src/main/java/sample/view/PopulationContextMenu.java,0\0\00e4393b0adb0de5339773a7456fb9657d5d06d0
 ^
 .src/main/java/sample/view/PopulationPanel.java,f\d\fd07e16d6b52dfe0dea84835112d4326820bb903
-b
-2src/main/java/sample/view/PopulationPanelImpl.java,b\7\b70cccd79c1345a00601984e0b20dba5d9783f72
 a
 1src/main/java/sample/view/ViewManagerFactory.java,b\b\bbe0e209e20ab7f87a174afac5316bb830c572c1
 X
@@ -215,8 +189,6 @@ w
 G.idea/sonarlint/issuestore/1/8/1874723b37fd22ea9fa714bfc6d40725b22e465b,2\b\2bbc32b1c0225f1f3c5842fd92cbc61e5141b07e
 w
 G.idea/sonarlint/issuestore/2/c/2c9762b9f422ecc8b5427a257471fdebaad2bdc3,5\5\55ebe8396be992054ae0893721fbcfbacdf4b345
-w
-G.idea/sonarlint/issuestore/3/9/397830f0a580620fee8264f2496ec965ef7efb3f,f\5\f550e40a0784421f7f535416aa6e941c0e33dcaa
 w
 G.idea/sonarlint/issuestore/4/e/4e5d1ab5eead542ced478a1f682b0a67da5a3f5f,6\5\653b471be174a7b718be04a145eab665ea533528
 S
@@ -282,8 +254,6 @@ G.idea/sonarlint/issuestore/a/9/a94929e7b0587c283cc804aa21ef3a4f4bd74f0f,9\b\9b
 w
 G.idea/sonarlint/issuestore/a/9/a9c500829e8550760c68beec428123d580275688,8\7\877f9e2863d6427eaafc0ae448cd177ed729752b
 w
-G.idea/sonarlint/issuestore/b/e/be30476d372be059bde982fd93c3955c33df3dad,c\5\c5367776347ea523dca5c8514a4d15d99fd46d62
-w
 G.idea/sonarlint/issuestore/7/a/7a7e4275b5879bb68f877ec23afe92c17f93c0de,9\b\9b2f0194111d6fa5a378337ccae485468a596527
 ^
 .src/internationalization/Test_de_US.properties,f\0\f026b3c24842f97128d72c441fd0efb7cd13e00f
@@ -303,7 +273,17 @@ w
 G.idea/sonarlint/issuestore/f/f/ff205f0d9cd68a0a8ebca4270285841dda1d6537,0\7\072b140b8d0ee6ba44dc157e641437993081851f
 7
 pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
-S
-#src/main/java/sample/view/View.java,d\8\d8055ff05d7dc6fc978461fff87eaa63d1ca967b
 c
 3src/main/java/sample/presenter/EditorPresenter.java,1\6\1647f2c42ef6fa4f1fa29da242804ed0a33e227b
+^
+.src/internationalization/Test_US_de.properties,7\8\785839062dff3024a036d1d867d8e8bd2f49d651
+N
+src/main/java/sample/Test.java,1\0\1076d7e2b774a1ddf745c940a7e5e48163d33380
+N
+src/main/java/sample/Main.java,a\1\a101a599f108b850043533fb382c500b68c01b71
+e
+5src/main/java/sample/presenter/PropertyPresenter.java,2\4\24ad7910659a56d7b24da70c84a559a8fec26734
+a
+1src/main/java/sample/util/CreatePropertyFile.java,1\f\1f581314606f72ba54500a9264443a0ddc947e1b
+P
+ text/KruemelmonsterAutomaton.txt,0\2\0208b60158132fefd91f7a0b5655229e4cc877e5

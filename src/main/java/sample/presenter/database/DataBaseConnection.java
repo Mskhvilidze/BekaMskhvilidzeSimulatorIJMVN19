@@ -40,6 +40,19 @@ public class DataBaseConnection {
      * @return a new {@code Connection} to the sql database
      */
     public Connection getConnection() {
-        return dataSource;
+        try {
+            if (dataSource != null && !dataSource.isClosed() && dataSource.isValid(0)) {
+                return dataSource;
+            }
+            if (dataSource != null) {
+                dataSource.close();
+                dataSource = null;
+                return getConnection();
+            }
+            dataSource = DriverManager.getConnection("jdbc:derby:" + DATABASE_NAME + ";create=true");
+            return dataSource;
+        } catch (SQLException exc) {
+            return null;
+        }
     }
 }

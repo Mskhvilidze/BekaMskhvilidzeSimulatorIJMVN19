@@ -104,7 +104,6 @@ public class View {
         if (AbstractPresenter.map.size() < 2) {
             this.store.shutdown();
         }
-
         stage.close();
     }
 

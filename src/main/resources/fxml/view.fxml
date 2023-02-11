@@ -307,7 +307,8 @@
         </HBox>
     </VBox>
     <HBox fx:id="hbox" layoutY="72.0" minHeight="400.0" prefWidth="240.0" styleClass="hBox">
-        <VBox fx:id="pane" maxWidth="192.0" minHeight="400.0" minWidth="100.0" prefHeight="730.0" prefWidth="185.0"
+    <ScrollPane minWidth="130.0">
+        <VBox fx:id="pane" maxWidth="192.0" minHeight="400.0" minWidth="100.0" prefHeight="1030.0" prefWidth="185.0"
               styleClass="paneForHbox">
             <HBox minHeight="20.0" prefHeight="45.0" prefWidth="184.0">
                 <RadioButton disable="true" minHeight="5.0" minWidth="25.0" mnemonicParsing="false" onAction="#onStateGenerate"
@@ -319,7 +320,8 @@
                         <Insets right="10.0" top="2.0"/>
                     </HBox.margin>
                 </RadioButton>
-                <ColorPicker minHeight="15.0" minWidth="15.0" prefHeight="30.0" prefWidth="117.0" styleClass="picker">
+                <ColorPicker userData="0" onAction="#onSetColor" minHeight="15.0" minWidth="15.0" prefHeight="30.0" prefWidth="117.0"
+                             styleClass="picker">
                     <HBox.margin>
                         <Insets top="5.0"/>
                     </HBox.margin>
@@ -333,7 +335,9 @@
                         <Insets right="10.0" top="5.0"/>
                     </HBox.margin>
                 </RadioButton>
-                <ColorPicker layoutX="67.0" layoutY="45.0" minHeight="15.0" minWidth="15.0" prefHeight="30.0" prefWidth="117.0"
+                <ColorPicker userData="1" onAction="#onSetColor" layoutX="67.0" layoutY="45.0" minHeight="15.0" minWidth="15.0"
+                             prefHeight="30.0"
+                             prefWidth="117.0"
                              styleClass="picker">
                     <value>
                         <Color/>
@@ -354,7 +358,9 @@
                         <Insets right="10.0" top="5.0"/>
                     </HBox.margin>
                 </RadioButton>
-                <ColorPicker layoutX="67.0" layoutY="80.0" minHeight="15.0" minWidth="15.0" prefHeight="30.0" prefWidth="117.0"
+                <ColorPicker userData="2" onAction="#onSetColor" layoutX="67.0" layoutY="80.0" minHeight="15.0" minWidth="15.0"
+                             prefHeight="30.0"
+                             prefWidth="117.0"
                              styleClass="picker">
                     <value>
                         <Color fx:value="#0f7b4e"/>
@@ -372,7 +378,9 @@
                         <Insets right="10.0" top="5.0"/>
                     </HBox.margin>
                 </RadioButton>
-                <ColorPicker layoutX="67.0" layoutY="115.0" minHeight="15.0" minWidth="15.0" prefHeight="30.0" prefWidth="117.0"
+                <ColorPicker userData="3" onAction="#onSetColor" layoutX="67.0" layoutY="115.0" minHeight="15.0" minWidth="15.0"
+                             prefHeight="30.0"
+                             prefWidth="117.0"
                              styleClass="picker">
                     <value>
                         <Color fx:value="#b6d4e1"/>
@@ -390,7 +398,9 @@
                         <Insets right="10.0" top="5.0"/>
                     </HBox.margin>
                 </RadioButton>
-                <ColorPicker layoutX="67.0" layoutY="150.0" minHeight="15.0" minWidth="15.0" prefHeight="30.0" prefWidth="117.0"
+                <ColorPicker userData="4" onAction="#onSetColor" layoutX="67.0" layoutY="150.0" minHeight="15.0" minWidth="15.0"
+                             prefHeight="30.0"
+                             prefWidth="117.0"
                              styleClass="picker">
                     <value>
                         <Color fx:value="#f9ee3d"/>
@@ -408,7 +418,9 @@
                         <Insets right="10.0" top="5.0"/>
                     </HBox.margin>
                 </RadioButton>
-                <ColorPicker layoutX="67.0" layoutY="185.0" minHeight="15.0" minWidth="15.0" prefHeight="30.0" prefWidth="117.0"
+                <ColorPicker userData="5" onAction="#onSetColor" layoutX="67.0" layoutY="185.0" minHeight="15.0" minWidth="15.0"
+                             prefHeight="30.0"
+                             prefWidth="117.0"
                              styleClass="picker">
                     <value>
                         <Color fx:value="#5f85c4"/>
@@ -426,7 +438,9 @@
                         <Insets right="10.0" top="5.0"/>
                     </HBox.margin>
                 </RadioButton>
-                <ColorPicker layoutX="67.0" layoutY="220.0" minHeight="15.0" minWidth="15.0" prefHeight="30.0" prefWidth="117.0"
+                <ColorPicker userData="6" onAction="#onSetColor" layoutX="67.0" layoutY="220.0" minHeight="15.0" minWidth="15.0"
+                             prefHeight="30.0"
+                             prefWidth="117.0"
                              styleClass="picker">
                     <value>
                         <Color fx:value="#eaa8fe"/>
@@ -444,7 +458,8 @@
                         <Insets right="10.0" top="5.0"/>
                     </HBox.margin>
                 </RadioButton>
-                <ColorPicker layoutX="67.0" layoutY="255.0" prefHeight="30.0" prefWidth="117.0" styleClass="picker">
+                <ColorPicker userData="7" onAction="#onSetColor" layoutX="67.0" layoutY="255.0" prefHeight="30.0" prefWidth="117.0"
+                             styleClass="picker">
                     <value>
                         <Color fx:value="#2f8789"/>
                     </value>
@@ -461,7 +476,8 @@
                         <Insets right="10.0" top="5.0"/>
                     </HBox.margin>
                 </RadioButton>
-                <ColorPicker layoutX="67.0" layoutY="290.0" prefHeight="30.0" prefWidth="117.0" styleClass="picker">
+                <ColorPicker userData="8" onAction="#onSetColor" layoutX="67.0" layoutY="290.0" prefHeight="30.0" prefWidth="117.0"
+                             styleClass="picker">
                     <value>
                         <Color fx:value="#213968"/>
                     </value>
@@ -478,7 +494,8 @@
                         <Insets right="10.0" top="5.0"/>
                     </HBox.margin>
                 </RadioButton>
-                <ColorPicker layoutX="67.0" layoutY="325.0" prefHeight="30.0" prefWidth="117.0" styleClass="picker">
+                <ColorPicker userData="9" onAction="#onSetColor" layoutX="67.0" layoutY="325.0" prefHeight="30.0" prefWidth="117.0"
+                             styleClass="picker">
                     <value>
                         <Color fx:value="#535c79"/>
                     </value>
@@ -488,6 +505,7 @@
                 </VBox.margin>
             </HBox>
         </VBox>
+    </ScrollPane>
         <HBox fx:id="hBoxForSimul" minHeight="400.0" minWidth="180.0" prefHeight="400.0" prefWidth="600.0"
               style="-fx-background-color: #A9A9A9; -fx-effect: dropshadowshadow(three-pass-box, grey, 10, 0, 0, 15)">
             <ScrollPane fx:id="scrollPane">

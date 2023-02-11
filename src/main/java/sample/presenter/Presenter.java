@@ -4,6 +4,7 @@ import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
@@ -115,7 +116,6 @@ public class Presenter extends AbstractPresenter implements Initializable {
         });
         automaton.randomPopulation();
         this.slider.valueProperty().addListener((a, b, c) -> this.simulation.setSpeed(c.intValue()));
-        System.out.println(this.toggleGroup.getUserData());
     }
 
     public void simulatorPresenter(Service service) {
@@ -402,6 +402,7 @@ public class Presenter extends AbstractPresenter implements Initializable {
         populationPanel.repaint((int) Double.parseDouble(list.get(5)));
         stage.getScene().getWindow().setX(Double.parseDouble(list.get(6)));
         stage.getScene().getWindow().setY(Double.parseDouble(list.get(7)));
+        map.remove(this.beenden.getId() + "4");
     }
 
     @FXML
@@ -412,5 +413,13 @@ public class Presenter extends AbstractPresenter implements Initializable {
     @FXML
     private void onChangeGermanLanguage() {
         new PropertyPresenter(automata, pop, sim, setting, false, true);
+    }
+
+    @FXML
+    private void onSetColor(ActionEvent event) {
+        ColorPicker picker = (ColorPicker) event.getSource();
+        final int state = Integer.parseInt(picker.getUserData().toString());
+        mapping.setColor(state, picker.getValue());
+        populationPanel.paintPopulation();
     }
 }

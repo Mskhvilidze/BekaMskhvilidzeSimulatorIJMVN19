@@ -11,7 +11,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import sample.presenter.database.DatabaseAutomatonStore;
 import sample.presenter.database.TableManagementException;
-
 import java.net.URL;
 import java.util.List;
 import java.util.Optional;
@@ -74,6 +73,5 @@ public class RestorePresenter extends AbstractPresenter implements Initializable
         }
         List<String> list = dataBaseConnection.getTable(tableToRestore.get());
         service.onRestoreAutomaton(list);
-        service.onPlatformExit(stage);
     }
 }

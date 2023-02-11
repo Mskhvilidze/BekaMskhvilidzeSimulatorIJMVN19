@@ -40,8 +40,8 @@ public class PopulationContextMenu extends ContextMenu {
     private List<Method> getMethods(AbstractAutomaton automaton) {
         List<Method> res = new ArrayList<>();
         for (Method method : automaton.getClass().getDeclaredMethods()) {
-            if (Modifier.isPublic(method.getModifiers()) && method.getParameterCount() == 2 &&
-                method.isAnnotationPresent(Callable.class)) {
+            if (Modifier.isPublic(method.getModifiers()) && method.getParameterCount() == 2 && method.isAnnotationPresent(Callable.class) &&
+                !Modifier.isAbstract(method.getModifiers()) && !Modifier.isStatic(method.getModifiers())) {
                 res.add(method);
             }
         }

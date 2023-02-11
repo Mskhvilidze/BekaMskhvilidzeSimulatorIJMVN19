@@ -3,6 +3,7 @@ package sample.presenter;
 
 import javafx.scene.canvas.Canvas;
 import javafx.stage.Stage;
+import sample.model.GameOfLifeAutomaton;
 import sample.model.KruemelmonsterAutomaton;
 import sample.util.Simulation;
 import sample.util.StatesColorMapping;
@@ -26,6 +27,7 @@ public class AbstractPresenter {
     protected Simulation simulation;
     protected AbstractAutomaton automaton;
     protected PopulationPanel populationPanel;
+    protected StatesColorMapping mapping;
     private Canvas canvas;
     public AbstractPresenter() {
         automaton = new KruemelmonsterAutomaton(45, 45, false);
@@ -40,7 +42,7 @@ public class AbstractPresenter {
     }
 
     public void initPopulationView(AbstractAutomaton automaton) {
-        StatesColorMapping mapping = new StatesColorMapping(automaton.getNumberOfStates());
+        mapping = new StatesColorMapping(automaton.getNumberOfStates());
         populationPanel = new PopulationPanelImpl(automaton, canvas, mapping);
     }
 

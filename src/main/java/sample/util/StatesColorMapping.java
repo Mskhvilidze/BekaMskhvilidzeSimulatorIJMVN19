@@ -31,4 +31,8 @@ public class StatesColorMapping {
                 "#535c79", // grau
         };
     }
+
+    public void setColor(int state, Color color){
+        colors[state] = color;
+    }
 }
