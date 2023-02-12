@@ -4,7 +4,6 @@ import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
@@ -403,6 +402,7 @@ public class Presenter extends AbstractPresenter implements Initializable {
         stage.getScene().getWindow().setX(Double.parseDouble(list.get(6)));
         stage.getScene().getWindow().setY(Double.parseDouble(list.get(7)));
         map.remove(this.beenden.getId() + "4");
+        Service.alert("" + map.size(), "Rest");
     }
 
     @FXML

@@ -1,12 +1,11 @@
 package sample.presenter;
 
-
 import javafx.beans.binding.StringBinding;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.Menu;
-import javafx.scene.control.TextField;
 import sample.util.CreatePropertyFile;
+import javafx.scene.text.Text;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -19,8 +18,8 @@ public class PropertyPresenter {
 
     private ObservableResourceFactory resourceFactory;
     private Properties properties;
-    private static final String DE_US = "src/internationalization/Test_de_US.properties";
-    private static final String US_DE = "src/internationalization/Test_US_de.properties";
+    private static final String DE_US = "Test_de_US.properties";
+    private static final String US_DE = "Test_US_de.properties";
     private ResourceBundle bundle;
     private String[] basketAutomataUS;
     private String[] basketAutomataDE;
@@ -43,7 +42,7 @@ public class PropertyPresenter {
                 Service.alert("File existiert nicht, nachdem Programm neu gestartet wird, wird die Datei wiederherstellt", "");
                 return;
             } else {
-                bundle = ResourceBundle.getBundle("internationalization.Test", new Locale("de", "US"));
+                bundle = ResourceBundle.getBundle("Test", Locale.getDefault());
                 this.resourceFactory.setResources(bundle);
             }
         } else if (!isChangeEnglish && isChangeGerman) {
@@ -53,7 +52,7 @@ public class PropertyPresenter {
                 Service.alert("File existiert nicht, nachdem Programm neu gestartet wird, wird die Datei wiederherstellt", "");
                 return;
             } else {
-                bundle = ResourceBundle.getBundle("internationalization.Test", new Locale("US", "de"));
+                bundle = ResourceBundle.getBundle("Test", new Locale("de"));
                 this.resourceFactory.setResources(bundle);
             }
         } else {
@@ -83,10 +82,10 @@ public class PropertyPresenter {
     private void changeAutomataLanguage(Menu automata, boolean isChangeEnglish) {
         if (isChangeEnglish) {
             readePropertiesFile(Paths.get(new File(DE_US).getPath()));
-            changePropertyAutomata(automata, basketAutomataUS);
+            changePropertyAutomata(automata, basketAutomataUS, true);
         } else {
             readePropertiesFile(Paths.get(new File(US_DE).getPath()));
-            changePropertyAutomata(automata, basketAutomataDE);
+            changePropertyAutomata(automata, basketAutomataDE, false);
         }
     }
 
@@ -94,30 +93,30 @@ public class PropertyPresenter {
     private void changePopLanguage(Menu pop, boolean isChangeEnglish) {
         if (isChangeEnglish) {
             readePropertiesFile(Paths.get(new File(DE_US).getPath()));
-            changePropertyAutomata(pop, basketPopUS);
+            changePropertyAutomata(pop, basketPopUS, true);
         } else {
             readePropertiesFile(Paths.get(new File(US_DE).getPath()));
-            changePropertyAutomata(pop, basketPopDE);
+            changePropertyAutomata(pop, basketPopDE, false);
         }
     }
 
     private void changeSimLanguage(Menu sim, boolean isChangeEnglish) {
         if (isChangeEnglish) {
             readePropertiesFile(Paths.get(new File(DE_US).getPath()));
-            changePropertyAutomata(sim, basketSimUS);
+            changePropertyAutomata(sim, basketSimUS, true);
         } else {
             readePropertiesFile(Paths.get(new File(US_DE).getPath()));
-            changePropertyAutomata(sim, basketSimDE);
+            changePropertyAutomata(sim, basketSimDE, false);
         }
     }
 
     private void changeSettingsLanguage(Menu settings, boolean isChangeEnglish) {
         if (isChangeEnglish) {
             readePropertiesFile(Paths.get(new File(DE_US).getPath()));
-            changePropertyAutomata(settings, basketSettUS);
+            changePropertyAutomata(settings, basketSettUS, true);
         } else {
             readePropertiesFile(Paths.get(new File(US_DE).getPath()));
-            changePropertyAutomata(settings, basketSettDE);
+            changePropertyAutomata(settings, basketSettDE, false);
         }
     }
 
@@ -127,21 +126,19 @@ public class PropertyPresenter {
      * @param node   Manuitem
      * @param basket Array
      */
-    private void changePropertyAutomata(Menu node, String[] basket) {
-        node.textProperty()
-                .bind(i18n(basket[0]).isValid() ? i18n(basket[0]) : new TextField(properties.getProperty(basket[0])).textProperty());
+    private void changePropertyAutomata(Menu node, String[] basket, boolean isChangeEnglish) {
+        node.textProperty().bind(i18n(basket[0]).isValid() ? i18n(basket[0]) : new Text(properties.getProperty(basket[0])).textProperty());
         int j = 0;
         int x;
-        System.out.println(file.getPath());
         for (int i = 0; i < node.getItems().size(); i++) {
             if (node.getItems().get(i).getText() == null) {
                 j++;
                 continue;
             }
             x = (i - j) + 1 >= basket.length ? (i - j) - 1 : (i - j) + 1;
-            CreatePropertyFile.updateProperties(file, true);
+           // CreatePropertyFile.updateProperties(file, isChangeEnglish);
             node.getItems().get(i).textProperty()
-                    .bind(i18n(basket[x]).isValid() ? i18n(basket[x]) : new TextField(properties.getProperty(basket[x])).textProperty());
+                    .bind(i18n(basket[x]).isValid() ? i18n(basket[x]) : new Text(properties.getProperty(basket[x])).textProperty());
 
         }
     }

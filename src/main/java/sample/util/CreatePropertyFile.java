@@ -110,7 +110,7 @@ public class CreatePropertyFile {
             }
         } else {
             for (Map.Entry<String, String> entry : german.entrySet()) {
-                properties.setProperty(entry.getKey(), entry.getValue());
+                changedReloadingStrategy(file, entry.getKey(), entry.getValue());
             }
         }
     }

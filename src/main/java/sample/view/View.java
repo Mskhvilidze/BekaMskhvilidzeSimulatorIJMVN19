@@ -101,6 +101,7 @@ public class View {
     @Subscribe
     private void closeStage(RequestExitStage exitStage) {
         Stage stage = (Stage) exitStage.getStage().getScene().getWindow();
+        Service.alert(""+AbstractPresenter.map.size(), "");
         if (AbstractPresenter.map.size() < 2) {
             this.store.shutdown();
         }
