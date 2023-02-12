@@ -96,7 +96,13 @@ public class View {
             stage.show();
             presenter.setStage(stage);
         });
-
+        newStage.getStage().setOnCloseRequest(event -> {
+            for (Map.Entry<String , Stage> entry:AbstractPresenter.map.entrySet()){
+                if (newStage.getStage() == entry.getValue()){
+                    AbstractPresenter.map.remove(entry.getKey());
+                }
+            }
+        });
     }
 
     @Subscribe
@@ -143,6 +149,13 @@ public class View {
             presenter.setSaveTableStage(saveTableStage.getStage());
             presenter.addFields(saveTableStage.getMap(), saveTableStage.getSize(), saveTableStage.getStage());
         });
+        saveTableStage.getStage().setOnCloseRequest(event -> {
+            for (Map.Entry<String , Stage> entry:AbstractPresenter.map.entrySet()){
+                if (saveTableStage.getStage() == entry.getValue()){
+                    AbstractPresenter.map.remove(entry.getKey());
+                }
+            }
+        });
     }
 
     @Subscribe
@@ -160,6 +173,13 @@ public class View {
             presenter.setDataBaseConnection(this.store);
             presenter.setDropTableService(this.service);
         });
+        deleteTableStage.getStage().setOnCloseRequest(event -> {
+            for (Map.Entry<String , Stage> entry:AbstractPresenter.map.entrySet()){
+                if (deleteTableStage.getStage() == entry.getValue()){
+                    AbstractPresenter.map.remove(entry.getKey());
+                }
+            }
+        });
     }
 
     @Subscribe
@@ -176,6 +196,13 @@ public class View {
             presenter.setRestoredTableStage(requestRestoreTableStage.getStage());
             presenter.setDataBaseConnection(this.store);
             presenter.setRestoredTableService(this.service);
+        });
+        requestRestoreTableStage.getStage().setOnCloseRequest(event -> {
+            for (Map.Entry<String , Stage> entry:AbstractPresenter.map.entrySet()){
+                if (requestRestoreTableStage.getStage() == entry.getValue()){
+                    AbstractPresenter.map.remove(entry.getKey());
+                }
+            }
         });
     }
 

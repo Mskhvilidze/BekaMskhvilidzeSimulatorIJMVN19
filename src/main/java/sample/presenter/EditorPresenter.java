@@ -44,11 +44,6 @@ public class EditorPresenter extends AbstractPresenter implements Initializable 
 
     public void setStage(Stage stage) {
         this.stage = stage;
-        for (Map.Entry<String , Stage> entry:AbstractPresenter.map.entrySet()){
-            if (stage == entry.getValue()){
-                AbstractPresenter.map.remove(entry.getKey());
-            }
-        }
     }
 
     public void simulatorPresenter(Service service) {

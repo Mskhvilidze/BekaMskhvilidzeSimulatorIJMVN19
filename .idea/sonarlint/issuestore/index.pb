@@ -231,8 +231,6 @@ m
 =src/main/java/sample/message/AbstractNewAutomatonMessage.java,b\f\bf053de2d22dbaff2c08491321f968fa52b3a104
 c
 3src/main/java/sample/model/GameOfLifeAutomaton.java,e\f\efadb7f7132894fc94556732e34478dc21780540
-[
-+src/main/java/sample/presenter/Service.java,5\4\54f9b6a94401ec81633b4f26d2f72da33658cb16
 q
 Asrc/main/java/sample/message/request/RequestDeleteTableStage.java,b\d\bdc2d6c08f3382072d317e0909ce29b35da5900c
 N
