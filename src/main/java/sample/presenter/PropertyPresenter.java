@@ -18,8 +18,8 @@ public class PropertyPresenter {
 
     private ObservableResourceFactory resourceFactory;
     private Properties properties;
-    private static final String DE_US = "Test_de_US.properties";
-    private static final String US_DE = "Test_US_de.properties";
+    private static final String DE_US = "ii.Test_de_US.properties";
+    private static final String US_DE = "ii.Test_US_de.properties";
     private ResourceBundle bundle;
     private String[] basketAutomataUS;
     private String[] basketAutomataDE;
@@ -42,7 +42,7 @@ public class PropertyPresenter {
                 Service.alert("File existiert nicht, nachdem Programm neu gestartet wird, wird die Datei wiederherstellt", "");
                 return;
             } else {
-                bundle = ResourceBundle.getBundle("Test", Locale.getDefault());
+                bundle = ResourceBundle.getBundle("ii.Test", Locale.getDefault());
                 this.resourceFactory.setResources(bundle);
             }
         } else if (!isChangeEnglish && isChangeGerman) {
@@ -52,8 +52,9 @@ public class PropertyPresenter {
                 Service.alert("File existiert nicht, nachdem Programm neu gestartet wird, wird die Datei wiederherstellt", "");
                 return;
             } else {
-                bundle = ResourceBundle.getBundle("Test", new Locale("de"));
+                bundle = ResourceBundle.getBundle("ii.Test", new Locale("de"));
                 this.resourceFactory.setResources(bundle);
+                Service.alert(bundle.getString("Save"), "");
             }
         } else {
             Service.alert("Oops, Etwas ist schief gelaufen, Variable in Presenter wurde nicht gesetzt", "");

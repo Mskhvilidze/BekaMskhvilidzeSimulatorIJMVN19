@@ -243,3 +243,11 @@ h
 +src/main/java/sample/presenter/Service.java,5\4\54f9b6a94401ec81633b4f26d2f72da33658cb16
 q
 Asrc/main/java/sample/message/request/RequestDeleteTableStage.java,b\d\bdc2d6c08f3382072d317e0909ce29b35da5900c
+N
+src/main/java/sample/Test.java,1\0\1076d7e2b774a1ddf745c940a7e5e48163d33380
+S
+#BekaMskhvilidzeSimulatorIJMVN19.iml,6\6\66840c6c59cb020a376d1ea792f79913463893f2
+N
+src/main/java/sample/Main.java,a\1\a101a599f108b850043533fb382c500b68c01b71
+S
+#src/main/java/sample/view/View.java,d\8\d8055ff05d7dc6fc978461fff87eaa63d1ca967b
