@@ -12,6 +12,7 @@ import javafx.util.Duration;
 import sample.presenter.database.DatabaseAutomatonStore;
 import java.net.URL;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class DropTablePresenter extends AbstractPresenter implements Initializable {
@@ -31,6 +32,11 @@ public class DropTablePresenter extends AbstractPresenter implements Initializab
 
     public void setDropTableStage(Stage stage) {
         this.stage = stage;
+        for (Map.Entry<String , Stage> entry:AbstractPresenter.map.entrySet()){
+            if (stage == entry.getValue()){
+                AbstractPresenter.map.remove(entry.getKey());
+            }
+        }
     }
 
     public void setDropTableService(Service service) {
@@ -51,7 +57,12 @@ public class DropTablePresenter extends AbstractPresenter implements Initializab
 
     @FXML
     public void onStageCancel() {
-        service.onPlatformExit(stage);
+        stage.close();
+        for (Map.Entry<String , Stage> entry:AbstractPresenter.map.entrySet()){
+            if (stage == entry.getValue()){
+                AbstractPresenter.map.remove(entry.getKey());
+            }
+        }
     }
 
     @FXML

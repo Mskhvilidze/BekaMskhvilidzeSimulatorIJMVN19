@@ -1,5 +1,6 @@
 package sample.presenter;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -8,9 +9,11 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.File;
 import java.net.URL;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class EditorPresenter extends AbstractPresenter implements Initializable {
@@ -41,6 +44,11 @@ public class EditorPresenter extends AbstractPresenter implements Initializable 
 
     public void setStage(Stage stage) {
         this.stage = stage;
+        for (Map.Entry<String , Stage> entry:AbstractPresenter.map.entrySet()){
+            if (stage == entry.getValue()){
+                AbstractPresenter.map.remove(entry.getKey());
+            }
+        }
     }
 
     public void simulatorPresenter(Service service) {
@@ -60,7 +68,8 @@ public class EditorPresenter extends AbstractPresenter implements Initializable 
 
     @FXML
     private void onClose() {
-        this.service.onPlatformExit(this.stage);
+        System.out.println("AA");
+        stage.close();
     }
 
     @FXML

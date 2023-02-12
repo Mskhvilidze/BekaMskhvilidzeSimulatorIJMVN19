@@ -63,11 +63,21 @@ public class CreateTablePresenter extends AbstractPresenter implements Initializ
         columns.put("x", map.get(stage).get(6));
         columns.put("y", map.get(stage).get(7));
         dataBaseConnection.createTable(tableName.getText().toUpperCase(), columns);
-        this.service.onPlatformExit(this.stage);
+        stage.close();
+        for (Map.Entry<String , Stage> entry:AbstractPresenter.map.entrySet()){
+            if (stage == entry.getValue()){
+                AbstractPresenter.map.remove(entry.getKey());
+            }
+        }
     }
 
     @FXML
     private void onStageCancel() {
-        this.service.onPlatformExit(this.stage);
+        stage.close();
+        for (Map.Entry<String , Stage> entry:AbstractPresenter.map.entrySet()){
+            if (stage == entry.getValue()){
+                AbstractPresenter.map.remove(entry.getKey());
+            }
+        }
     }
 }

@@ -15,6 +15,7 @@ import sample.presenter.*;
 import sample.presenter.database.DatabaseAutomatonStore;
 
 import java.io.IOException;
+import java.util.Map;
 
 @SuppressWarnings("UnstableApiUsage")
 public class View {
@@ -87,8 +88,8 @@ public class View {
         loader.setLocation(getClass().getResource(EditorPresenter.FXML));
         Parent rootParent = loader.load();
         EditorPresenter presenter = loader.getController();
-        presenter.simulatorPresenter(this.service);
         Platform.runLater(() -> {
+            presenter.simulatorPresenter(this.service);
             stage.setTitle(Service.getMap().get(stage));
             scene = new Scene(rootParent, 600, 400);
             stage.setScene(scene);
@@ -114,13 +115,13 @@ public class View {
         loader.setLocation(getClass().getResource(Presenter.FXML));
         Parent rootParent = loader.load();
         Presenter presenter = loader.getController();
-        presenter.simulatorPresenter(this.service);
-        presenter.setAutomaton(newAutomaton.getAutomaton());
         Platform.runLater(() -> {
             newAutomaton.getStage().setTitle(newAutomaton.getName());
             scene = new Scene(rootParent, 815, 850);
             newAutomaton.getStage().setScene(scene);
             newAutomaton.getStage().show();
+            presenter.simulatorPresenter(this.service);
+            presenter.setAutomaton(newAutomaton.getAutomaton());
         });
         presenter.setStage(newAutomaton.getStage());
         newAutomaton.getStage().setOnCloseRequest(event -> presenter.closeStage());
@@ -132,15 +133,15 @@ public class View {
         loader.setLocation(getClass().getResource(CreateTablePresenter.FXML));
         Parent rootParent = loader.load();
         CreateTablePresenter presenter = loader.getController();
-        presenter.setDataBaseConnection(this.store);
-        presenter.setPresenterService(this.service);
-        presenter.setSaveTableStage(saveTableStage.getStage());
-        presenter.addFields(saveTableStage.getMap(), saveTableStage.getSize(), saveTableStage.getStage());
         Platform.runLater(() -> {
             saveTableStage.getStage().setTitle("Speichern");
             scene = new Scene(rootParent, 589.0, 198.0);
             saveTableStage.getStage().setScene(scene);
             saveTableStage.getStage().show();
+            presenter.setDataBaseConnection(this.store);
+            presenter.setPresenterService(this.service);
+            presenter.setSaveTableStage(saveTableStage.getStage());
+            presenter.addFields(saveTableStage.getMap(), saveTableStage.getSize(), saveTableStage.getStage());
         });
     }
 
@@ -150,14 +151,14 @@ public class View {
         loader.setLocation(getClass().getResource(DropTablePresenter.FXML));
         Parent rootParent = loader.load();
         DropTablePresenter presenter = loader.getController();
-        presenter.setDropTableStage(deleteTableStage.getStage());
-        presenter.setDataBaseConnection(this.store);
-        presenter.setDropTableService(this.service);
         Platform.runLater(() -> {
             deleteTableStage.getStage().setTitle("Löschen");
             scene = new Scene(rootParent, 501.0, 198.0);
             deleteTableStage.getStage().setScene(scene);
             deleteTableStage.getStage().show();
+            presenter.setDropTableStage(deleteTableStage.getStage());
+            presenter.setDataBaseConnection(this.store);
+            presenter.setDropTableService(this.service);
         });
     }
 
@@ -167,14 +168,14 @@ public class View {
         loader.setLocation(getClass().getResource(RestorePresenter.FXML));
         Parent rootParent = loader.load();
         RestorePresenter presenter = loader.getController();
-        presenter.setRestoredTableStage(requestRestoreTableStage.getStage());
-        presenter.setDataBaseConnection(this.store);
-        presenter.setRestoredTableService(this.service);
         Platform.runLater(() -> {
             requestRestoreTableStage.getStage().setTitle("Wiederherstellen");
             scene = new Scene(rootParent, 533.0, 198.0);
             requestRestoreTableStage.getStage().setScene(scene);
             requestRestoreTableStage.getStage().show();
+            presenter.setRestoredTableStage(requestRestoreTableStage.getStage());
+            presenter.setDataBaseConnection(this.store);
+            presenter.setRestoredTableService(this.service);
         });
     }
 

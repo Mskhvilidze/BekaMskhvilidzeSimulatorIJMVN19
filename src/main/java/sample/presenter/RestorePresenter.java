@@ -13,6 +13,7 @@ import sample.presenter.database.DatabaseAutomatonStore;
 import sample.presenter.database.TableManagementException;
 import java.net.URL;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -44,7 +45,12 @@ public class RestorePresenter extends AbstractPresenter implements Initializable
 
     @FXML
     private void onStageCancel() {
-        service.onPlatformExit(stage);
+        stage.close();
+        for (Map.Entry<String , Stage> entry:AbstractPresenter.map.entrySet()){
+            if (stage == entry.getValue()){
+                AbstractPresenter.map.remove(entry.getKey());
+            }
+        }
     }
 
     @FXML

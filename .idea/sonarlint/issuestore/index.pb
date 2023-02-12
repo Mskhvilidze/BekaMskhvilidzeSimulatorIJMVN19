@@ -67,8 +67,6 @@ a
 1src/main/java/sample/model/AbstractAutomaton.java,7\b\7bb987fcfdece4064ce61d7027f7ac1ac97c05ef
 j
 :src/main/java/sample/message/AbstractRestoreAutomaton.java,1\8\180ec129776b1fb411787d95d38df8150179f360
-f
-6src/main/java/sample/presenter/DropTablePresenter.java,7\e\7e3104bafaae3be51eaa9232dea50f834648ec1b
 q
 Asrc/main/java/sample/message/request/RequestRestoreAutomaton.java,c\a\cad91ce0adbf6201c3c015f56bda80497042b160
 r
@@ -229,16 +227,10 @@ P
  text/KruemelmonsterAutomaton.txt,0\2\0208b60158132fefd91f7a0b5655229e4cc877e5
 b
 2src/main/java/sample/view/PopulationPanelImpl.java,b\7\b70cccd79c1345a00601984e0b20dba5d9783f72
-d
-4src/main/java/sample/presenter/RestorePresenter.java,6\e\6e59736474eaff3deb07701817501a0995da1a80
 m
 =src/main/java/sample/message/AbstractNewAutomatonMessage.java,b\f\bf053de2d22dbaff2c08491321f968fa52b3a104
 c
 3src/main/java/sample/model/GameOfLifeAutomaton.java,e\f\efadb7f7132894fc94556732e34478dc21780540
-e
-5src/main/java/sample/presenter/AbstractPresenter.java,3\9\397830f0a580620fee8264f2496ec965ef7efb3f
-h
-8src/main/java/sample/presenter/CreateTablePresenter.java,c\6\c6d481c112bc4b250dd93326a9aa3610158864b0
 [
 +src/main/java/sample/presenter/Service.java,5\4\54f9b6a94401ec81633b4f26d2f72da33658cb16
 q
@@ -249,5 +241,3 @@ S
 #BekaMskhvilidzeSimulatorIJMVN19.iml,6\6\66840c6c59cb020a376d1ea792f79913463893f2
 N
 src/main/java/sample/Main.java,a\1\a101a599f108b850043533fb382c500b68c01b71
-S
-#src/main/java/sample/view/View.java,d\8\d8055ff05d7dc6fc978461fff87eaa63d1ca967b

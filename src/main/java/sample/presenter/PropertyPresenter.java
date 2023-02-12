@@ -29,14 +29,14 @@ public class PropertyPresenter {
     private String[] basketSimUS;
     private String[] basketSettDE;
     private String[] basketSettUS;
-    private File file;
 
     public PropertyPresenter(Menu automata, Menu pop, Menu sim, Menu settings, boolean isChangeEnglish, boolean isChangeGerman) {
         initList();
         this.properties = new Properties();
         this.resourceFactory = new ObservableResourceFactory();
+        File file;
         if (isChangeEnglish && !isChangeGerman) {
-            file = new File(DE_US);
+            file = new File(US_DE);
             if (!file.exists()) {
                 CreatePropertyFile.createFile(file, true);
                 Service.alert("File existiert nicht, nachdem Programm neu gestartet wird, wird die Datei wiederherstellt", "");
@@ -44,6 +44,7 @@ public class PropertyPresenter {
             } else {
                 bundle = ResourceBundle.getBundle("ii.Test", Locale.getDefault());
                 this.resourceFactory.setResources(bundle);
+                Service.alert("TEST " + bundle.getString("Laden"), "");
             }
         } else if (!isChangeEnglish && isChangeGerman) {
             file = new File(US_DE);
@@ -54,7 +55,7 @@ public class PropertyPresenter {
             } else {
                 bundle = ResourceBundle.getBundle("ii.Test", new Locale("de"));
                 this.resourceFactory.setResources(bundle);
-                Service.alert(bundle.getString("Save"), "");
+                Service.alert("TEST " + bundle.getString("Load"), "");
             }
         } else {
             Service.alert("Oops, Etwas ist schief gelaufen, Variable in Presenter wurde nicht gesetzt", "");
@@ -137,7 +138,7 @@ public class PropertyPresenter {
                 continue;
             }
             x = (i - j) + 1 >= basket.length ? (i - j) - 1 : (i - j) + 1;
-           // CreatePropertyFile.updateProperties(file, isChangeEnglish);
+            // CreatePropertyFile.updateProperties(file, isChangeEnglish);
             node.getItems().get(i).textProperty()
                     .bind(i18n(basket[x]).isValid() ? i18n(basket[x]) : new Text(properties.getProperty(basket[x])).textProperty());
 

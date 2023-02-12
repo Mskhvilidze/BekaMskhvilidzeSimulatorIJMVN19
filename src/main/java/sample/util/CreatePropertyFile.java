@@ -2,7 +2,6 @@ package sample.util;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
-
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;

@@ -401,12 +401,10 @@ public class Presenter extends AbstractPresenter implements Initializable {
         populationPanel.repaint((int) Double.parseDouble(list.get(5)));
         stage.getScene().getWindow().setX(Double.parseDouble(list.get(6)));
         stage.getScene().getWindow().setY(Double.parseDouble(list.get(7)));
-        map.remove(this.beenden.getId() + "4");
-        Service.alert("" + map.size(), "Rest");
     }
 
     @FXML
-    private void onChangeEnglishLanguage(){
+    private void onChangeEnglishLanguage() {
         new PropertyPresenter(automata, pop, sim, setting, true, false);
     }
 
